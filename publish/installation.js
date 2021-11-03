@@ -82727,26 +82727,23 @@ async function downgrade(client, request) {
 }
 async function upsertFirstRelation(client) {
     const blockName = "PageBuilderTester";
-    try {
-        const pageComponentRelation = {
-            RelationName: "PageBlock",
-            Name: blockName,
-            Description: blockName,
-            Type: "NgComponent",
-            SubType: "NG11",
-            AddonUUID: client.AddonUUID,
-            AddonRelativeURL: blockName.toLowerCase(),
-            ComponentName: 'AddonComponent',
-            ModuleName: 'AddonModule',
-        };
-        // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
-        const service = new pageBuilderTesterService(client);
-        const result = await service.upsertRelation(pageComponentRelation);
-        return { success: true, resultObject: { result } };
-    }
-    catch (e) {
-        return { success: false, errorMessage: e.message };
-    }
+    const pageComponentRelation = {
+        RelationName: "PageBlock",
+        Name: blockName,
+        Description: blockName,
+        Type: "NgComponent",
+        SubType: "NG11",
+        AddonUUID: client.AddonUUID,
+        AddonRelativeURL: blockName.toLowerCase(),
+        ComponentName: 'AddonComponent',
+        ModuleName: 'AddonModule',
+        EditorComponentName: 'AddonEditorComponent',
+        EditorModuleName: 'AddonEditorModule'
+    };
+    // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
+    const service = new pageBuilderTesterService(client);
+    return await service.upsertRelation(pageComponentRelation);
+    // return {success: true, resultObject: {result} };
 }
 
 exports.downgrade = downgrade;

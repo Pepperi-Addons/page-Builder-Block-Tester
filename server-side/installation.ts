@@ -47,5 +47,6 @@ async function upsertFirstRelation(client){
     // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
 
     const service = new pageBuilderTesterService(client);
-    return await service.upsertRelation(pageComponentRelation);
+    let result = await service.upsertRelation(pageComponentRelation);
+    return {success: true, resultObject: {result} };
 }
