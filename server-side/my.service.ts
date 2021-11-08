@@ -36,11 +36,11 @@ class PageBuilderTesterService {
         const pageRelation : NgComponentRelation = {
             RelationName: "PageBlock",
             Name: `${namePrefix}_${pageName}`,
-            Description: pageName,
+            Description: `${namePrefix}_${pageName}`,
             Type: "NgComponent",
             SubType: "NG12",
             AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: pageName.toLowerCase(),
+            AddonRelativeURL: "pagebuildertester",
             ComponentName: `${pageName}Component`,
             ModuleName: `${pageName}Module`,
             // EditorComponentName: `${pageName}EditorComponent`,
