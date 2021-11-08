@@ -32,13 +32,20 @@ module.exports = (config, options, env) => {
                 filename: "pagebuildertester.js",
                 exposes: {
                   './AddonComponent': './src/app/components/addon/index.ts',
-                  './AddonModule': './src/app/components/addon/index.ts'
-
+                  './AddonModule': './src/app/components/addon/index.ts',
+                  './SubAddon3Component': './src/app/components/sub-addon/index.ts',
+                  './SubAddon3Module': './src/app/components/sub-addon/index.ts',
+                  './SubAddon3EditorComponent': './src/app/components/sub-addon-editor/index.ts',
+                  './SubAddon3EditorModule': './src/app/components/sub-addon-editor/index.ts'
                 },
                 shared: {
                   // ...deps,
-                  "@angular/core": { eager:true,  singleton: true,   strictVersion: false  },
-                  "@angular/common": { eager:true,  singleton: true,  strictVersion: false   }
+                  "@angular/core": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/common": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/common/http": { eager: true, singleton: true, strictVersion: false },
+                  "rxjs": { eager: true, singleton: true, strictVersion: false },
+                  "@ngx-translate/core": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/router": { eager: true, singleton: true,  strictVersion: false }
                 }
               })
             ],

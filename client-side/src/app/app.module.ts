@@ -14,7 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PepFileService, PepAddonService } from '@pepperi-addons/ngx-lib';
 import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
-
+import { SubAddon3Module } from './components/sub-addon/sub-addon-3.module';
 
 @NgModule({
     declarations: [
@@ -33,10 +33,18 @@ import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
         PepTopBarModule,
         PepMenuModule,
         PepPageLayoutModule,
-        TranslateModule.forChild({
+        SubAddon3Module,
+        // TranslateModule.forChild({
+        //     loader: {
+        //         provide: TranslateLoader,
+        //         useFactory: createTranslateLoader,
+        //         deps: [HttpClient, PepFileService, PepAddonService]
+        //     }
+        // })
+        TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: createTranslateLoader,
+                useFactory: PepAddonService.createDefaultMultiTranslateLoader,
                 deps: [HttpClient, PepFileService, PepAddonService]
             }
         })
@@ -47,6 +55,26 @@ import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
 })
 export class AppModule {
 }
+// import { BrowserModule } from '@angular/platform-browser';
+// import { NgModule } from '@angular/core';
+// import { AppComponent } from './app.component';
+// import { SubAddon3Module } from './components/sub-addon/sub-addon-3.module';
+
+// @NgModule({
+//   imports: [
+//     BrowserModule,
+//     SubAddon3Module
+//   ],
+//   declarations: [
+//     AppComponent
+
+//   ],
+//   providers: [],
+//   bootstrap: [
+//       AppComponent
+//   ]
+// })
+// export class AppModule { }
 
 
 

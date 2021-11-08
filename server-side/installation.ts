@@ -30,13 +30,36 @@ export async function downgrade(client: Client, request: Request): Promise<any> 
 
 async function upsertPageBlockRelations(client: Client){
     const service = new PageBuilderTesterService(client);
-
-    const pageComponentRelations: NgComponentRelation[] = [
-        service.createPageRelation("Addon")
-    ]
+    const namePrefix : string = "PBBT";
+    let pageRelations : NgComponentRelation[] =[
+        {
+            RelationName: "PageBlock",
+            Name: `${namePrefix}_Addon`,
+            Description: `${namePrefix}_Addon`,
+            Type: "NgComponent",
+            SubType: "NG11",
+            AddonUUID: client.AddonUUID,
+            AddonRelativeURL: "pagebuildertester",
+            ComponentName: `AddonComponent`,
+            ModuleName: `AddonModule`,
+        },
+        {
+            RelationName: "PageBlock",
+            Name: "Ofer Producer",
+            Description: "Ofer Producer example",
+            Type: "NgComponent",
+            SubType: "NG11",
+            AddonUUID: client.AddonUUID,
+            AddonRelativeURL: "pagebuildertester",
+            ComponentName: "SubAddon3Component",
+            ModuleName: "SubAddon3Module",
+            EditorComponentName: 'SubAddon3EditorComponent',
+            EditorModuleName: 'SubAddon3EditorModule'
+        }
+    ] 
 
     // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
-    for (let pageRelation of pageComponentRelations){
+    for (let pageRelation of pageRelations){
         await service.upsertRelation(pageRelation);
     }
     return {success: true};
