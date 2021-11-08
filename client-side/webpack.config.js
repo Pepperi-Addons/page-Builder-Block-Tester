@@ -33,6 +33,10 @@ module.exports = (config, options, env) => {
                 exposes: {
                   './AddonComponent': './src/app/components/addon/index.ts',
                   './AddonModule': './src/app/components/addon/index.ts',
+                  './SubAddon2Component': './src/app/components/consumer-block/index.ts',
+                  './SubAddon2Module': './src/app/components/consumer-block/index.ts',
+                  './SubAddon2EditorComponent': './src/app/components/consumer-block-editor/index.ts',
+                  './SubAddon2EditorModule': './src/app/components/consumer-block-editor/index.ts',
                   './SubAddon3Component': './src/app/components/sub-addon/index.ts',
                   './SubAddon3Module': './src/app/components/sub-addon/index.ts',
                   './SubAddon3EditorComponent': './src/app/components/sub-addon-editor/index.ts',

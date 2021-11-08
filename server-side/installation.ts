@@ -55,6 +55,19 @@ async function upsertPageBlockRelations(client: Client){
             ModuleName: "SubAddon3Module",
             EditorComponentName: 'SubAddon3EditorComponent',
             EditorModuleName: 'SubAddon3EditorModule'
+        },
+        {
+            RelationName: "PageBlock",
+            Name: "Ofer Consumer",
+            Description: "Ofer Consumer example",
+            Type: "NgComponent",
+            SubType: "NG11",
+            AddonUUID: client.AddonUUID,
+            AddonRelativeURL: "pagebuildertester",
+            ComponentName: "SubAddon2Component",
+            ModuleName: "SubAddon2Module",
+            EditorComponentName: 'SubAddon2EditorComponent',
+            EditorModuleName: 'SubAddon2EditorModule'
         }
     ] 
 
