@@ -8,6 +8,8 @@
                 </pep-button>
             </div>
         </pep-top-bar>
+        <pep-button [value]="'Test_Button' | translate" [sizeType]="'sm'" [styleType]="'strong'" (buttonClick)="openTest();">
+        </pep-button>
         <div class="table-content">
             <pep-table [displayedColumns]="displayedColumns" [dataSource]="(dataSource$ | async)"></pep-table>
         </div>

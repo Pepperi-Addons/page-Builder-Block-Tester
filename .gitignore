@@ -2,6 +2,7 @@
 /publish/editors
 var_sk
 node_modules
+publish
 /server-side/node_modules
 /client-side/node_modules
 /cpi-side/node_modules

@@ -53,6 +53,13 @@ export class AddonComponent implements OnInit {
         this.dialog.openDefaultDialog(dataMsg);
     }
 
+    openTest(){
+        const content = 'Test Body';
+        const title = 'Test Title';
+        const dataMsg = new PepDialogData({title, actionsType: "close", content});
+        this.dialog.openDefaultDialog(dataMsg);
+    }
+
 
 
 

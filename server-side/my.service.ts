@@ -1,7 +1,7 @@
 import { PapiClient, InstalledAddon, Relation, NgComponentRelation } from '@pepperi-addons/papi-sdk'
 import { Client } from '@pepperi-addons/debug-server';
 
-class pageBuilderTesterService {
+class PageBuilderTesterService {
 
     papiClient: PapiClient
 
@@ -23,13 +23,31 @@ class pageBuilderTesterService {
         return this.papiClient.addons.installedAddons.find({});
     }
 
-    // async upsertRelation(relation): Promise<any> {
-    //     return await this.papiClient.post('/addons/data/relations', relation);
-    // }
-
     upsertRelation(relation : NgComponentRelation): Promise<any> {
         return this.papiClient.addons.data.relations.upsert(relation);
     }
+
+    getAddonRelations() : Promise<Relation[]>{
+        return this.papiClient.addons.data.relations.find({where: `AddonUUID='${this.client.AddonUUID}'`});
+    }
+
+    createPageRelation(pageName:string, ) : NgComponentRelation {
+        const namePrefix : string = "PBBT";
+        const pageRelation : NgComponentRelation = {
+            RelationName: "PageBlock",
+            Name: `${namePrefix}_${pageName}`,
+            Description: pageName,
+            Type: "NgComponent",
+            SubType: "NG12",
+            AddonUUID: this.client.AddonUUID,
+            AddonRelativeURL: pageName.toLowerCase(),
+            ComponentName: `${pageName}Component`,
+            ModuleName: `${pageName}Module`,
+            // EditorComponentName: `${pageName}EditorComponent`,
+            // EditorModuleName: `${pageName}EditorModule`
+        }
+        return pageRelation;
+    }
 }
 
-export default pageBuilderTesterService;
+export default PageBuilderTesterService;

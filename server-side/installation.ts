@@ -10,10 +10,10 @@ The error Message is importent! it will be written in the audit log and help the
 
 import { Client, Request } from '@pepperi-addons/debug-server'
 import { NgComponentRelation, Page, Relation } from '@pepperi-addons/papi-sdk';
-import pageBuilderTesterService from './my.service';
+import PageBuilderTesterService from './my.service';
 
 export async function install(client: Client, request: Request): Promise<any> {
-    return await upsertFirstRelation(client);
+    return await upsertPageBlockRelations(client);
 }
 
 export async function uninstall(client: Client, request: Request): Promise<any> {
@@ -21,32 +21,23 @@ export async function uninstall(client: Client, request: Request): Promise<any> 
 }
 
 export async function upgrade(client: Client, request: Request): Promise<any> {
-    return await upsertFirstRelation(client);
+    return await upsertPageBlockRelations(client);
 }
 
 export async function downgrade(client: Client, request: Request): Promise<any> {
     return {success:true,resultObject:{}}
 }
 
-async function upsertFirstRelation(client){
-    const blockName = "PageBuilderTester";
-    const pageComponentRelation: NgComponentRelation = {
-        RelationName: "PageBlock",
-        Name: blockName,
-        Description: blockName,
-        Type: "NgComponent",
-        SubType: "NG11",
-        AddonUUID: client.AddonUUID,
-        AddonRelativeURL: blockName.toLowerCase(),
-        ComponentName: 'AddonComponent',
-        ModuleName: 'AddonModule',
-        EditorComponentName: 'AddonEditorComponent',
-        EditorModuleName: 'AddonEditorModule'
-    };
+async function upsertPageBlockRelations(client: Client){
+    const service = new PageBuilderTesterService(client);
+
+    const pageComponentRelations: NgComponentRelation[] = [
+        service.createPageRelation("Addon")
+    ]
 
     // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
-
-    const service = new pageBuilderTesterService(client);
-    let result = await service.upsertRelation(pageComponentRelation);
-    return {success: true, resultObject: {result} };
+    for (let pageRelation of pageComponentRelations){
+        await service.upsertRelation(pageRelation);
+    }
+    return {success: true};
 }
