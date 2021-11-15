@@ -1,2 +1,2 @@
-export * from './sub-addon-2.component';
-export * from './sub-addon-2.module';
+export * from './consumer-block.component';
+export * from './consumer-block.module';

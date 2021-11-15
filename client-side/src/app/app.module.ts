@@ -14,7 +14,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PepFileService, PepAddonService } from '@pepperi-addons/ngx-lib';
 import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
-import { SubAddon3Module } from './components/sub-addon/sub-addon-3.module';
 
 @NgModule({
     declarations: [
@@ -33,7 +32,6 @@ import { SubAddon3Module } from './components/sub-addon/sub-addon-3.module';
         PepTopBarModule,
         PepMenuModule,
         PepPageLayoutModule,
-        SubAddon3Module,
         // TranslateModule.forChild({
         //     loader: {
         //         provide: TranslateLoader,
@@ -58,12 +56,12 @@ export class AppModule {
 // import { BrowserModule } from '@angular/platform-browser';
 // import { NgModule } from '@angular/core';
 // import { AppComponent } from './app.component';
-// import { SubAddon3Module } from './components/sub-addon/sub-addon-3.module';
+// import { ProducerBlockModule } from './components/sub-addon/producer-block.module';
 
 // @NgModule({
 //   imports: [
 //     BrowserModule,
-//     SubAddon3Module
+//     ProducerBlockModule
 //   ],
 //   declarations: [
 //     AppComponent

@@ -3,7 +3,15 @@ const singleSpaAngularWebpack = require('single-spa-angular-webpack5/lib/webpack
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 // const deps = require('./package.json').dependencies;
-
+const shared = {
+  // ...deps,
+  "@angular/core": { eager: true, singleton: true, strictVersion: false },
+  "@angular/common": { eager: true, singleton: true, strictVersion: false },
+  "@angular/common/http": { eager: true, singleton: true, strictVersion: false },
+  "rxjs": { eager: true, singleton: true, strictVersion: false },
+  "@ngx-translate/core": { eager: true, singleton: true, strictVersion: false },
+  "@angular/router": { eager: true, singleton: true,  strictVersion: false }
+}
 module.exports = (config, options, env) => {
 
     config.plugins.push(
@@ -26,21 +34,53 @@ module.exports = (config, options, env) => {
               runtimeChunk: false
             },
             plugins: [
+              // new ModuleFederationPlugin({
+              //   // remotes: {},
+              //   name: "addonblock",
+              //   filename: "addonblock.js",
+              //   exposes: {
+              //     './AddonComponent': './src/app/components/addon/index.ts',
+              //     './AddonModule': './src/app/components/addon/index.ts',
+              //   },
+              //   shared: {
+              //     // ...deps,
+              //     "@angular/core": { eager: true, singleton: true, strictVersion: false },
+              //     "@angular/common": { eager: true, singleton: true, strictVersion: false },
+              //     "@angular/common/http": { eager: true, singleton: true, strictVersion: false },
+              //     "rxjs": { eager: true, singleton: true, strictVersion: false },
+              //     "@ngx-translate/core": { eager: true, singleton: true, strictVersion: false },
+              //     "@angular/router": { eager: true, singleton: true,  strictVersion: false }
+              //   }
+              // }),
               new ModuleFederationPlugin({
                 // remotes: {},
-                name: "pagebuildertester",
-                filename: "pagebuildertester.js",
+                name: "consumer",
+                filename: "consumer.js",
                 exposes: {
-                  './AddonComponent': './src/app/components/addon/index.ts',
-                  './AddonModule': './src/app/components/addon/index.ts',
-                  './SubAddon2Component': './src/app/components/consumer-block/index.ts',
-                  './SubAddon2Module': './src/app/components/consumer-block/index.ts',
-                  './SubAddon2EditorComponent': './src/app/components/consumer-block-editor/index.ts',
-                  './SubAddon2EditorModule': './src/app/components/consumer-block-editor/index.ts',
-                  './SubAddon3Component': './src/app/components/sub-addon/index.ts',
-                  './SubAddon3Module': './src/app/components/sub-addon/index.ts',
-                  './SubAddon3EditorComponent': './src/app/components/sub-addon-editor/index.ts',
-                  './SubAddon3EditorModule': './src/app/components/sub-addon-editor/index.ts'
+                  './ConsumerBlockComponent': './src/app/components/consumer-block/index.ts',
+                  './ConsumerBlockModule': './src/app/components/consumer-block/index.ts',
+                  './ConsumerBlockEditorComponent': './src/app/components/consumer-block-editor/index.ts',
+                  './ConsumerBlockEditorModule': './src/app/components/consumer-block-editor/index.ts',
+                },
+                shared: {
+                  // ...deps,
+                  "@angular/core": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/common": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/common/http": { eager: true, singleton: true, strictVersion: false },
+                  "rxjs": { eager: true, singleton: true, strictVersion: false },
+                  "@ngx-translate/core": { eager: true, singleton: true, strictVersion: false },
+                  "@angular/router": { eager: true, singleton: true,  strictVersion: false }
+                }
+              }),
+              new ModuleFederationPlugin({
+                // remotes: {},
+                name: "producer",
+                filename: "producer.js",
+                exposes: {
+                  './ProducerBlockComponent': './src/app/components/producer-block/index.ts',
+                  './ProducerBlockModule': './src/app/components/producer-block/index.ts',
+                  './ProducerBlockEditorComponent': './src/app/components/producer-block-editor/index.ts',
+                  './ProducerBlockEditorModule': './src/app/components/producer-block-editor/index.ts'
                 },
                 shared: {
                   // ...deps,

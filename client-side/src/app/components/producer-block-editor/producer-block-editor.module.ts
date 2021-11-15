@@ -1,7 +1,7 @@
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SubAddon3EditorComponent } from './sub-addon-3-editor.component';
+import { ProducerBlockEditorComponent } from './producer-block-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -9,9 +9,10 @@ import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import {config } from './addon.config';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
 @NgModule({
-    declarations: [SubAddon3EditorComponent],
+    declarations: [ProducerBlockEditorComponent],
     imports: [
         CommonModule,
         HttpClientModule,
@@ -26,9 +27,10 @@ import {config } from './addon.config';
       PepNgxLibModule,
       PepSelectModule,
       PepImagesFilmstripModule,
-      PepRichHtmlTextareaModule
+      PepRichHtmlTextareaModule,
+      PepButtonModule
     ],
-    exports: [SubAddon3EditorComponent],
+    exports: [ProducerBlockEditorComponent],
     providers: [
         HttpClient,
         TranslateStore,
@@ -39,7 +41,7 @@ import {config } from './addon.config';
         PepDialogService
     ]
 })
-export class SubAddon3EditorModule {
+export class ProducerBlockEditorModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService

@@ -8,17 +8,20 @@ import { PepHttpService, PepAddonService, PepFileService, PepCustomizationServic
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
+import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 
 import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
 import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
-import { SubAddon2Component } from './sub-addon-2.component';
+import { ProducerBlockComponent } from './producer-block.component';
 
-import { config } from './addon.config';
+import {config } from './addon.config';
+import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
+
 @NgModule({
-    declarations: [SubAddon2Component],
+    declarations: [ProducerBlockComponent],
     imports: [
         CommonModule,
         // HttpClientModule,
@@ -33,13 +36,15 @@ import { config } from './addon.config';
         }),
         // PepNgxLibModule,
         PepButtonModule,
+        PepCheckboxModule
         // PepSelectModule,
         // PepTopBarModule,
         // PepListModule,
         // PepPageLayoutModule,
-        PepImagesFilmstripModule
+        // PepImagesFilmstripModule,
+        // PepRichHtmlTextareaModule
     ],
-    exports: [SubAddon2Component],
+    exports: [ProducerBlockComponent],
     providers: [
         // HttpClient,
         TranslateStore,
@@ -47,10 +52,10 @@ import { config } from './addon.config';
         // PepAddonService,
         // PepFileService,
         PepCustomizationService,
-        PepDialogService
+        // PepDialogService
     ]
 })
-export class SubAddon2Module {
+export class ProducerBlockModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService

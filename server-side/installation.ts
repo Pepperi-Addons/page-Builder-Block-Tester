@@ -34,27 +34,16 @@ async function upsertPageBlockRelations(client: Client){
     let pageRelations : NgComponentRelation[] =[
         {
             RelationName: "PageBlock",
-            Name: `${namePrefix}_Addon`,
-            Description: `${namePrefix}_Addon`,
-            Type: "NgComponent",
-            SubType: "NG11",
-            AddonUUID: client.AddonUUID,
-            AddonRelativeURL: "pagebuildertester",
-            ComponentName: `AddonComponent`,
-            ModuleName: `AddonModule`,
-        },
-        {
-            RelationName: "PageBlock",
             Name: "Ofer Producer",
             Description: "Ofer Producer example",
             Type: "NgComponent",
             SubType: "NG11",
             AddonUUID: client.AddonUUID,
-            AddonRelativeURL: "pagebuildertester",
-            ComponentName: "SubAddon3Component",
-            ModuleName: "SubAddon3Module",
-            EditorComponentName: 'SubAddon3EditorComponent',
-            EditorModuleName: 'SubAddon3EditorModule'
+            AddonRelativeURL: "producer",
+            ComponentName: "ProducerBlockComponent",
+            ModuleName: "ProducerBlockModule",
+            EditorComponentName: 'ProducerBlockEditorComponent',
+            EditorModuleName: 'ProducerBlockEditorModule'
         },
         {
             RelationName: "PageBlock",
@@ -63,11 +52,11 @@ async function upsertPageBlockRelations(client: Client){
             Type: "NgComponent",
             SubType: "NG11",
             AddonUUID: client.AddonUUID,
-            AddonRelativeURL: "pagebuildertester",
-            ComponentName: "SubAddon2Component",
-            ModuleName: "SubAddon2Module",
-            EditorComponentName: 'SubAddon2EditorComponent',
-            EditorModuleName: 'SubAddon2EditorModule'
+            AddonRelativeURL: "consumer",
+            ComponentName: "ConsumerBlockComponent",
+            ModuleName: "ConsumerBlockModule",
+            EditorComponentName: 'ConsumerBlockEditorComponent',
+            EditorModuleName: 'ConsumerBlockEditorModule'
         }
     ] 
 

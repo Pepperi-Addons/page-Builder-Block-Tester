@@ -1,19 +1,27 @@
-import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SubAddon2EditorComponent } from './sub-addon-2-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+
 import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
+
+import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
+import { PepListModule } from '@pepperi-addons/ngx-lib/list';
+import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+
+import { ConsumerBlockComponent } from './consumer-block.component';
 
 import { config } from './addon.config';
-
 @NgModule({
-    declarations: [SubAddon2EditorComponent],
+    declarations: [ConsumerBlockComponent],
     imports: [
         CommonModule,
-        HttpClientModule,
+        // HttpClientModule,
         // When not using module as sub-addon please remark this for not loading twice resources
         TranslateModule.forChild({
             loader: {
@@ -23,21 +31,26 @@ import { config } from './addon.config';
                 deps: [HttpClient, PepFileService, PepAddonService],
             }, isolate: false
         }),
-        PepNgxLibModule,
-        PepSelectModule,
+        // PepNgxLibModule,
+        PepButtonModule,
+        // PepSelectModule,
+        // PepTopBarModule,
+        // PepListModule,
+        // PepPageLayoutModule,
+        PepImagesFilmstripModule
     ],
-    exports: [SubAddon2EditorComponent],
+    exports: [ConsumerBlockComponent],
     providers: [
-        HttpClient,
+        // HttpClient,
         TranslateStore,
-        PepHttpService,
-        PepAddonService,
-        PepFileService,
+        // PepHttpService,
+        // PepAddonService,
+        // PepFileService,
         PepCustomizationService,
         PepDialogService
     ]
 })
-export class SubAddon2EditorModule {
+export class ConsumerBlockModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService

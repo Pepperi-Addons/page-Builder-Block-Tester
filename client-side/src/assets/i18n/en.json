@@ -6,6 +6,7 @@
     "Title_Sub_Addon": "Hello Sub Addon",
     "Open_Dialog": "Open Dialog",
     "Dialog_Body": "Dialog from sub addon",
-    "Dialog_Title": "Dialog"
+    "Dialog_Title": "Dialog",
+    "Checkbox_Label": "Enable Filter"
 
 }

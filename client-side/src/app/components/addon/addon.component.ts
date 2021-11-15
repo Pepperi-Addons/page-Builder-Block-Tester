@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angu
 import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { AddonService, PepperiTableComponent } from './index';
 import { Observable } from 'rxjs';
-import { InstalledAddon } from '@pepperi-addons/papi-sdk';
+import { InstalledAddon, ResourceType } from '@pepperi-addons/papi-sdk';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { InstalledAddon } from '@pepperi-addons/papi-sdk';
 export class AddonComponent implements OnInit {
 
     screenSize: PepScreenSizeType;
-    options: {key:string, value:string}[] = [];
+    options: {key:ResourceType, value:ResourceType}[] = [{key: "accounts", value: "accounts"}];
     dataSource$: Observable<any[]>
     displayedColumns = ['Name', 'Description'];
     @Input() hostObject: any;
@@ -33,7 +33,7 @@ export class AddonComponent implements OnInit {
     ) {
 
         this.layoutService.onResize$.subscribe(size => {
-            this.screenSize = size;
+;
         });
 
     }

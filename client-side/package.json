@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4400 --live-reload=false",
+    "start": "ng serve --port 4900 --live-reload=false",
     "single-spa": "ng serve --port 4400 --configuration SingleSpa --sourceMap=false --live-reload=false",
     "standalone": "ng serve --port 4400 --configuration Standalone --sourceMap=false --live-reload=false",
     "build": "ng build",
