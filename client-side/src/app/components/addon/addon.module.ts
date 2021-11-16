@@ -15,6 +15,7 @@ import { AddonComponent } from './index';
 import {PepperiTableComponent} from './pepperi-table.component'
 import { MatDialogModule } from '@angular/material/dialog';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { FilterTargetModule } from '../filter-target/filter-target.module';
 
 export function createTranslateLoader(http: HttpClient, fileService: PepFileService, addonService: PepAddonService) {
     const translationsPath: string = fileService.getAssetsTranslationsPath();
@@ -62,7 +63,8 @@ export function createTranslateLoader(http: HttpClient, fileService: PepFileServ
         PepButtonModule,
         PepSelectModule,
         PepTopBarModule,
-        PepListModule
+        PepListModule,
+        FilterTargetModule
 
 
     ],

@@ -18,6 +18,7 @@ export class ConsumerBlockComponent implements OnInit {
     get hostObject(): any {
         return this._hostObject;
     }
+    
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 

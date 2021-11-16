@@ -6,6 +6,8 @@ import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { AddonService, PepperiTableComponent } from './index';
 import { Observable } from 'rxjs';
 import { InstalledAddon, ResourceType } from '@pepperi-addons/papi-sdk';
+import { ResourceTypes } from 'papi-sdk-web';
+import { FilterTarget } from '../filter-target/filter-target.component';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class AddonComponent implements OnInit {
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild(PepperiTableComponent) table: PepperiTableComponent;
 
-
+    resourceType : ResourceType;
+    fields : string[] = [];
     constructor(
         public addonService: AddonService,
         public layoutService: PepLayoutService,
@@ -60,7 +63,10 @@ export class AddonComponent implements OnInit {
         this.dialog.openDefaultDialog(dataMsg);
     }
 
+    setValue(value : FilterTarget){
+        console.log(value);
 
+    }
 
 
 

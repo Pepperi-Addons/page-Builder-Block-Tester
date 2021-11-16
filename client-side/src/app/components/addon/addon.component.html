@@ -13,12 +13,15 @@
         <div class="table-content">
             <pep-table [displayedColumns]="displayedColumns" [dataSource]="(dataSource$ | async)"></pep-table>
         </div>
-        <br>
+
         <div>
             <pep-select #pepSelect [value]="'Option 1'"[options]="options" [label]="'Select_Label' | translate "
             ></pep-select>
             <pep-button *ngIf="hostObject" [value]="'Close' | translate" [sizeType]="'md'" [styleType]="'strong'" (buttonClick)="hostEvents.emit({closeDialog: true});">
             </pep-button>
+            <addon-filter-target (filterTargetChange)="setValue($event)">
+                
+            </addon-filter-target>
         </div>
 
 

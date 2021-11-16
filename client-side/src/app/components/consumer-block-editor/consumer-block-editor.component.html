@@ -1,8 +1,11 @@
 <div>
-    Consumer resource: {{configuration.consumerResource}}
+    Consumer resource: {{configuration?.consumerResource}}
 </div>
 <div>
-    <pep-select #pepSelect [value]="configuration.consumerResource" [options]="options" (valueChange)="onConsumerResourceChange($event)" [label]="'Select_Label' | translate "
+    <pep-select #pepSelect [value]="configuration?.consumerResource" [options]="options" (valueChange)="onConsumerResourceChange($event)" [label]="'Select_Label' | translate "
     ></pep-select>
 </div>
+<addon-filter-target>
+    
+</addon-filter-target>
 

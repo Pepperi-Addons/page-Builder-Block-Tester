@@ -1,0 +1,10 @@
+<p>page-configuration works! Hi</p>
+<div class="filter-target">
+    <pep-select #pepSelect [value]="resourceType" [options]="options" (valueChange)="onChange('resourceType', $event)" [label]="'Resource Type'"
+    ></pep-select>
+    <pep-textbox #pepTextbox [value]="fields" [label]="'APINames'" type="string" (valueChange)="onChange('apiNames', $event)" [placeholder]="'123'">
+    </pep-textbox>
+    
+</div>
+
+

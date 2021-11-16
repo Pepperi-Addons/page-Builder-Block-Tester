@@ -66,6 +66,7 @@ export class ConsumerBlockEditorComponent implements OnInit {
         return options;
     }
     ngOnInit(): void {
+        this.updateHostObject();
         // Raise default event for set-page-configuration (if pageConfiguration not exist on host object).
         if (!this.hostObject || !this.hostObject.pageConfiguration) {
             this.setPageConfig();
