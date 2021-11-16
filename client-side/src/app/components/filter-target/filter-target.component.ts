@@ -23,13 +23,15 @@ export class FilterTargetComponent implements OnInit {
   //   get configuration(): PageConfiguration {
   //     return this._pageConfiguration;
   //   }
-  filterTarget : FilterTarget = new FilterTarget();
+  filterTarget : FilterTarget;
   @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
   @Output() filterTargetChange = new EventEmitter<any>();
 
   options: Array<{ key: ResourceType, value: ResourceType }> = [];
 
-  constructor() { }
+  constructor(filterTarget : FilterTarget) { 
+    this.filterTarget = filterTarget;
+  }
 
   ngOnInit(): void {
     for (let resource of ResourceTypes) {
@@ -61,7 +63,7 @@ export class FilterTargetComponent implements OnInit {
   // }
   
 }
-@Injectable()
+({ providedIn: 'root' })
 export class FilterTarget{
   private _resourceType?: ResourceType;
   set resourceType(value){

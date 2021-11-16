@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterTargetComponent } from './filter-target.component';
+import { FilterTarget, FilterTargetComponent } from './filter-target.component';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -14,7 +14,12 @@ import { config } from '../addon.config';
   declarations: [
     FilterTargetComponent
   ],
+  
+  
   exports: [FilterTargetComponent],
+  providers: [
+    FilterTarget
+],
   imports: [
     CommonModule,
     PepSelectModule,
