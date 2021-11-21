@@ -10,6 +10,10 @@ import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstr
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import {config } from './addon.config';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { FilterTargetModule } from '../filter-target/filter-target.module';
+import { PepperiTableComponent } from '../addon';
+import { PepListModule } from '@pepperi-addons/ngx-lib/list';
+import { ProducerDisplayModule } from '../producer-display/producer-display.module';
 
 @NgModule({
     declarations: [ProducerBlockEditorComponent],
@@ -28,7 +32,9 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
       PepSelectModule,
       PepImagesFilmstripModule,
       PepRichHtmlTextareaModule,
-      PepButtonModule
+      PepButtonModule,
+      FilterTargetModule,
+      ProducerDisplayModule,
     ],
     exports: [ProducerBlockEditorComponent],
     providers: [
@@ -39,6 +45,7 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
         PepFileService,
         PepCustomizationService,
         PepDialogService
+        
     ]
 })
 export class ProducerBlockEditorModule {

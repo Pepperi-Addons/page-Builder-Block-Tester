@@ -1,10 +1,12 @@
-<p>page-configuration works! Hi</p>
-<div class="filter-target">
-    <pep-select #pepSelect [value]="resourceType" [options]="options" (valueChange)="onChange('resourceType', $event)" [label]="'Resource Type'"
+<div class="filter-target" [id]="target">
+    <pep-select [id]="contextId" [value]="_context" [options]="options" (valueChange)="onContextChange($event)" [label]="'Context'"
     ></pep-select>
-    <pep-textbox #pepTextbox [value]="fields" [label]="'APINames'" type="string" (valueChange)="onChange('apiNames', $event)" [placeholder]="'123'">
+    <pep-select [id]="selectId" [value]="_resource" [options]="options" (valueChange)="onChange('Resource', $event)" [label]="'Resource Type'"
+    ></pep-select>
+    <pep-textbox [id]="textboxId" [value]="_fields" [label]="'Fields'" type="string" (valueChange)="onChange('Fields', $event)">
     </pep-textbox>
-    
+    <pep-button value="{{buttonText}}" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
+    (click)="onBtnClick();" style="width: 200px;"></pep-button>
 </div>
 
 

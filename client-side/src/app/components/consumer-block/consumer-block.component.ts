@@ -13,7 +13,7 @@ export class ConsumerBlockComponent implements OnInit {
     @Input()
     set hostObject(value: any) {
         this._hostObject = value;
-        this.handleHostObjectChange();
+        // this.handleHostObjectChange();
     }
     get hostObject(): any {
         return this._hostObject;
@@ -27,18 +27,16 @@ export class ConsumerBlockComponent implements OnInit {
     inputTitle = '';
     currIndex = 0;
     
-    constructor(
-        private translate: TranslateService,
-        private cd: ChangeDetectorRef) { }
+    constructor() { }
 
-    private handleHostObjectChange() {
+    // private handleHostObjectChange() {
 
-        if (this.hostObject?.filter) {
-            // alert(`Filter change in SubAddon2 with value ${JSON.stringify(this.hostObject?.filter)}`);
+    //     if (this.hostObject?.filter) {
+    //         // alert(`Filter change in SubAddon2 with value ${JSON.stringify(this.hostObject?.filter)}`);
 
-            this.inputTitle = JSON.stringify(this.hostObject?.filter);
-        }
-    }
+    //         this.inputTitle = JSON.stringify(this.hostObject?.filter);
+    //     }
+    // }
 
     ngOnInit(): void {
         this.options.push({key:'OPEN_DIALOG', value: 'Text 1' });

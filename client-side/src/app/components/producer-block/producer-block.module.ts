@@ -19,6 +19,7 @@ import { ProducerBlockComponent } from './producer-block.component';
 
 import {config } from './addon.config';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
+import { ProducerDisplayModule } from '../producer-display/producer-display.module';
 
 @NgModule({
     declarations: [ProducerBlockComponent],
@@ -36,7 +37,8 @@ import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
         }),
         // PepNgxLibModule,
         PepButtonModule,
-        PepCheckboxModule
+        PepCheckboxModule,
+        ProducerDisplayModule
         // PepSelectModule,
         // PepTopBarModule,
         // PepListModule,

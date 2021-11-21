@@ -1,6 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageConfiguration, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { PageConfiguration, PageConsume, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { IHostObject } from 'src/app/IHostObject';
 
 @Component({
     selector: 'consumer-block-editor',
@@ -8,42 +9,27 @@ import { PageConfiguration, ResourceType, ResourceTypes } from '@pepperi-addons/
     styleUrls: ['./consumer-block-editor.component.scss']
 })
 export class ConsumerBlockEditorComponent implements OnInit {
-    // @Input() hostObject: any;
-    @Input()
-    set hostObject(value) {
-        if (value && value.configuration) {
-            this._configuration = value.configuration
-        } else {
-            this._configuration = {consumerResource: "None"};
-        }
-    }
-
-    private _configuration: ConsumeEditorConfig;
-    get configuration(): ConsumeEditorConfig {
-        return this._configuration;
-    }
-
-    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
-    options: {key:ResourceType, value:ResourceType}[] = this.initOptions();
-
-    // configuration: ConsumeEditorConfig;
-
-    inputTitle = '';
-    currIndex = 0;
     
-    constructor(private translate: TranslateService) { }
+    private _hostObject: any;
+    @Input()
+    set hostObject(value: any) {
+        debugger;
+        this._hostObject = value;
+        this.handleHostObjectChange();
+    }
+    get hostObject(): any {
+        return this._hostObject;
+    }
+
+    
+    consumerContext = '';
+    consumerResource = '';
+    consumerFields;
+
+    pageConfiguration: PageConfiguration = this.getDefaultPageConfiguration();
 
     private getDefaultPageConfiguration() {
         const pageConfiguration : PageConfiguration = {
-            Consume: {
-                Filter: {
-                    Resource: this.configuration.consumerResource,
-                    Fields:  ["UnitsQuantity","Transaction.Account.Type","Item.TSABrand","Transaction.Status", "Type", "Status"],//   
-                },
-                Context: {
-                    Resource: "transactions"
-                }
-            },
             Produce: {
                 Filters: [{
                     Resource: "transactions",
@@ -54,30 +40,44 @@ export class ConsumerBlockEditorComponent implements OnInit {
                 }
             }
         };
-        console.log(pageConfiguration);
+
         return pageConfiguration;
     }
-    private initOptions() : {key:ResourceType, value:ResourceType}[]
-    {
-        let options : {key:ResourceType, value:ResourceType}[] = [];
-        for(let resource of ResourceTypes){
-            options.push({key: resource, value: resource})
+    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+
+    
+    constructor(private translate: TranslateService) { }
+
+    handleHostObjectChange(){
+        this.pageConfiguration = this.hostObject?.pageConfiguration;
+
+        if (this.pageConfiguration) {
+            this.consumerResource = this.pageConfiguration.Consume?.Filter?.Resource;
+            this.consumerFields = this.pageConfiguration.Consume?.Filter?.Fields;
+            this.consumerContext = this.pageConfiguration.Consume?.Context?.Resource;
         }
-        return options;
     }
     ngOnInit(): void {
-        this.updateHostObject();
-        // Raise default event for set-page-configuration (if pageConfiguration not exist on host object).
-        if (!this.hostObject || !this.hostObject.pageConfiguration) {
+        console.log("first \n" + JSON.stringify(this.hostObject));
+        this.handleHostObjectChange();
+        console.log("second \n" + JSON.stringify(this.hostObject));        // Raise default event for set-page-configuration (if pageConfiguration not exist on host object).
+        if (!this.hostObject || !this.hostObject.PageConfiguration) {
             this.setPageConfig();
         }
+        const temp = JSON.stringify(this.hostObject);
+        console.log("third \n" + JSON.stringify(this.hostObject));
     }
 
     private setPageConfig() {
+        console.log(`BEFORE set event: ${JSON.stringify(this.hostObject?.PageConfiguration?.Consume)}`);
+
         this.hostEvents.emit({
             action: 'set-page-configuration',
-            pageConfiguration: this.getDefaultPageConfiguration()
+            pageConfiguration: this.pageConfiguration
         });
+        // console.log(this.pageConfiguration);
+        console.log(`AFTER set event: ${JSON.stringify(this.hostObject?.PageConfiguration?.Consume)}`);
+
     }
 
     ngOnChanges(e: any): void { 
@@ -85,22 +85,20 @@ export class ConsumerBlockEditorComponent implements OnInit {
         //Add '${implements OnChanges}' to the class.
     }
 
-    onConsumerResourceChange(resource:ResourceType){
-        this._configuration.consumerResource = resource;
+    onConsumerChange(consumerFilter:PageFilter){
+        console.log(`Before assignment: ${JSON.stringify(this.pageConfiguration)}`);
+        // this._pageConfiguration.Consume.Filter = consumerFilter;
+        this.pageConfiguration.Consume = 
+            {
+                Filter: consumerFilter,
+                Context: {
+                            
+                } 
+            }
+        console.log(`After assignment: ${JSON.stringify(this.pageConfiguration)}`);
+        
         
         this.setPageConfig();
-        this.updateHostObject();
-    }
-    private updateHostObject() {
-        
-        this.hostEvents.emit({
-            action: 'set-configuration',
-            configuration: this.configuration
-        });
     }
     
-}
-
-export class ConsumeEditorConfig{
-    consumerResource: ResourceType | undefined;
 }

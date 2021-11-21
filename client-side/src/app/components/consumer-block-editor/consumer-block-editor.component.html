@@ -1,11 +1,30 @@
 <div>
-    Consumer resource: {{configuration?.consumerResource}}
+    <p>Consumer context: {{consumerContext}}</p>
+    <p>Consumer resource: {{consumerResource}}</p>
+    <p>Consumer fields: {{consumerFields}}</p>
+
+    <!-- <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
+    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p> -->
+    
 </div>
+
 <div>
+    <p>Consumer context: {{pageConfiguration?.Consume?.Context?.Resource}}</p>
+    <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
+    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p>
+</div>
+
+<p>Producer context: {{pageConfiguration?.Produce?.Context?.Resource}}</p>
+    <p *ngFor="let producerFilter of pageConfiguration?.Produce?.Filters; let i = index">
+        {{i}}: {{producerFilter?.Resource}}
+        <br>
+        {{i}}: {{producerFilter?.Fields}}
+        </p>
+<!-- <div>
     <pep-select #pepSelect [value]="configuration?.consumerResource" [options]="options" (valueChange)="onConsumerResourceChange($event)" [label]="'Select_Label' | translate "
     ></pep-select>
-</div>
-<addon-filter-target>
+</div> -->
+<addon-filter-target [target]="'consumer'" (setTargetFilter)="onConsumerChange($event)"> 
     
 </addon-filter-target>
 

@@ -1,0 +1,9 @@
+<p *ngIf="pageProduce?.Context?.Resource"> Producer context: {{pageProduce?.Context?.Resource}}</p>
+<div *ngIf="pageProduce?.Filters.length > 0">
+    <p *ngFor="let producerFilter of pageProduce.Filters; let i = index">
+        {{i}}
+        <br>
+        Resource: {{producerFilter?.Resource}}
+        Fields: {{producerFilter?.Fields}}
+        </p>
+</div>

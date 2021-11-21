@@ -1,8 +1,5 @@
 <p>{{'Title_Sub_Addon_3' | translate}}</p>
-<p>{{ inputTitle }}</p>
-<pep-button value="1st consumer" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
-    (click)="setFirstConsumer($event);" style="width: 100px;">
-</pep-button>
-<pep-button value="2nd consumer" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
-    (click)="setSecondConsumer($event);" style="width: 100px;">
-</pep-button>
+
+<addon-filter-target [target]="'producer'" (setTargetContext)="setContext($event)" (setTargetFilter)="addProducerFilter($event)" > 
+    
+</addon-filter-target>

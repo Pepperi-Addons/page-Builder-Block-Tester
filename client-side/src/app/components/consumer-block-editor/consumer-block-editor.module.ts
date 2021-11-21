@@ -9,6 +9,7 @@ import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 
 import { config } from './addon.config';
 import { FilterTargetModule } from '../filter-target/filter-target.module';
+import { PepTextboxComponent } from '@pepperi-addons/ngx-lib/textbox';
 
 @NgModule({
     declarations: [ConsumerBlockEditorComponent],

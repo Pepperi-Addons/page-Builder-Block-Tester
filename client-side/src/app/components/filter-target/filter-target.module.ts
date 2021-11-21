@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterTarget, FilterTargetComponent } from './filter-target.component';
+import { FilterTargetComponent } from './filter-target.component';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { PepAddonService, PepFileService } from '@pepperi-addons/ngx-lib';
 import { HttpClient } from '@angular/common/http';
 import { config } from '../addon.config';
+import { FilterTarget } from './FilterTarget';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
 
 
@@ -24,6 +26,7 @@ import { config } from '../addon.config';
     CommonModule,
     PepSelectModule,
     PepTextboxModule,
+    PepButtonModule,
     TranslateModule.forChild({
       loader: {
           provide: TranslateLoader,

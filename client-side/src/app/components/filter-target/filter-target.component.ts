@@ -1,84 +1,68 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
-import { ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { PageContext, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { OutputFileType } from 'typescript';
+import { FilterTarget } from './FilterTarget';
 
 @Component({
-  selector: 'addon-filter-target',
+  selector: 'addon-filter-target[target]',
   templateUrl: './filter-target.component.html',
   styleUrls: ['./filter-target.component.scss']
 })
 export class FilterTargetComponent implements OnInit {
 
-  @Input() 
-  resourceType: ResourceType | undefined;
-  placeholder : string = "Enter APINames separated by commas.";
-  private _fields: string[] = [];
-  // @Input()
-  set fields(value: string) {
-    this._fields = value.trim().split(',');
-  };
-  get fields() {
-    return this._fields.join(',');
-  }
-  // private _pageConfiguration: PageConfiguration;
-  //   get configuration(): PageConfiguration {
-  //     return this._pageConfiguration;
-  //   }
-  filterTarget : FilterTarget;
-  @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
-  @Output() filterTargetChange = new EventEmitter<any>();
+  _context : ResourceType | undefined;
+  _resource : ResourceType | undefined;
+  _fields: Array<string> | undefined
 
+  @Input() target : string;
+
+  @Output() setTargetFilter = new EventEmitter<PageFilter>();
+  @Output() setTargetContext = new EventEmitter<PageContext>();
+  
   options: Array<{ key: ResourceType, value: ResourceType }> = [];
+  contextId : string;
+  selectId : string;
+  textboxId: string;
+  buttonText: string;
 
-  constructor(filterTarget : FilterTarget) { 
-    this.filterTarget = filterTarget;
+  constructor() { 
   }
 
   ngOnInit(): void {
     for (let resource of ResourceTypes) {
       this.options.push({ key: resource, value: resource });
     }
+    this.contextId = `${this.target}-context`;
+    this.selectId = `${this.target}-resourceType`;
+    this.textboxId = `${this.target}-apiNames`;
+    this.buttonText = this.target == "producer" ? `Add ${this.target} filter` : `Set ${this.target} filter`;
   }
   
-  onChange(key, value: ResourceType | string) {
-    // debugger;
-    this.filterTarget[key] = value;
-    this.filterTargetChange.emit(this.filterTarget);
-    // if(key == "resource"){
-    //   this.resourceType = value as ResourceType;
-    //   this.filterTargetChange.emit(this.resourceType);
-    // }
-    // else{
-    //   this.fields = value;
-    //   this.filterTargetChange.emit(this._fields);
-    // }
-  }
-  // onResourceChange(resource: ResourceType) {
+  onChange(key : string, value: ResourceType | string) {
+    switch (key) {
+      case "Fields":
+        this._fields = value ? value.trim().split(',') : [];
+        break;
+      case "Resource":
+        this._resource = value as ResourceType;
+      default:
+        throw new Error("Key not supported");
+    }
     
-  //   this.filterTargetChange.emit(this.resourceType);
-  // }
-
-  // onFieldsChange(fieldsString: string) {
-  //   this.fields = fieldsString;
-  //   this.hostEvents.emit(this.fields);
-  // }
+  }
+  onContextChange(value : ResourceType)
+  {
+    this._context = value;
+    const pageContext : PageContext = { Resource: this._context};
+    this.setTargetContext.emit(pageContext);
+  }
+  onBtnClick(){
+    let pageFilter : PageFilter;
+    if(this._resource || this._fields?.length > 0){
+      pageFilter= { Resource: this._resource, Fields: this._fields};
+      this.setTargetFilter.emit(pageFilter);
+    }
+  }
   
 }
-({ providedIn: 'root' })
-export class FilterTarget{
-  private _resourceType?: ResourceType;
-  set resourceType(value){
-    this._resourceType = value as ResourceType;
-  }
-  get resourceType(){
-    return this._resourceType;
-  }
-  private _apiNames: Array<string>;
 
-  set apiNames(value : unknown){
-    this._apiNames = value ? (value as string).trim().split(',') : [];
-
-  }
-  get apiNames(){
-    return this._apiNames;
-  }
-}

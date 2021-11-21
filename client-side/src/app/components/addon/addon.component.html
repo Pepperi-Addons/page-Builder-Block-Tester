@@ -19,7 +19,7 @@
             ></pep-select>
             <pep-button *ngIf="hostObject" [value]="'Close' | translate" [sizeType]="'md'" [styleType]="'strong'" (buttonClick)="hostEvents.emit({closeDialog: true});">
             </pep-button>
-            <addon-filter-target (filterTargetChange)="setValue($event)">
+            <addon-filter-target [target]= "'Consumer'" (filterTargetChange)="setValue($event)">
                 
             </addon-filter-target>
         </div>

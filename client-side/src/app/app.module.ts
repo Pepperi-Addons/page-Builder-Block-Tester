@@ -15,11 +15,13 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PepFileService, PepAddonService } from '@pepperi-addons/ngx-lib';
 import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
 import { FilterTargetModule } from './components/filter-target/filter-target.module';
+import { XyzComponent } from './xyz/xyz.component';
 // import { PageConfigurationComponent } from './src/app/components/page-configuration/page-configuration/page-configuration.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        XyzComponent,
         // PageConfigurationComponent
 
     ],

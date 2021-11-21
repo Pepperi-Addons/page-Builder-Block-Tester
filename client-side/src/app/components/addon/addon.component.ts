@@ -7,7 +7,7 @@ import { AddonService, PepperiTableComponent } from './index';
 import { Observable } from 'rxjs';
 import { InstalledAddon, ResourceType } from '@pepperi-addons/papi-sdk';
 import { ResourceTypes } from 'papi-sdk-web';
-import { FilterTarget } from '../filter-target/filter-target.component';
+import { FilterTarget } from '../filter-target/FilterTarget';
 
 
 @Component({
@@ -26,8 +26,6 @@ export class AddonComponent implements OnInit {
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild(PepperiTableComponent) table: PepperiTableComponent;
 
-    resourceType : ResourceType;
-    fields : string[] = [];
     constructor(
         public addonService: AddonService,
         public layoutService: PepLayoutService,

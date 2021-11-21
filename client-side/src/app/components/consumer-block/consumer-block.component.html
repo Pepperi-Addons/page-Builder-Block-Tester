@@ -1,5 +1,16 @@
 <p>{{'Title_Sub_Addon_2' | translate}} </p>
-<p>{{hostObject.configuration.consumerResource}} </p>
+<p>{{hostObject?.pageConfiguration?.Consume?.Filter?.Resource}} </p>
+<div>
+    <p>Consumer resource: {{hostObject?.pageConfiguration?.Consume?.Filter?.Resource}}</p>
+    <p>Consumer fields: {{hostObject?.pageConfiguration?.Consume?.Filter?.Fields}}</p>
+    <p>Consumer context: {{hostObject?.pageConfiguration?.Consume?.Context?.Resource}}</p>
+</div>
+<p>Producer context: {{hostObject?.pageConfiguration?.Produce?.Context?.Resource}}</p>
+    <p *ngFor="let producerFilter of hostObject?.pageConfiguration?.Produce?.Filters; let i = index">
+        {{i}}: {{producerFilter?.Resource}}
+        <br>
+        {{i}}: {{producerFilter?.Fields}}
+        </p>
 <pep-images-filmstrip #filmStrip [showTitle]="false" [key]="'Images Filmstrip 2'" [xAlignment]="'center'"
     [label]="'Pepperi Images Filmstrip 1'" [rowSpan]="4" [currIndex]="currIndex" [value]="images">
 </pep-images-filmstrip>
