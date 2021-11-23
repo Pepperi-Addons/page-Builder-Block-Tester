@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
 import { PageContext, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
 import { OutputFileType } from 'typescript';
+import { Resource } from '../options.model';
 import { FilterTarget } from './FilterTarget';
 
 @Component({
@@ -10,63 +11,80 @@ import { FilterTarget } from './FilterTarget';
 })
 export class FilterTargetComponent implements OnInit {
 
-  _context : ResourceType | undefined;
-  _resource : ResourceType | undefined;
-  _fields: Array<string> | undefined
+  resource : ResourceType | undefined;
+  fields: Array<string> | undefined
+
+
 
   @Input() target : string;
   @Input() pageFilter : PageFilter;
 
+  filterTarget : FilterTarget;
+
   @Output() setTargetFilter = new EventEmitter<PageFilter>();
   @Output() onTargetContextChange = new EventEmitter<PageContext>();
   
-  options: Array<{ key: ResourceType, value: ResourceType }> = [];
-  contextId : string;
+  options;
   selectId : string;
   textboxId: string;
   buttonText: string;
 
-  constructor() { 
+  constructor(filterTarget : FilterTarget,
+              resource : Resource) {
+    this.filterTarget = filterTarget;
+    this.options = resource.options;
   }
 
   ngOnInit(): void {
     for (let resource of ResourceTypes) {
       this.options.push({ key: resource, value: resource });
     }
-    this.contextId = `${this.target}-context`;
-    this.selectId = `${this.target}-resourceType`;
-    this.textboxId = `${this.target}-apiNames`;
-    this.buttonText = this.target == "producer" ? `Add ${this.target} filter` : `Set ${this.target} filter`;
+
+    this.initIds();
+
+    if(this.pageFilter){
+      this.initValues();
+    }
   }
   
+  private initIds() {
+    this.selectId = `${this.target}-resourceType`;
+    this.textboxId = `${this.target}-apiNames`;
+    this.buttonText = this.target == "producer" ? 
+                        `Add ${this.target} filter` : 
+                        `Set ${this.target} filter`;
+  }
+
+  private initValues(){
+    if(this.pageFilter?.Fields){
+      this.fields = this.pageFilter?.Fields;
+    }
+    if(this.pageFilter?.Resource){
+      this.resource = this.pageFilter?.Resource;
+    }
+  }
+
   onChange(key : string, value: ResourceType | string) {
     switch (key) {
       case "Fields":
-        this._fields = value ? value.trim().split(',') : [];
+        this.fields = value ? value.trim().split(',') : [];
         break;
 
       case "Resource":
-        this._resource = value as ResourceType;
+        this.resource = value as ResourceType;
         break;
 
       default:
         throw new Error("Key not supported");
     }
-    
-  }
-  onContextChange(value : ResourceType) {
-    this._context = value;
-    const pageContext : PageContext = { Resource: this._context};
-    this.onTargetContextChange.emit(pageContext);
   }
   
   onBtnClick(){
     let pageFilter : PageFilter;
-    if(this._resource || this._fields?.length > 0){
-      pageFilter= { Resource: this._resource, Fields: this._fields};
+    if(this.resource || this.fields?.length > 0){
+      pageFilter= { Resource: this.resource, Fields: this.fields};
       this.setTargetFilter.emit(pageFilter);
     }
   }
-  
 }
 

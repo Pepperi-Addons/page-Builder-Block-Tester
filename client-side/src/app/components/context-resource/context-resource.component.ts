@@ -1,31 +1,35 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageContext, ResourceType } from '@pepperi-addons/papi-sdk';
+import { Resource } from '../options.model';
 
 @Component({
-  selector: 'addon-context-resource',
+  selector: 'context-resource',
   templateUrl: './context-resource.component.html',
   styleUrls: ['./context-resource.component.scss']
 })
 export class ContextResourceComponent implements OnInit {
 
-  @Input() currentValue: ResourceType;
-  @Output() contextChange: EventEmitter<PageContext>;
+  @Input() contextResource: ResourceType;
+  
+  @Output() contextChange: EventEmitter<PageContext> = new EventEmitter<PageContext>();
 
-  context: ResourceType;
+  value: ResourceType;
+  options : any;
 
-  constructor(eventEmitter: EventEmitter<PageContext>) {
-    this.contextChange = eventEmitter;
+  constructor(private resource : Resource) {
+    this.options = resource.options;
   }
 
   ngOnInit(): void {
-    if (this.currentValue)
-      this.context = this.currentValue;
+    if (this.contextResource)
+      this.value = this.contextResource;
   }
 
   valueChange(value: ResourceType) {
-    this.context = value;
-    const pageContext: PageContext = { Resource: this.context };
+    this.value = value;
+    const pageContext : PageContext = {
+      Resource: this.value,
+    }
     this.contextChange.emit(pageContext);
   }
-
 }

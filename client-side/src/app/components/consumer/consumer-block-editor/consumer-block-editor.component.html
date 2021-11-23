@@ -1,14 +1,14 @@
-<div>
+<!-- <div>
     <p>Consumer context: {{consumerContext}}</p>
     <p>Consumer resource: {{consumerResource}}</p>
     <p>Consumer fields: {{consumerFields}}</p>
 
-    <!-- <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
-    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p> -->
+    <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
+    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p>
     
-</div>
+</div> -->
 
-<div>
+<!-- <div>
     <p>Consumer context: {{pageConfiguration?.Consume?.Context?.Resource}}</p>
     <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
     <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p>
@@ -19,12 +19,17 @@
         {{i}}: {{producerFilter?.Resource}}
         <br>
         {{i}}: {{producerFilter?.Fields}}
-        </p>
+        </p> -->
 <!-- <div>
     <pep-select #pepSelect [value]="configuration?.consumerResource" [options]="options" (valueChange)="onConsumerResourceChange($event)" [label]="'Select_Label' | translate "
     ></pep-select>
 </div> -->
-<addon-filter-target [target]="'consumer'" (setTargetFilter)="onConsumerChange($event)"> 
-    
-</addon-filter-target>
+<div [id]="'consumer-editor'">
+    Consumer Configuration
+    <context-resource [contextResource] = "pageConsume?.Context?.Resource" (contextChange)="onContextChange($event)">
+    </context-resource>
+    <addon-filter-target [pageFilter] = "pageConsume?.Filter" [target]="'consumer'" (setTargetFilter)="onFilterChange($event)"> 
+    </addon-filter-target>
+</div>
+
 

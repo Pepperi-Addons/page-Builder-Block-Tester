@@ -2,6 +2,7 @@ import { EventEmitter, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContextResourceComponent } from './context-resource.component';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
+import { Resource } from '../options.model';
 
 
 
@@ -15,7 +16,7 @@ import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
     PepSelectModule
   ],
   providers: [
-    EventEmitter
+    Resource
   ]
 })
 export class ContextResourceModule { }

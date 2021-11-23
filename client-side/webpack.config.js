@@ -57,10 +57,10 @@ module.exports = (config, options, env) => {
                 name: "consumer",
                 filename: "consumer.js",
                 exposes: {
-                  './ConsumerBlockComponent': './src/app/components/consumer-block/index.ts',
-                  './ConsumerBlockModule': './src/app/components/consumer-block/index.ts',
-                  './ConsumerBlockEditorComponent': './src/app/components/consumer-block-editor/index.ts',
-                  './ConsumerBlockEditorModule': './src/app/components/consumer-block-editor/index.ts',
+                  './ConsumerBlockComponent': './src/app/components/consumer/consumer-block/index.ts',
+                  './ConsumerBlockModule': './src/app/components/consumer/consumer-block/index.ts',
+                  './ConsumerBlockEditorComponent': './src/app/components/consumer/consumer-block-editor/index.ts',
+                  './ConsumerBlockEditorModule': './src/app/components/consumer/consumer-block-editor/index.ts',
                 },
                 shared: {
                   // ...deps,
@@ -77,10 +77,10 @@ module.exports = (config, options, env) => {
                 name: "producer",
                 filename: "producer.js",
                 exposes: {
-                  './ProducerBlockComponent': './src/app/components/producer-block/index.ts',
-                  './ProducerBlockModule': './src/app/components/producer-block/index.ts',
-                  './ProducerBlockEditorComponent': './src/app/components/producer-block-editor/index.ts',
-                  './ProducerBlockEditorModule': './src/app/components/producer-block-editor/index.ts'
+                  './ProducerBlockComponent': './src/app/components/producer/producer-block/index.ts',
+                  './ProducerBlockModule': './src/app/components/producer/producer-block/index.ts',
+                  './ProducerBlockEditorComponent': './src/app/components/producer/producer-block-editor/index.ts',
+                  './ProducerBlockEditorModule': './src/app/components/producer/producer-block-editor/index.ts'
                 },
                 shared: {
                   // ...deps,

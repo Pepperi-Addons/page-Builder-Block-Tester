@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { config } from '../addon.config';
 import { FilterTarget } from './FilterTarget';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { Resource } from '../options.model';
 
 
 
@@ -20,7 +21,8 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
   
   exports: [FilterTargetComponent],
   providers: [
-    FilterTarget
+    FilterTarget,
+    Resource
 ],
   imports: [
     CommonModule,

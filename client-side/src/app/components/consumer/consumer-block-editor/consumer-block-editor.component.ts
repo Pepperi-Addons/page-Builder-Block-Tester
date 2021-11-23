@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageConfiguration, PageConsume, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { PageConsume, PageContext, PageFilter } from '@pepperi-addons/papi-sdk';
 import { IHostObject } from 'src/app/IHostObject';
 
 @Component({
@@ -23,41 +23,26 @@ export class ConsumerBlockEditorComponent implements OnInit {
         return pageConsume;
     }
 
-    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
-
+    @Output() consumerChange: EventEmitter<PageConsume> = new EventEmitter<PageConsume>();
+    @Output() hostEvents: EventEmitter<any>  = new EventEmitter<any>();
     
     constructor(private translate: TranslateService) { }
 
     
     ngOnInit(): void {
-
         this.pageConsume = this.hostObject?.pageConfiguration?.Consume ?
                                 this.hostObject?.pageConfiguration?.Consume :
-                                {
-                                    Filter: undefined,
-                                    Context: undefined
-                                };
-
-        // Raise default event for set-page-configuration (if pageConfiguration not exist on host object).
-        if (!this.hostObject?.pageConfiguration?.Consume) {
-            this.pageConsume = this.hostObject?.pageConfiguration?.Consume;
-            this.setPageConfig();
-        }
-        else{
-            this.pageConsume = this.getDefaultPageConsume();
-        }
+                                this.getDefaultPageConsume();
     }
 
-    private setPageConfig() {
-        console.log(`BEFORE set event: ${JSON.stringify(this.hostObject?.pageConfiguration?.Consume)}`);
-
+    private onConsumeChange() {
+        this.consumerChange.emit(this.pageConsume);
         this.hostEvents.emit({
-            action: 'set-page-configuration',
-            pageConfiguration: this.pageConsume
+            action: "set-page-configuration",
+            pageConfiguration: {
+                Consume: this.pageConsume,
+            }
         });
-        // console.log(this.pageConfiguration);
-        console.log(`AFTER set event: ${JSON.stringify(this.hostObject?.pageConfiguration?.Consume)}`);
-
     }
 
     ngOnChanges(e: any): void { 
@@ -65,15 +50,14 @@ export class ConsumerBlockEditorComponent implements OnInit {
         //Add '${implements OnChanges}' to the class.
     }
 
-    onConsumerChange( consumerFilter : PageFilter){
-        this.pageConsume = {
-                Filter: consumerFilter,
-                Context: {
-                            
-                } 
-            }
+    onFilterChange( consumerFilter : PageFilter){
+        this.pageConsume.Filter = consumerFilter;
+        this.onConsumeChange();
+    }
 
-        this.setPageConfig();
+    onContextChange(pageContext : PageContext){
+        this.pageConsume.Context = pageContext;
+        this.onConsumeChange();
     }
     
 }

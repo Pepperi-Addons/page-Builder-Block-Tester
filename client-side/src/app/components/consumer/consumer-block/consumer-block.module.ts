@@ -17,6 +17,7 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { ConsumerBlockComponent } from './consumer-block.component';
 
 import { config } from './addon.config';
+import { ConsumerDisplayModule } from '../consumer-display/consumer-display.module';
 @NgModule({
     declarations: [ConsumerBlockComponent],
     imports: [
@@ -37,7 +38,8 @@ import { config } from './addon.config';
         // PepTopBarModule,
         // PepListModule,
         // PepPageLayoutModule,
-        PepImagesFilmstripModule
+        PepImagesFilmstripModule,
+        ConsumerDisplayModule
     ],
     exports: [ConsumerBlockComponent],
     providers: [
