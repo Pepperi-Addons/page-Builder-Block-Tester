@@ -4,5 +4,11 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.exclude": {
+			"**/*.ico": true,
+			"**/node_modules/**": true,
+			"**/publish": true
+		}
+	}
 }
