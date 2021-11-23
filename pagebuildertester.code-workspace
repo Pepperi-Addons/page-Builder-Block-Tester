@@ -9,6 +9,7 @@
 			"**/*.ico": true,
 			"**/node_modules/**": true,
 			"**/publish": true
-		}
+		},
+		"editor.insertSpaces": false
 	}
 }

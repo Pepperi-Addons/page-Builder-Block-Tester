@@ -15,9 +15,10 @@ export class FilterTargetComponent implements OnInit {
   _fields: Array<string> | undefined
 
   @Input() target : string;
+  @Input() pageFilter : PageFilter;
 
   @Output() setTargetFilter = new EventEmitter<PageFilter>();
-  @Output() setTargetContext = new EventEmitter<PageContext>();
+  @Output() onTargetContextChange = new EventEmitter<PageContext>();
   
   options: Array<{ key: ResourceType, value: ResourceType }> = [];
   contextId : string;
@@ -43,19 +44,22 @@ export class FilterTargetComponent implements OnInit {
       case "Fields":
         this._fields = value ? value.trim().split(',') : [];
         break;
+
       case "Resource":
         this._resource = value as ResourceType;
+        break;
+
       default:
         throw new Error("Key not supported");
     }
     
   }
-  onContextChange(value : ResourceType)
-  {
+  onContextChange(value : ResourceType) {
     this._context = value;
     const pageContext : PageContext = { Resource: this._context};
-    this.setTargetContext.emit(pageContext);
+    this.onTargetContextChange.emit(pageContext);
   }
+  
   onBtnClick(){
     let pageFilter : PageFilter;
     if(this._resource || this._fields?.length > 0){

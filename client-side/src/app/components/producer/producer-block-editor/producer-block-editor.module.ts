@@ -1,35 +1,42 @@
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConsumerBlockEditorComponent } from './consumer-block-editor.component';
+import { ProducerBlockEditorComponent } from './producer-block-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
-
-import { config } from './addon.config';
-import { FilterTargetModule } from '../filter-target/filter-target.module';
-import { PepTextboxComponent } from '@pepperi-addons/ngx-lib/textbox';
+import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
+import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import {config } from './addon.config';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { FilterTargetModule } from '../../filter-target/filter-target.module';
+import { PepperiTableComponent } from '../../addon';
+import { PepListModule } from '@pepperi-addons/ngx-lib/list';
+import { ProducerDisplayModule } from '../producer-display/producer-display.module';
 
 @NgModule({
-    declarations: [ConsumerBlockEditorComponent],
+    declarations: [ProducerBlockEditorComponent],
     imports: [
         CommonModule,
         HttpClientModule,
-        // When not using module as sub-addon please remark this for not loading twice resources
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
                 useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
                     PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
                 deps: [HttpClient, PepFileService, PepAddonService],
-            }, isolate: false
-        }),
-        PepNgxLibModule,
-        PepSelectModule,
-        FilterTargetModule
+          }, isolate: false
+      }),
+      PepNgxLibModule,
+      PepSelectModule,
+      PepImagesFilmstripModule,
+      PepRichHtmlTextareaModule,
+      PepButtonModule,
+      FilterTargetModule,
+      ProducerDisplayModule,
     ],
-    exports: [ConsumerBlockEditorComponent],
+    exports: [ProducerBlockEditorComponent],
     providers: [
         HttpClient,
         TranslateStore,
@@ -38,9 +45,10 @@ import { PepTextboxComponent } from '@pepperi-addons/ngx-lib/textbox';
         PepFileService,
         PepCustomizationService,
         PepDialogService
+        
     ]
 })
-export class ConsumerBlockEditorModule {
+export class ProducerBlockEditorModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService
