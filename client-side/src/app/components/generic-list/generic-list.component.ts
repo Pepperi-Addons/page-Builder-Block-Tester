@@ -128,12 +128,13 @@ export class GenericListComponent implements OnInit, AfterViewInit {
   }
 
   getMenuObjects() {
+    // debugger;
     let uuids = this.customList.getSelectedItemsData().rows;
     if (this.customList.getSelectedItemsData().rows.length == 1 && this.customList.getSelectedItemsData().rows[0] == "") {
       uuids = [];
     }
     if (this.customList.getIsAllSelectedForActions()) {
-      uuids = this.dataObjects.map(obj => obj.UID).filter(x => uuids.indexOf(x) !== -1);
+      uuids = uuids.concat(this.dataObjects.map(obj => obj.UID).filter(x => uuids.indexOf(x) === -1));
     }
     const objects = uuids.map(uuid => this.getObject(uuid))
 
