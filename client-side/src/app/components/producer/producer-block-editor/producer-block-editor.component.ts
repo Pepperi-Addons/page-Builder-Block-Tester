@@ -11,7 +11,7 @@ export type VisibleComponent = "list" | "add";
 @Component({
     selector: 'producer-block-editor',
     templateUrl: './producer-block-editor.component.html',
-    styleUrls: ['./producer-block-editor.component.css']
+    styleUrls: ['./producer-block-editor.component.scss']
 })
 export class ProducerBlockEditorComponent implements OnInit {
     @ViewChild(GenericListComponent) 
