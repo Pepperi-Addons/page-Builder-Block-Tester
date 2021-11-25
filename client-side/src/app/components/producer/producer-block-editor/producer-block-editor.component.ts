@@ -107,16 +107,6 @@ export class ProducerBlockEditorComponent implements OnInit {
                             Title: this.translate.instant("Resource"),
                             Mandatory: false,
                             ReadOnly: true,
-                            Layout:{
-                                Origin: {
-                                    X: 0,
-                                    Y: 0,
-                                },
-                                // Size?: {
-                                //     Width: number;
-                                //     Height: number;
-                                // };
-                            },
                             Style: {
                                 Alignment: {
                                     Horizontal: "Left",
