@@ -1,5 +1,18 @@
-<p>{{'Title_Sub_Addon_3' | translate}}</p>
+<div> 
 
-<addon-filter-target [target]="'producer'" (onTargetContextChange)="setContext($event)" (setTargetFilter)="addProducerFilter($event)" > 
+	<context-resource [contextResource] = "pageProduce?.Context?.Resource"  (contextChange)="onContextChange($event)">
+	</context-resource>
+    <pep-top-bar [title]="'Charts Manager' | translate">
+    </pep-top-bar>
+
+    <div >
+            <generic-list style="overflow: auto; height: 100%;" *ngIf="visibleComponent === 'list'" [viewType]="'table'" [allowMultipleSelection]="true" [inline]="true" [dataSource]="listDataSource">
+                <div right-buttons>
+                    <pep-button [value]="'Add' | translate" [iconName]="'number_plus'" [iconPosition]="'end'" [sizeType]="'sm'" [styleType]="'strong'" [classNames]="'pep-spacing-element'" (buttonClick)="add()"></pep-button>
+                </div>
+            </generic-list>
+			<addon-filter-target *ngIf="visibleComponent === 'add'" [target]="'producer'" (setTargetFilter)="addProducerFilter($event)" > 
     
-</addon-filter-target>
+			</addon-filter-target>    
+    </div>
+</div>

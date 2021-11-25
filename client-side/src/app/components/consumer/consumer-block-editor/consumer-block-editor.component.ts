@@ -26,7 +26,7 @@ export class ConsumerBlockEditorComponent implements OnInit {
     @Output() consumerChange: EventEmitter<PageConsume> = new EventEmitter<PageConsume>();
     @Output() hostEvents: EventEmitter<any>  = new EventEmitter<any>();
     
-    constructor(private translate: TranslateService) { }
+    constructor() { }
 
     
     ngOnInit(): void {

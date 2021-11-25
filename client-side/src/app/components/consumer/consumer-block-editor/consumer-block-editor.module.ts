@@ -1,5 +1,5 @@
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { EventEmitter, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConsumerBlockEditorComponent } from './consumer-block-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -9,7 +9,6 @@ import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 
 import { config } from './addon.config';
 import { FilterTargetModule } from '../../filter-target/filter-target.module';
-import { PepTextboxComponent } from '@pepperi-addons/ngx-lib/textbox';
 import { ContextResourceModule } from '../../context-resource/context-resource.module';
 
 @NgModule({
@@ -26,20 +25,14 @@ import { ContextResourceModule } from '../../context-resource/context-resource.m
                 deps: [HttpClient, PepFileService, PepAddonService],
             }, isolate: false
         }),
-        PepNgxLibModule,
-        PepSelectModule,
         FilterTargetModule,
         ContextResourceModule
     ],
     exports: [ConsumerBlockEditorComponent],
     providers: [
-        HttpClient,
         TranslateStore,
-        PepHttpService,
         PepAddonService,
-        PepFileService,
-        PepCustomizationService,
-        PepDialogService
+        PepFileService
     ]
 })
 export class ConsumerBlockEditorModule {

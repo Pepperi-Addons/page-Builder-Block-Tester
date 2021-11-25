@@ -32,12 +32,6 @@ import { ConsumerDisplayModule } from '../consumer-display/consumer-display.modu
                 deps: [HttpClient, PepFileService, PepAddonService],
             }, isolate: false
         }),
-        // PepNgxLibModule,
-        PepButtonModule,
-        // PepSelectModule,
-        // PepTopBarModule,
-        // PepListModule,
-        // PepPageLayoutModule,
         PepImagesFilmstripModule,
         ConsumerDisplayModule
     ],

@@ -7,7 +7,6 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, Simp
     styleUrls: ['./consumer-block.component.scss']
 })
 export class ConsumerBlockComponent implements OnInit {
-    @ViewChild('filmStrip') filmStrip: any;
 
     private _hostObject: any;
     @Input()
@@ -21,11 +20,6 @@ export class ConsumerBlockComponent implements OnInit {
     
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
-
-    options: {key:string, value:string}[] = [];
-    images = 'https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/left-side-background.jpg;https://idpfiles.sandbox.pepperi.com/f389fd2e-4a31-4965-a21e-3a98b4553300/images/logo.svg';
-    inputTitle = '';
-    currIndex = 0;
     
     constructor() { }
 
@@ -39,9 +33,6 @@ export class ConsumerBlockComponent implements OnInit {
     // }
 
     ngOnInit(): void {
-        this.options.push({key:'OPEN_DIALOG', value: 'Text 1' });
-        this.options.push({key:'OPEN_DIALOG', value: 'Text 2' });
-        this.images +=  ';' +this.hostObject?.configuration?.imageURL;
         this.hostEvents.emit({action: 'block-loaded'});
     }
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProducerBlockEditorComponent } from './producer-block-editor.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
-import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { PepDialogModule, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
@@ -14,6 +14,10 @@ import { FilterTargetModule } from '../../filter-target/filter-target.module';
 import { PepperiTableComponent } from '../../addon';
 import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { ProducerDisplayModule } from '../producer-display/producer-display.module';
+import { ContextResourceModule } from '../../context-resource/context-resource.module';
+import { RouterModule } from '@angular/router';
+import { GenericListModule } from '../../generic-list/generic-list.module';
+import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 
 @NgModule({
     declarations: [ProducerBlockEditorComponent],
@@ -34,7 +38,10 @@ import { ProducerDisplayModule } from '../producer-display/producer-display.modu
       PepRichHtmlTextareaModule,
       PepButtonModule,
       FilterTargetModule,
-      ProducerDisplayModule,
+      ContextResourceModule,
+      PepDialogModule,
+      GenericListModule,
+      PepTopBarModule
     ],
     exports: [ProducerBlockEditorComponent],
     providers: [
