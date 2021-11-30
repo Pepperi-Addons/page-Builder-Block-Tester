@@ -1,6 +1,8 @@
 <p>Producer with filter - {{hostObject?.filter ? filters: 'None'}}</p>
 Ofer <br/>
-<producer-display [pageProduce]="hostObject?.pageConfiguration?.Produce"> </producer-display>
+<!-- <producer-display [pageProduce]="hostObject?.pageConfiguration?.Produce"> </producer-display> -->
+<producer-display [pageProduce]="pageProduce" [filters]="pageProduce?.Filters"> </producer-display>
+
 <span>click num: {{clickCount}}</span>
 <!-- <pep-checkbox [value]="isFilter1Enabled" [label]="'Account_Filter'" [renderTitle]="false" (valueChange)="changeIsFilter1Enabled()"></pep-checkbox>
 <pep-checkbox [value]="isFilter2Enabled" [label]="'Transaction_Filter'" [renderTitle]="false" (valueChange)="changeIsFilter2Enabled()"></pep-checkbox> -->

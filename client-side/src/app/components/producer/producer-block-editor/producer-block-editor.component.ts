@@ -52,7 +52,9 @@ export class ProducerBlockEditorComponent implements OnInit {
     private getListDataSource(): GenericListDataSource {
         return {
             getList: async (state) => {
-                return this.pageProduce?.Filters;
+                let filters : PageFilter[];
+                filters = this.pageProduce?.Filters;
+                return filters;
             },
 
             getDataView: async () => {
@@ -179,6 +181,7 @@ export class ProducerBlockEditorComponent implements OnInit {
                 }
             }
         }
+        this.pageProduce.Filters = this.pageProduce.Filters.slice();
         this.onProduceChange();
         this.filtersList?.reload();
     };
@@ -202,6 +205,7 @@ export class ProducerBlockEditorComponent implements OnInit {
         
         if(producerFilter && (producerFilter.Resource || producerFilter.Fields.length>0)){
             this.pageProduce.Filters.push(producerFilter);
+            this.pageProduce.Filters = this.pageProduce.Filters.slice();
         }
         this.visibleComponent = "list";
         this.onProduceChange();

@@ -19,6 +19,8 @@ export class ProducerBlockComponent implements OnInit {
         return this._hostObject;
     }
 
+    pageProduce : PageProduce;
+
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     isFilter1Enabled : boolean = false;
     isFilter2Enabled : boolean = false;
@@ -30,6 +32,9 @@ export class ProducerBlockComponent implements OnInit {
     constructor(private translate: TranslateService) { }
 
     private handleHostObjectChange() {
+        if(this.hostObject?.pageConfiguration?.Produce){
+            this.pageProduce = this.hostObject.pageConfiguration.Produce;
+        }
         if (this.hostObject?.filter) {
             // alert(`Filter change in SubAddon3 with value ${JSON.stringify(this.hostObject?.filter)}`);
             this.jsonConsumedFilter = JSON.stringify(this.hostObject?.filter);

@@ -1,45 +1,12 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  Optional,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import {
-  PepHttpService,
-  PepDataConvertorService,
-  PepLayoutService,
-  PepRowData,
-  PepFieldData,
-  FIELD_TYPE,
-  PepScreenSizeType,
-  PepGuid,
-} from '@pepperi-addons/ngx-lib';
-import { IPepFormFieldClickEvent } from '@pepperi-addons/ngx-lib/form';
-import {
-  IPepListChooserOptionChangeEvent,
-  IPepListSortingOptionChangeEvent,
-  PepListComponent,
-  IPepListSortingOption,
-  IPepListView,
-  IListViewChangeEvent,
-  PepListViewType,
-} from '@pepperi-addons/ngx-lib/list';
-import {
-  PepMenuItem,
-  IPepMenuItemClickEvent,
-} from '@pepperi-addons/ngx-lib/menu';
-import {
-  PepFooterStateType,
-  IPepFooterStateChangeEvent,
-} from '@pepperi-addons/ngx-lib/top-bar';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
+import { PepScreenSizeType, PepDataConvertorService, PepLayoutService, PepGuid, PepRowData } from "@pepperi-addons/ngx-lib";
+import { IPepFormFieldClickEvent } from "@pepperi-addons/ngx-lib/form";
+import { PepListComponent, PepListViewType } from "@pepperi-addons/ngx-lib/list";
+import { PepMenuItem, IPepMenuItemClickEvent } from "@pepperi-addons/ngx-lib/menu";
+import { DataView } from "@pepperi-addons/papi-sdk";
+import { BaseFormDataViewField, DataViewFieldTypes } from "papi-sdk-web";
 
-import { DataView, GridDataViewField, DataViewFieldType, DataViewFieldTypes, BaseFormDataViewField } from '@pepperi-addons/papi-sdk/dist/entities/data-view';
-import { CommonModule } from '@angular/common';
 
 export interface GenericListDataSource {
   getList(state: { searchString: string }): Promise<any[]> ;
