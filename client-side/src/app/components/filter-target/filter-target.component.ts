@@ -12,7 +12,7 @@ import { FilterTarget } from './FilterTarget';
 export class FilterTargetComponent implements OnInit {
 
   resource : ResourceType | undefined;
-  fields: Array<string> | undefined
+  fields: Array<string> = [];
 
 
 

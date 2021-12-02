@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { PepScreenSizeType, PepDataConvertorService, PepLayoutService, PepGuid, PepRowData } from "@pepperi-addons/ngx-lib";
 import { IPepFormFieldClickEvent } from "@pepperi-addons/ngx-lib/form";
@@ -6,15 +6,16 @@ import { PepListComponent, PepListViewType } from "@pepperi-addons/ngx-lib/list"
 import { PepMenuItem, IPepMenuItemClickEvent } from "@pepperi-addons/ngx-lib/menu";
 import { DataView } from "@pepperi-addons/papi-sdk";
 import { BaseFormDataViewField, DataViewFieldTypes } from "papi-sdk-web";
+import { Observable } from "rxjs";
 
 
 export interface GenericListDataSource {
-  getList(state: { searchString: string }): Promise<any[]> ;
-  getDataView(): Promise<DataView>;
-  getActions(objs: any[]): Promise<{
-    title: string;
-    handler: (obj: any) => Promise<void>;
-  }[]>;
+  // getList(state: { searchString: string }): Observable<any[]> ;
+  getDataView(): Observable<DataView>;
+  // getActions(objs: any[]): Promise<{
+  //   title: string;
+  //   handler: (obj: any) => Promise<void>;
+  // }[]>;
 }
 
 @Component({
@@ -22,9 +23,27 @@ export interface GenericListDataSource {
   styleUrls: ['./generic-list.component.scss'],
   selector: 'generic-list'
 })
-export class GenericListComponent implements OnInit, AfterViewInit {
+export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChecked {//, AfterViewInit {
   @ViewChild(PepListComponent) customList: PepListComponent;
 
+  private _listData: any[];
+
+  @Input()
+  set listData(value){
+    this._listData = value;
+    this.reload();
+  }
+  get listData(){
+    return this._listData;
+  }
+  
+  dataView : DataView;
+  
+  @Input('getSelectActions') getSelectActions: (selectedObjects: any[]) => Promise<{
+    title: string;
+    handler: (obj: any) => Promise<void>;
+  }[]>;
+  
   @Input()
   dataSource: GenericListDataSource;
   dataObjects: any[] = []
@@ -48,6 +67,8 @@ export class GenericListComponent implements OnInit, AfterViewInit {
   @Input()
   allowMultipleSelection: boolean = false;
 
+  @Output() onAddClicked = new EventEmitter<void>();
+
   menuHandlers: { [key: string]: (obj: any) => Promise<void> }
   menuActions: Array<PepMenuItem>;
   PepScreenSizeType = PepScreenSizeType;
@@ -57,7 +78,8 @@ export class GenericListComponent implements OnInit, AfterViewInit {
     private dataConvertorService: PepDataConvertorService,
     private layoutService: PepLayoutService,
     // private httpService: PepHttpService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private detectChanges: ChangeDetectorRef
   ) {
     this.layoutService.onResize$.pipe().subscribe((size) => {
       this.screenSize = size;
@@ -71,47 +93,60 @@ export class GenericListComponent implements OnInit, AfterViewInit {
     this.reload();
   }
 
+  ngAfterViewChecked(): void {
+    this.detectChanges.detectChanges();
+  }
+
   private loadMenuItems(): void {
     if (this.allowSelection) {
-      this.getMenuActions().then(x => this.menuActions = x);
+      this.getMenuActions().then(x => {
+        if(x){
+          this.menuActions = x;
+        }});
     }
   }
 
   async getMenuActions(): Promise<PepMenuItem[]> {
-    const actions = await this.dataSource.getActions(this.getMenuObjects());
+    // const actions = await this.dataSource.getActions(this.getMenuObjects());
+    const actions = await this.getSelectActions(this.getMenuObjects());
+    // let actions = [];
+
+    // this.getSelectActions(this.getMenuObjects()).subscribe((x) => actions.push(x));
+
+
     const res: PepMenuItem[] = []
     this.menuHandlers = {};
 
     actions.forEach(item => {
       const uuid = PepGuid.newGuid();
+      
       this.menuHandlers[uuid] = item.handler;
       res.push({
         key: uuid,
         text: item.title
-      })
+      });
+      
     })
 
     return res;
   }
 
   getMenuObjects() {
-    // debugger;
-    let uuids = this.customList.getSelectedItemsData().rows;
-    if (this.customList.getSelectedItemsData().rows.length == 1 && this.customList.getSelectedItemsData().rows[0] == "") {
-      uuids = [];
-    }
-    if (this.customList.getIsAllSelectedForActions()) {
-      uuids = uuids.concat(this.dataObjects.map(obj => obj.UID).filter(x => uuids.indexOf(x) === -1));
-    }
+
+    let uuids = this.customList.getIsAllSelectedForActions() ?
+        this.customList.items.map(obj => obj.UID) :
+        this.customList.getSelectedItemsData().rows;
+
     const objects = uuids.map(uuid => this.getObject(uuid))
-
+    if(objects === undefined){
+      debugger;
+      throw new Error("undefined objects");
+    }
     return objects;
-
-
   }
 
   getObject(uuid: string) {
-    return this.dataObjects.find(obj => obj.UID === uuid);
+    return this.customList.getItemDataByID(uuid);
   }
 
   onMenuItemClicked(action: IPepMenuItemClickEvent): void {
@@ -122,22 +157,23 @@ export class GenericListComponent implements OnInit, AfterViewInit {
     this.searchString = $event.value
     this.reload();
   }
-
   async reload() {
     if (this.customList && this.dataSource) {
-      this.dataObjects = await this.dataSource.getList({
-        searchString: this.searchString
-      });
-      const dataView = await this.dataSource.getDataView();
-      const tableData = this.dataObjects.map(x => this.convertToPepRowData(x, dataView));
-      const data = this.dataConvertorService.convertListData(tableData);
-      data.forEach((obj, i) => {
-        this.dataObjects[i].UID = obj.UID;
-      })
-      const uiControl = this.dataConvertorService.getUiControl(tableData[0]);
-      this.customList.initListData(uiControl, data.length, data);
+      // this.dataObjects = await this.dataSource.getList({
+      //   searchString: this.searchString
+      // });
+      // this.dataSource
+      //   .getList({searchString: this.searchString})
+      //   .subscribe((data) => this.dataObjects = data);
+      this.dataObjects = this.listData;
 
-      this.loadMenuItems();
+      this.dataSource.getDataView().subscribe((view) => this.dataView = view);
+      const tableData = this.dataObjects.map(x => this.convertToPepRowData(x, this.dataView));
+      const rows = this.dataConvertorService.convertListData(tableData);
+
+      const uiControl = this.dataConvertorService.getUiControl(tableData[0]);
+      this.customList.initListData(uiControl, rows.length, rows);
+      // this.loadMenuItems();
     }
   }
 
@@ -173,7 +209,5 @@ export class GenericListComponent implements OnInit, AfterViewInit {
     this.loadMenuItems();
   }
 
-  @Output()
-  onAddClicked = new EventEmitter<void>();
 
 }

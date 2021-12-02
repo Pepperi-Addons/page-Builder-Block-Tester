@@ -1,10 +1,10 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { CardDataView, GridDataView, LineDataView, PageConfiguration, PageContext, PageFilter, PageProduce, ResourceType } from '@pepperi-addons/papi-sdk';
-import { IHostObject } from 'src/app/IHostObject';
-import { GenericListComponent, GenericListDataSource } from '../../generic-list/generic-list.component';
-import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { CardsGridDataView } from 'papi-sdk-web';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
+import { GenericListDataSource } from '../../generic-list/generic-list.component';
+import { PepDialogData, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
+import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
+import { pageFiltersDataView } from '../../list-data-source.service';
 
 export type VisibleComponent = "list" | "add";
 
@@ -14,16 +14,11 @@ export type VisibleComponent = "list" | "add";
     styleUrls: ['./producer-block-editor.component.scss']
 })
 export class ProducerBlockEditorComponent implements OnInit {
-    @ViewChild(GenericListComponent) 
-    filtersList: GenericListComponent;
+
     @Input() hostObject: any;
     visibleComponent : VisibleComponent = "list";
     
     pageProduce : PageProduce;
-
-    handleHostObjectChange(){
-        this.pageProduce = this.hostObject.pageConfiguration;
-    }
 
     @Output() producerChange: EventEmitter<PageProduce> = new EventEmitter<PageProduce>();
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
@@ -47,131 +42,52 @@ export class ProducerBlockEditorComponent implements OnInit {
         this.listDataSource = this.getListDataSource();
     }
 
-    
+    getActions = async (objs: ObjectsDataRow[]) => {
+        let actions = [];
+        console.log(`Received objects in ${this.getActions.name} from producer-editor: ${JSON.stringify(objs)}`);
+        if(objs === undefined || (objs.length > 0 && objs[0] === undefined)){
+            debugger;
+            throw new Error("PageFilter objects for actions is 'undefined'");
+        }
+        if (objs.length > 0) {
+            const pageFilters : PageFilter[] =[];
+            objs.forEach((row) => {
+                const resource  = row.Fields.find( x=> x.ApiName == "Resource").FormattedValue;
+                const fields  = row.Fields.find( x=> x.ApiName == "Fields").FormattedValue;
+                console.log(`From producer-editor: ${resource}, ${fields}`);
+                pageFilters.push(
+                    {Resource: resource, 
+                    Fields: fields})
+            });
+            actions.unshift(
+                {
+                    title: this.translate.instant("Delete"),
+                    handler: async (objs : ObjectsDataRow[]) => {
+                    
+                        console.log(`From producer-editor: ${pageFilters}`);
+                        this.deletePageFilter(pageFilters);
+                    }
+                }
+            );
+        }
+
+        return actions;
+    }
 
     private getListDataSource(): GenericListDataSource {
         return {
-            getList: async (state) => {
-                let filters : PageFilter[];
-                filters = this.pageProduce?.Filters;
-                return filters;
-            },
 
-            getDataView: async () => {
-                // const gridView: GridDataView = {
-                //     Context: {
-                //         Name: '',
-                //         Profile: { InternalID: 0 },
-                //         ScreenSize: 'Phablet'
-                //     },
-                //     Type: 'Grid',
-                //     Title: '',
-                //     Fields: [
-                //         {
-                //             FieldID: 'Resource',
-                //             Type: 'ComboBox',
-                //             Title: this.translate.instant("Resource"),
-                //             Mandatory: false,
-                //             ReadOnly: true
-                //         },
-                //         {
-                //             FieldID: 'Fields',
-                //             Type: 'TextBox',
-                //             Title: this.translate.instant("Fields"),
-                //             Mandatory: false,
-                //             ReadOnly: true
-                //         }
-                //     ],
-                //     Columns: [
-                //         {
-                //             Width: 25
-                //         },
-                //         {
-                //             Width: 75
-                //         }
-                //     ],
-                //     FrozenColumnsCount: 0,
-                //     MinimumColumnWidth: 0
-                // };
-                // return gridView;
-                const cardView: CardsGridDataView  = {
-                    // Context: {
-                    //     Name: '',
-                    //     Profile: { InternalID: 0 },
-                    //     ScreenSize: 'Landscape'
-                    // },
-                    Type: 'CardsGrid',
-                    // Title: 'Producer Filter',
-                    Fields: [
-                        {
-                            FieldID: 'Resource',
-                            Type: 'TextBox',
-                            Title: this.translate.instant("Resource"),
-                            Mandatory: false,
-                            ReadOnly: true,
-                            Style: {
-                                Alignment: {
-                                    Horizontal: "Left",
-                                    Vertical: "Center",
-                                },
-                            }
-                        },
-                        {
-                            FieldID: 'Fields',
-                            Type: 'TextBox',
-                            Title: this.translate.instant("Fields"),
-                            Mandatory: false,
-                            ReadOnly: true,
-                            Style: {
-                                Alignment: {
-                                    Horizontal: "Left",
-                                    Vertical: "Center",
-                                },
-                            }
-                        }
-                    ],
-                    Columns: [
-                                {
-                                    Width: 0
-                                },
-                                {
-                                    Width: 0
-                                }
-                            ]
-                }
-                return cardView;
-            },
-
-            getActions: async (objs: PageFilter[]) => {
-                let actions = [];
-
-                if (objs.length > 0) {
-                    actions.unshift(
-                        {
-                            title: this.translate.instant("Delete"),
-                            handler: async (objs) => {
-                                this.deletePageFilter(objs);
-                            }
-                        }
-                    );
-                }
-
-                return actions;
-            }
+            getDataView: pageFiltersDataView,
         };
     }
 
     add() {
         this.visibleComponent = "add";
-        // this.router.navigate(['create'], {
-        //     relativeTo: this.route,
-        //     queryParamsHandling: 'merge'
-        // });
     }
 
     deletePageFilter(pageFilter : PageFilter[]) {
         for(let filter of pageFilter){
-            const index = this.pageProduce.Filters.indexOf(filter, 0);
+            const index = this.getFilterIndex(this.pageProduce.Filters, filter);
             if (index > -1) {
                 if(this.pageProduce.Filters.length == 1){
                     this.pageProduce.Filters = [];
@@ -183,7 +99,6 @@ export class ProducerBlockEditorComponent implements OnInit {
         }
         this.pageProduce.Filters = this.pageProduce.Filters.slice();
         this.onProduceChange();
-        this.filtersList?.reload();
     };
     
     onContextChange(pageContext : PageContext){
@@ -201,13 +116,28 @@ export class ProducerBlockEditorComponent implements OnInit {
         }
         
     addProducerFilter(producerFilter : PageFilter){
-        // debugger;
         
         if(producerFilter && (producerFilter.Resource || producerFilter.Fields.length>0)){
-            this.pageProduce.Filters.push(producerFilter);
-            this.pageProduce.Filters = this.pageProduce.Filters.slice();
+            if(this.getFilterIndex(this.pageProduce.Filters, producerFilter) > -1){
+                console.log(`The filter ${producerFilter} already exists`);
+                
+                const content = `The filter ${JSON.stringify(producerFilter)} already exists`;
+                const title = 'Add filter failed!';
+                const dataMsg = new PepDialogData({title, actionsType: "close", content});
+                this.dialog.openDefaultDialog(dataMsg);
+                
+            }
+            else{
+                this.pageProduce.Filters.push(producerFilter);
+                this.pageProduce.Filters = this.pageProduce.Filters.slice();
+                this.onProduceChange();
+            }
         }
         this.visibleComponent = "list";
-        this.onProduceChange();
+        
+    }
+
+    private getFilterIndex(filtersArray: PageFilter[], filter: PageFilter) {
+        return filtersArray.findIndex(x => x?.Resource == filter?.Resource && JSON.stringify(x?.Fields) == JSON.stringify(filter?.Fields), 0);
     }
 }

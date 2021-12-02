@@ -11,11 +11,7 @@ import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-tex
 import {config } from './addon.config';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { FilterTargetModule } from '../../filter-target/filter-target.module';
-import { PepperiTableComponent } from '../../addon';
-import { PepListModule } from '@pepperi-addons/ngx-lib/list';
-import { ProducerDisplayModule } from '../producer-display/producer-display.module';
 import { ContextResourceModule } from '../../context-resource/context-resource.module';
-import { RouterModule } from '@angular/router';
 import { GenericListModule } from '../../generic-list/generic-list.module';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 
@@ -41,7 +37,8 @@ import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
       ContextResourceModule,
       PepDialogModule,
       GenericListModule,
-      PepTopBarModule
+      PepTopBarModule,
+      PepDialogModule
     ],
     exports: [ProducerBlockEditorComponent],
     providers: [

@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageFilter, PageProduce, ResourceType} from '@pepperi-addons/papi-sdk';
+import { PageProduce, ResourceType} from '@pepperi-addons/papi-sdk';
 import { KeyValuePair } from '@pepperi-addons/ngx-lib';
 
 @Component({
@@ -125,7 +125,6 @@ export class ProducerBlockComponent implements OnInit {
         this.clickCount++;
         this.updateProducedFilters(this.getProducedFilter1(this.clickCount), this.isFilter1Enabled);
         this.updateProducedFilters(this.getProducedFilter2(this.clickCount), this.isFilter2Enabled);
-
     }
     
 }

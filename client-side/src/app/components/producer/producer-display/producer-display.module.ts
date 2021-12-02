@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProducerDisplayComponent } from './producer-display.component';
 import {MatListModule} from '@angular/material/list';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { GenericListModule } from '../../generic-list/generic-list.module';
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { PepAddonService, PepCustomizationService, PepFileService, PepHttpService } from '@pepperi-addons/ngx-lib';
+import { HttpClient } from '@angular/common/http';
+import { config } from '../../addon.config';
+import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 
 
 
@@ -16,7 +21,32 @@ import { GenericListModule } from '../../generic-list/generic-list.module';
   imports: [
     CommonModule,
     MatTableModule,
-    GenericListModule
+    GenericListModule,
+    TranslateModule.forChild({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
+              PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
+          deps: [HttpClient, PepFileService, PepAddonService],
+    }, isolate: false
+    }),
+  ],
+  providers: [
+    HttpClient,
+        TranslateStore,
+        PepHttpService,
+        PepAddonService,
+        PepFileService,
+        PepCustomizationService
   ]
 })
-export class ProducerDisplayModule { }
+export class ProducerDisplayModule { 
+
+  constructor(
+    translate: TranslateService,
+    private pepAddonService: PepAddonService
+  ) {
+      this.pepAddonService.setDefaultTranslateLang(translate);
+  }
+
+}
