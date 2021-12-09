@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageContext, ResourceType } from '@pepperi-addons/papi-sdk';
-import { Resource } from '../options.model';
+import { Resource } from '../../options.model';
 
 @Component({
   selector: 'context-resource',

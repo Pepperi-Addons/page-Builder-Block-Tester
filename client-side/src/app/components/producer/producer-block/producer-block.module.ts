@@ -11,8 +11,8 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { ProducerBlockComponent } from './producer-block.component';
 
 import {config } from './addon.config';
-import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { ProducerDisplayModule } from '../producer-display/producer-display.module';
+import { SetFiltersEditorModule } from '../../block-filter/set-filters-editor/set-filters-editor.module';
 
 @NgModule({
     declarations: [ProducerBlockComponent],
@@ -28,26 +28,14 @@ import { ProducerDisplayModule } from '../producer-display/producer-display.modu
                 deps: [HttpClient, PepFileService, PepAddonService],
             }, isolate: false
         }),
-        // PepNgxLibModule,
         PepButtonModule,
-        PepCheckboxModule,
-        ProducerDisplayModule
-        // PepSelectModule,
-        // PepTopBarModule,
-        // PepListModule,
-        // PepPageLayoutModule,
-        // PepImagesFilmstripModule,
-        // PepRichHtmlTextareaModule
+        ProducerDisplayModule,
+        SetFiltersEditorModule
+
     ],
     exports: [ProducerBlockComponent],
     providers: [
-        // HttpClient,
-        TranslateStore,
-        // PepHttpService,
-        // PepAddonService,
-        // PepFileService,
-        // PepCustomizationService,
-        // PepDialogService
+        TranslateStore
     ]
 })
 export class ProducerBlockModule {

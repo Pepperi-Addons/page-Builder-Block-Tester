@@ -1,18 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 
-import { PepHttpService, PepAddonService, PepFileService, PepCustomizationService, PepNgxLibModule } from '@pepperi-addons/ngx-lib';
+import { PepAddonService, PepFileService, PepCustomizationService } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstrip';
 
-import { PepPageLayoutModule } from '@pepperi-addons/ngx-lib/page-layout';
-import { PepListModule } from '@pepperi-addons/ngx-lib/list';
-import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
-import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
 import { ConsumerBlockComponent } from './consumer-block.component';
 

@@ -8,7 +8,7 @@ import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { PepAddonService, PepDataConvertorService, PepFileService, PepLayoutService } from '@pepperi-addons/ngx-lib';
-import { config } from '../addon.config';
+import { config } from '../../addon.config';
 
 
 

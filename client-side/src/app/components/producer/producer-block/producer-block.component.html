@@ -1,18 +1,8 @@
-<p>Producer with filter - {{hostObject?.filter ? filters: 'None'}}</p>
-Ofer <br/>
-<!-- <producer-display [pageProduce]="hostObject?.pageConfiguration?.Produce"> </producer-display> -->
-<producer-display [pageProduce]="pageProduce" [filters]="pageProduce?.Filters"> </producer-display>
+<producer-display [pageProduce]="pageProduce"> </producer-display>
 
-<span>click num: {{clickCount}}</span>
-<!-- <pep-checkbox [value]="isFilter1Enabled" [label]="'Account_Filter'" [renderTitle]="false" (valueChange)="changeIsFilter1Enabled()"></pep-checkbox>
-<pep-checkbox [value]="isFilter2Enabled" [label]="'Transaction_Filter'" [renderTitle]="false" (valueChange)="changeIsFilter2Enabled()"></pep-checkbox> -->
 <pep-button value="raise filter" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
     (click)="onBtnClick($event);" style="width: 200px;">
 </pep-button>
+<set-filters-editor (blockFiltersChange)="onFiltersChange($event)">
 
-<!-- <div>
-    <p>Consumed filter - {{ jsonConsumedFilter }}</p>
-</div>
-<p *ngFor="let prFilter of jsonProducedFilter"> {{ prFilter }}</p> -->
-
-
+</set-filters-editor>

@@ -8,9 +8,9 @@ import { ConsumerDisplayComponent } from './consumer-display.component';
   declarations: [
     ConsumerDisplayComponent
   ],
-  exports: [ConsumerDisplayComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [ConsumerDisplayComponent],
 })
 export class ConsumerDisplayModule { }

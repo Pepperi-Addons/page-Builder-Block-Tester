@@ -6,10 +6,10 @@ import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { PepAddonService, PepFileService } from '@pepperi-addons/ngx-lib';
 import { HttpClient } from '@angular/common/http';
-import { config } from '../addon.config';
+import { config } from '../../addon.config';
 import { FilterTarget } from './FilterTarget';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
-import { Resource } from '../options.model';
+import { Resource } from '../../options.model';
 
 
 

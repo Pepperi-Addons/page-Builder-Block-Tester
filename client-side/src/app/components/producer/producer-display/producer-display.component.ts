@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
 import { of } from 'rxjs';
-import { GenericListDataSource } from '../../generic-list/generic-list.component';
+import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
 import { pageFiltersDataView } from '../../list-data-source.service';
 
 @Component({

@@ -1,7 +1,7 @@
 <div class="filter-target" [id]="target">
     <pep-select [id]="selectId" [value]="resource" [options]="options" (valueChange)="onChange('Resource', $event)" [label]="'Resource Type'"
     ></pep-select>
-    <pep-textbox [id]="textboxId" [value]="fields" [label]="'Fields'" type="string" (valueChange)="onChange('Fields', $event)">
+    <pep-textbox [id]="textboxId" [value]="fields" [label]="'Fields'" type="text" (valueChange)="onChange('Fields', $event)">
     </pep-textbox>
     <pep-button value="{{buttonText}}" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
     (click)="onBtnClick();" style="width: 200px;"></pep-button>

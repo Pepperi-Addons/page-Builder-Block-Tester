@@ -10,9 +10,9 @@ import { PepImagesFilmstripModule } from '@pepperi-addons/ngx-lib/images-filmstr
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import {config } from './addon.config';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
-import { FilterTargetModule } from '../../filter-target/filter-target.module';
-import { ContextResourceModule } from '../../context-resource/context-resource.module';
-import { GenericListModule } from '../../generic-list/generic-list.module';
+import { FilterTargetModule } from '../../base-components/filter-target/filter-target.module';
+import { ContextResourceModule } from '../../base-components/context-resource/context-resource.module';
+import { GenericListModule } from '../../base-components/generic-list/generic-list.module';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 
 @NgModule({

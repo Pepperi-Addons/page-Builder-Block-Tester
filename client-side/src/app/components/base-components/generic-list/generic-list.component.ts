@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectorRef } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
-import { PepScreenSizeType, PepDataConvertorService, PepLayoutService, PepGuid, PepRowData } from "@pepperi-addons/ngx-lib";
+import { PepScreenSizeType, PepDataConvertorService, PepLayoutService, PepGuid, PepRowData, ObjectsDataRow } from "@pepperi-addons/ngx-lib";
 import { IPepFormFieldClickEvent } from "@pepperi-addons/ngx-lib/form";
 import { PepListComponent, PepListViewType } from "@pepperi-addons/ngx-lib/list";
 import { PepMenuItem, IPepMenuItemClickEvent } from "@pepperi-addons/ngx-lib/menu";
@@ -39,7 +39,7 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
   
   dataView : DataView;
   
-  @Input('getSelectActions') getSelectActions: (selectedObjects: any[]) => Promise<{
+  @Input('getSelectActions') getSelectActions: (selectedObjects: ObjectsDataRow[]) => Promise<{
     title: string;
     handler: (obj: any) => Promise<void>;
   }[]>;

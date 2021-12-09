@@ -8,8 +8,8 @@ import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 
 import { config } from './addon.config';
-import { FilterTargetModule } from '../../filter-target/filter-target.module';
-import { ContextResourceModule } from '../../context-resource/context-resource.module';
+import { FilterTargetModule } from '../../base-components/filter-target/filter-target.module';
+import { ContextResourceModule } from '../../base-components/context-resource/context-resource.module';
 
 @NgModule({
     declarations: [ConsumerBlockEditorComponent],

@@ -1,0 +1,16 @@
+<div class="block-filter">
+    <pep-select [id]="'resource'" [value]="resource" [options]="options" (valueChange)="onChange('resource', $event)" [label]="'Resource Type'"
+    ></pep-select>
+    <pep-textbox [id]="'fieldType'" [value]="fieldType" [label]="'Field Type'" type="text" (valueChange)="onChange('FieldType', $event)">
+    </pep-textbox>
+    <pep-textbox [id]="'apiName'" [value]="apiName" [label]="'APIName'" type="text" (valueChange)="onChange('ApiName', $event)">
+    </pep-textbox>
+    <pep-textbox [id]="'operation'" [value]="operation" [label]="'Operation'" type="text" (valueChange)="onChange('Operation', $event)">
+    </pep-textbox>
+    <pep-textbox [id]="'values'" [value]="values" [label]="'Values'" type="text" (valueChange)="onChange('Values', $event)">
+    </pep-textbox>
+    <pep-button value="{{buttonText}}" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
+    (click)="onBtnClick();" style="width: 200px;"></pep-button>
+</div>
+
+
