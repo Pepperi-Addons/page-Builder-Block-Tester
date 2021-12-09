@@ -1,8 +1,9 @@
 <div>
 	Consumer display
 	<p>Context: {{pageConsume?.Context?.Resource}}</p>
-    <p>Resource: {{pageConsume?.Filter?.Resource}}</p>
-    <p>Fields: {{pageConsume?.Filter?.Fields}}</p>
-	<br>
-	<p>Consumed filter: {{consumedFilter}}</p>
+	<p>Resource: {{pageConsume?.Filter?.Resource}}</p>
+	<p>Fields: {{pageConsume?.Filter?.Fields}}</p>
+	<pep-textarea [value]="consumedFilter" label="Consumed filter" xAlignment="left" [rowSpan]="4" [visible]="true"
+		[disabled]="true" [showTitle]="true"></pep-textarea>>
+	<!-- <p>Consumed filter: {{consumedFilter}}</p> -->
 </div>

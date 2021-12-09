@@ -28,7 +28,7 @@
         </div>
     </ng-template>
     <ng-template #listTemplate>
-        <div class="list-wrapper" #listContainer id="listContainer">
+        <div class="list-wrapper" #listContainer id="listContainer" [ngStyle]="{'height':listHeight}">
             <pep-list [viewType]="viewType" [supportSorting]="supportSorting" [supportResizing]="false"
             [parentScroll]="listContainer" [showCardSelection]="true"
              [selectionTypeForActions]="allowMultipleSelection ? 'multi' : (allowSelection ? 'single' : 'none')"

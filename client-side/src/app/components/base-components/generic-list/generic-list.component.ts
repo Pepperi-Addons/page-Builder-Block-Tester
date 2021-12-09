@@ -5,6 +5,7 @@ import { IPepFormFieldClickEvent } from "@pepperi-addons/ngx-lib/form";
 import { PepListComponent, PepListViewType } from "@pepperi-addons/ngx-lib/list";
 import { PepMenuItem, IPepMenuItemClickEvent } from "@pepperi-addons/ngx-lib/menu";
 import { DataView } from "@pepperi-addons/papi-sdk";
+import { min } from "moment";
 import { BaseFormDataViewField, DataViewFieldTypes } from "papi-sdk-web";
 import { Observable } from "rxjs";
 
@@ -36,7 +37,7 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
   get listData(){
     return this._listData;
   }
-  
+  listHeight
   dataView : DataView;
   
   @Input('getSelectActions') getSelectActions: (selectedObjects: ObjectsDataRow[]) => Promise<{
@@ -172,6 +173,7 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
       const rows = this.dataConvertorService.convertListData(tableData);
 
       const uiControl = this.dataConvertorService.getUiControl(tableData[0]);
+      this.listHeight = this.getListHeight();
       this.customList.initListData(uiControl, rows.length, rows);
       // this.loadMenuItems();
     }
@@ -207,6 +209,16 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
 
   selectedRowsChanged(selectedRowsCount: number) {
     this.loadMenuItems();
+  }
+
+  private getListHeight(){
+    // const minHeight = 100;
+    // const num = Math.min(40*this.listData.length, 250);
+    // return num < minHeight ? `${minHeight}px` : `${num + minHeight}px`;
+
+    const minHeight = 4;
+    const num = Math.min(4*this.listData.length, 25);
+    return num < minHeight ? `${minHeight}rem` : `${num + minHeight}rem`;
   }
 
 
