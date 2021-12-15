@@ -1,8 +1,9 @@
 <producer-display [pageProduce]="pageProduce"> </producer-display>
 
 <pep-button value="raise filter" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
-    (click)="onBtnClick($event);" style="width: 200px;">
+    (click)="onBtnClick();" style="width: 200px;">
 </pep-button>
-<set-filters-editor (blockFiltersChange)="onFiltersChange($event)">
+<set-filters-editor  [blockKey]="blockKey">
+    <!-- (blockFiltersChange)="onFiltersChange($event)" -->
 
 </set-filters-editor>

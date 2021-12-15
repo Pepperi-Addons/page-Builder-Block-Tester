@@ -50,7 +50,6 @@ export class PepperiTableComponent implements OnInit, OnChanges {
         if (changes?.dataSource?.currentValue){
             this.initPepList(this.dataSource, this.displayedColumns, this.customizeTable);
         }
-
     }
 
     initPepList(dataSource, displayedColumns = null, customizeFn = null) {
@@ -90,7 +89,6 @@ export class PepperiTableComponent implements OnInit, OnChanges {
         else {
             return dataRowField;
         }
-
     }
 
     getSelectedItemsData(){

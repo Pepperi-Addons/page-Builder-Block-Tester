@@ -3,7 +3,8 @@ import jwt from 'jwt-decode';
 import { PapiClient } from '@pepperi-addons/papi-sdk';
 import { Injectable } from '@angular/core';
 
-import {PepHttpService, PepDataConvertorService, PepSessionService} from '@pepperi-addons/ngx-lib';
+import {PepHttpService, PepDataConvertorService, PepSessionService, PepGuid} from '@pepperi-addons/ngx-lib';
+import { config } from './addon.config';
 
 
 @Injectable({ providedIn: 'root' })
@@ -12,14 +13,15 @@ export class AddonService {
     accessToken = '';
     parsedToken: any
     papiBaseURL = ''
-    addonUUID;
+    addonUUID = config.AddonUUID;
 
     get papiClient(): PapiClient {
         return new PapiClient({
             baseURL: this.papiBaseURL,
             token: this.session.getIdpToken(),
             addonUUID: this.addonUUID,
-            suppressLogging:true
+            actionUUID: PepGuid.newGuid()
+            // suppressLogging:true
         })
     }
 
@@ -32,7 +34,10 @@ export class AddonService {
         this.parsedToken = jwt(accessToken);
         this.papiBaseURL = this.parsedToken["pepperi.baseurl"]
     }
-
+    getFiltersEndpoint(){
+        return this.papiClient.addons.api.uuid(this.addonUUID)
+            .file('api').func('blockfilters');
+    }
     async get(endpoint: string): Promise<any> {
         return await this.papiClient.get(endpoint);
     }

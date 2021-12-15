@@ -1,44 +1,70 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 import { GridDataView, ResourceType } from '@pepperi-addons/papi-sdk';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
+import { BlockFilterData, BlockFiltersService } from '../block-filters.service';
 import { IBlockFilter, IFilter } from '../blockfilter.model';
 
 
 export declare type BlockFilterKeys = keyof IBlockFilter;
 
-export interface ISetFilter{
+export interface ISetFilter {
   resource?: ResourceType,
   filter?: IFilter,
 }
 
 @Component({
-  selector: 'set-filters-editor',
+  selector: 'set-filters-editor[blockKey]',
   templateUrl: './set-filters-editor.component.html',
   styleUrls: ['./set-filters-editor.component.scss']
 })
-export class SetFiltersEditorComponent implements OnInit {
+export class SetFiltersEditorComponent implements OnInit, OnDestroy {
 
   visibleComponent: string = "list";
 
-  blockFiltersArray: Array<IBlockFilter> = [];
+  // private _blockFiltersArray : Array<IBlockFilter>;
+
+  // set blockFiltersArray(value: Array<IBlockFilter>){
+  //   if(this._blockFiltersArray && value){
+  //     this.filtersService.post(value);
+  //   }
+  // }
+  // get blockFiltersArray(){
+  //   return this.filtersService.jsonFilters$;
+  // }
+
+  // blockFilters$ : Observable<IBlockFilter[]>;
+  blockFilters: Array<IBlockFilter>;
+  unsubscribe$: Subject<boolean> = new Subject();
 
   listDataSource: GenericListDataSource = this.getListDataSource();
-
+  @Input() blockKey: string;
 
   @Output() hostEvents = new EventEmitter<any>();
   @Output() blockFiltersChange = new EventEmitter<Array<ISetFilter>>();
 
 
-  constructor() { }
+  constructor(private filtersService: BlockFiltersService) {
+
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.complete();
+  }
 
   ngOnInit(): void {
+    this.filtersService.blockKey = this.blockKey;
+    this.filtersService.jsonFilters$.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: IBlockFilter[]) => this.blockFilters = data);
+    // this.blockFilters$ = this.filtersService.jsonFilters$;
+    // this.filtersService.get().then((addonData) =>{
+    //   this.blockFiltersArray = this.filtersService.toFiltersArray(addonData as AddonDataFilter)
+    // });
   }
 
-  getBlockFilters(): Observable<Array<IBlockFilter>> {
-    return of(this.blockFiltersArray);
-  }
 
   getActions = async (dataRows: ObjectsDataRow[]) => {
     let actions = [];
@@ -66,7 +92,7 @@ export class SetFiltersEditorComponent implements OnInit {
     dataRows.forEach((row) => {
       let blockFilter: IBlockFilter = {};
       row.Fields.forEach((dataRowCell) => {
-        if(dataRowCell?.ApiName && dataRowCell?.FormattedValue != ""){
+        if (dataRowCell?.ApiName && dataRowCell?.FormattedValue != "") {
           blockFilter[dataRowCell.ApiName] = dataRowCell?.FormattedValue;
         }
       });
@@ -77,19 +103,21 @@ export class SetFiltersEditorComponent implements OnInit {
   }
 
   deleteBlockFilter(filtersArray: IBlockFilter[]) {
+    let blockFiltersArray = this.blockFilters;
     for (const filter of filtersArray) {
-      const index = this.getFilterIndex(this.blockFiltersArray, filter);
+      const index = this.getFilterIndex(blockFiltersArray, filter);
       if (index > -1) {
-        if (this.blockFiltersArray.length == 1) {
-          this.blockFiltersArray = [];
+        if (blockFiltersArray.length == 1) {
+          blockFiltersArray = [];
         }
         else {
-          this.blockFiltersArray.splice(index, 1);
+          blockFiltersArray.splice(index, 1);
         }
       }
     }
-    this.blockFiltersArray = this.blockFiltersArray.slice();
-    this.onFiltersChange();
+    this.filtersService.updateFiltersData(blockFiltersArray);
+    // this.blockFiltersArray = this.blockFiltersArray.slice();
+    // this.onFiltersChange();
   };
 
   private getListDataSource(): GenericListDataSource {
@@ -192,46 +220,18 @@ export class SetFiltersEditorComponent implements OnInit {
     this.visibleComponent = "add";
   }
 
-  private onFiltersChange() {
-    let setFilters : Array<ISetFilter> = [];
-    this.blockFiltersArray.forEach((blockFilter) => {
-      // let tempFilter : ISetFilter = { };
-      // if(blockFilter?.resource){
-      //   tempFilter.resource = blockFilter.resource;
-      // }
-      // if(blockFilter?.ApiName){
-      //   tempFilter.filter.ApiName = tempFilter.filter ? blockFilter.ApiName : tempFilter;
-      // }
-      // if(blockFilter?.FieldType){
-      //   tempFilter.filter.FieldType = blockFilter.FieldType;
-      // }
-      // if(blockFilter?.Operation){
-      //   tempFilter.filter.Operation = blockFilter.Operation;
-      // }
-      // if(blockFilter?.Values){
-      //   tempFilter.filter.Values = blockFilter.Values;
-      // }
-      // setFilters.push({
-      //   resource: blockFilter.resource,
-      //   filter: {
-      //     FieldType: blockFilter.FieldType,
-      //     ApiName: blockFilter.ApiName,
-      //     Operation: blockFilter.Operation,
-      //     Values: blockFilter.Values,
-      //   }
-      // });
-      // setFilters.push(tempFilter);
-      setFilters.push(this.blockToSetFilter(blockFilter));
-    });
-    this.blockFiltersChange.emit(setFilters);
+  // private onFiltersChange() {
+  //   let setFilters : Array<ISetFilter> = [];
+  //   this.blockFiltersArray.forEach((blockFilter) => {
+  //     setFilters.push(this.blockToSetFilter(blockFilter));
+  //   });
+  //   this.blockFiltersChange.emit(setFilters);
+  // }
 
-  }
-
-  blockToSetFilter(blockFilter : IBlockFilter) : ISetFilter
-  {
+  blockToSetFilter(blockFilter: IBlockFilter): ISetFilter {
     return {
       resource: blockFilter.resource,
-      filter:{
+      filter: {
         ApiName: blockFilter?.ApiName,
         FieldType: blockFilter?.FieldType,
         Operation: blockFilter?.Operation,
@@ -241,10 +241,14 @@ export class SetFiltersEditorComponent implements OnInit {
   }
 
   onAddingFilter(blockFilter: IBlockFilter) {
-
-    this.blockFiltersArray.push(blockFilter);
-    this.blockFiltersArray = this.blockFiltersArray.slice();
-    this.onFiltersChange();
+    let blockFiltersArray = this.blockFilters;
+    blockFiltersArray.push(blockFilter);
+    this.filtersService.updateFiltersData(blockFiltersArray);
+    // this.filtersService.post(this.blockFiltersArray).then((addonData) =>{
+    //   this.blockFiltersArray = this.filtersService.toFiltersArray(addonData as AddonDataFilter);
+    // });
+    // this.blockFiltersArray = this.blockFiltersArray.slice();
+    // this.onFiltersChange();
     this.visibleComponent = "list";
   }
 

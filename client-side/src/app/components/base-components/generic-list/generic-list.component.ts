@@ -31,8 +31,10 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
 
   @Input()
   set listData(value){
-    this._listData = value;
-    this.reload();
+    if(value){
+      this._listData = value;
+      this.reload();
+    }
   }
   get listData(){
     return this._listData;
@@ -159,7 +161,7 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
     this.reload();
   }
   async reload() {
-    if (this.customList && this.dataSource) {
+    if (this.customList && this.dataSource && this.listData) {
       // this.dataObjects = await this.dataSource.getList({
       //   searchString: this.searchString
       // });

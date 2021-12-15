@@ -10,28 +10,30 @@ The error Message is importent! it will be written in the audit log and help the
 
 import { Client, Request } from '@pepperi-addons/debug-server'
 import { NgComponentRelation, Page, Relation } from '@pepperi-addons/papi-sdk';
-import PageBuilderTesterService from './my.service';
+import MyService from './my.service';
 
 export async function install(client: Client, request: Request): Promise<any> {
-    return await upsertPageBlockRelations(client);
+    // return await upsertPageBlockRelations(client);
+    return installOrUpgradeOperation(client);
 }
 
 export async function uninstall(client: Client, request: Request): Promise<any> {
-    return {success:true,resultObject:{}}
+    return { success: true, resultObject: {} }
 }
 
 export async function upgrade(client: Client, request: Request): Promise<any> {
-    return await upsertPageBlockRelations(client);
+    // return await upsertPageBlockRelations(client);
+    return installOrUpgradeOperation(client);
 }
 
 export async function downgrade(client: Client, request: Request): Promise<any> {
-    return {success:true,resultObject:{}}
+    return { success: true, resultObject: {} }
 }
 
-async function upsertPageBlockRelations(client: Client){
-    const service = new PageBuilderTesterService(client);
-    const namePrefix : string = "PBBT";
-    let pageRelations : NgComponentRelation[] =[
+async function upsertPageBlockRelations(client: Client) {
+    const service = new MyService(client);
+    const namePrefix: string = "PBBT";
+    let pageRelations: NgComponentRelation[] = [
         {
             RelationName: "PageBlock",
             Name: "Ofer Producer",
@@ -58,11 +60,21 @@ async function upsertPageBlockRelations(client: Client){
             EditorComponentName: 'ConsumerBlockEditorComponent',
             EditorModuleName: 'ConsumerBlockEditorModule'
         }
-    ] 
+    ]
 
     // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
-    for (let pageRelation of pageRelations){
+    for (let pageRelation of pageRelations) {
         await service.upsertRelation(pageRelation);
     }
-    return {success: true};
+    return { success: true };
+}
+
+async function createAdalScheme(client: Client){
+    const service = new MyService(client);
+    return await service.createFiltersSchema();
+}
+
+async function installOrUpgradeOperation(client: Client){
+    await createAdalScheme(client);
+    return await upsertPageBlockRelations(client);
 }

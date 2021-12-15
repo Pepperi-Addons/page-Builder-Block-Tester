@@ -1,7 +1,8 @@
-import { PapiClient, InstalledAddon, Relation, NgComponentRelation } from '@pepperi-addons/papi-sdk'
+import { PapiClient, InstalledAddon, Relation, NgComponentRelation, AddonDataScheme } from '@pepperi-addons/papi-sdk'
 import { Client } from '@pepperi-addons/debug-server';
+import { FiltersTableName } from '../global.consts'
 
-class PageBuilderTesterService {
+class MyService {
 
     papiClient: PapiClient
 
@@ -15,9 +16,6 @@ class PageBuilderTesterService {
         });
     }
 
-    doSomething() {
-        console.log("doesn't really do anything....");
-    }
 
     getAddons(): Promise<InstalledAddon[]> {
         return this.papiClient.addons.installedAddons.find({});
@@ -31,23 +29,18 @@ class PageBuilderTesterService {
         return this.papiClient.addons.data.relations.find({where: `AddonUUID='${this.client.AddonUUID}'`});
     }
 
-    createPageRelation(pageName:string, ) : NgComponentRelation {
-        const namePrefix : string = "PBBT";
-        const pageRelation : NgComponentRelation = {
-            RelationName: "PageBlock",
-            Name: `${namePrefix}_${pageName}`,
-            Description: `${namePrefix}_${pageName}`,
-            Type: "NgComponent",
-            SubType: "NG12",
-            AddonUUID: this.client.AddonUUID,
-            AddonRelativeURL: "pagebuildertester",
-            ComponentName: `${pageName}Component`,
-            ModuleName: `${pageName}Module`,
-            // EditorComponentName: `${pageName}EditorComponent`,
-            // EditorModuleName: `${pageName}EditorModule`
+    async createFiltersSchema(){
+        const tableScheme : AddonDataScheme = {
+            Name: FiltersTableName,
+            Type: 'data',
+            Fields: {
+                BlockFiltersJson: {
+                    Type: 'MultipleStringValues'
+                }
+            }
         }
-        return pageRelation;
+        return this.papiClient.addons.data.schemes.post( tableScheme as any)
     }
 }
 
-export default PageBuilderTesterService;
+export default MyService;

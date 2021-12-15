@@ -34,7 +34,6 @@ export class AddonComponent implements OnInit {
     ) {
 
         this.layoutService.onResize$.subscribe(size => {
-;
         });
 
     }

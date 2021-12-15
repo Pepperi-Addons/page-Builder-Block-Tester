@@ -5,6 +5,7 @@ import { GenericListModule } from '../../base-components/generic-list/generic-li
 import { Resource } from '../../options.model';
 import { AddBlockFilterModule } from '../add-block-filter/add-block-filter.module';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
+import { BlockFiltersService } from '../block-filters.service';
 
 
 
@@ -19,6 +20,9 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
     AddBlockFilterModule
   ],
   exports: [SetFiltersEditorComponent],
-  providers: [Resource]
+  providers: [
+    Resource,
+    BlockFiltersService
+  ]
 })
 export class SetFiltersEditorModule { }

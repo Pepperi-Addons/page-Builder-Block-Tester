@@ -13,6 +13,7 @@ import { ProducerBlockComponent } from './producer-block.component';
 import {config } from './addon.config';
 import { ProducerDisplayModule } from '../producer-display/producer-display.module';
 import { SetFiltersEditorModule } from '../../block-filter/set-filters-editor/set-filters-editor.module';
+import { BlockFiltersService } from '../../block-filter/block-filters.service';
 
 @NgModule({
     declarations: [ProducerBlockComponent],
@@ -35,7 +36,8 @@ import { SetFiltersEditorModule } from '../../block-filter/set-filters-editor/se
     ],
     exports: [ProducerBlockComponent],
     providers: [
-        TranslateStore
+        TranslateStore,
+        BlockFiltersService
     ]
 })
 export class ProducerBlockModule {

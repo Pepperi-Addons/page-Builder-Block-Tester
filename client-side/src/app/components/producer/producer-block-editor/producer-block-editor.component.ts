@@ -3,8 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
 import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
 import { PepDialogData, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
+import { ObjectsDataRow, PepGuid } from '@pepperi-addons/ngx-lib';
 import { pageFiltersDataView } from '../../list-data-source.service';
+import { IHostObject } from 'src/app/IHostObject';
+import { BlockFiltersService } from '../../block-filter/block-filters.service';
 
 export type VisibleComponent = "list" | "add";
 
@@ -15,7 +17,11 @@ export type VisibleComponent = "list" | "add";
 })
 export class ProducerBlockEditorComponent implements OnInit {
 
-    @Input() hostObject: any;
+    @Input() hostObject: IHostObject;
+    @Input() isBlockContainer: boolean = true;
+
+    private blockUuid : string;
+
     visibleComponent: VisibleComponent = "list";
 
     pageProduce: PageProduce;
@@ -24,7 +30,8 @@ export class ProducerBlockEditorComponent implements OnInit {
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private translate: TranslateService,
-        public dialog: PepDialogService) { }
+        public dialog: PepDialogService,
+        ) { }
     private getDefaultPageProduce(): PageProduce {
         const pageProduce: PageProduce = {
             Filters: [],
@@ -36,11 +43,31 @@ export class ProducerBlockEditorComponent implements OnInit {
     listDataSource: GenericListDataSource;
 
     ngOnInit(): void {
-        this.pageProduce = this.hostObject?.pageConfiguration?.Produce as PageProduce ?
-            this.hostObject?.pageConfiguration?.Produce  as PageProduce :
+        this.pageProduce = this.hostObject?.pageConfiguration?.Produce ?
+            this.hostObject?.pageConfiguration?.Produce :
             this.getDefaultPageProduce();
-            
+
+        this.setBlockUuid();
+        
         this.listDataSource = this.getListDataSource();
+    }
+
+    private setBlockUuid(){
+        if(this.hostObject?.configuration?.blockUuid){
+            this.blockUuid = this.hostObject?.configuration?.blockUuid;
+        }
+        else if(this.isBlockContainer){
+            this.blockUuid = PepGuid.newGuid();
+            this.hostEvents.emit({
+                action: "set-configuration",
+                configuration: {
+                    blockUuid: this.blockUuid,
+                }
+            });
+        }
+        else{
+            throw new Error("Block UUID is not defined!");
+        }
     }
 
     getActions = async (objs: ObjectsDataRow[]) => {
@@ -110,13 +137,19 @@ export class ProducerBlockEditorComponent implements OnInit {
     }
 
     private onProduceChange() {
-        this.producerChange.emit(this.pageProduce);
-        this.hostEvents.emit({
-            action: "set-page-configuration",
-            pageConfiguration: {
-                Produce: this.pageProduce,
-            }
-        });
+        if (this.isBlockContainer) {
+            this.hostEvents.emit({
+                action: "set-page-configuration",
+                pageConfiguration: {
+                    Produce: this.pageProduce,
+                }
+            });
+        }
+        else {
+            this.producerChange.emit(this.pageProduce);
+        }
+
+
     }
 
     addProducerFilter(producerFilter: PageFilter) {
