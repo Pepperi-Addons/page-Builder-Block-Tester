@@ -21,7 +21,7 @@ export class BlockFiltersService{
     async upsert(request: Request) : Promise<AddonData>{
         const body = request.body;
         const addonData : AddonData = {
-            Key: this.getBlockKey(body),
+            Key: this.getBlockKey(request),
             BlockFiltersJson: body.BlockFiltersJson
         };
 
@@ -29,19 +29,18 @@ export class BlockFiltersService{
     }
 
     async get(request : Request) : Promise<AddonData>{
-        const body = request.body;
-        const key : string = this.getBlockKey(body);
+        // const body = request.body;
+        const key : string = this.getBlockKey(request);
         return this.papiClient.addons.data.uuid(this.client.AddonUUID).table(TABLE_NAME).key(key).get();
 	}
 
-    getBlockKey(body : any) :  string{
-        const key : string = body?.Key ?? body?.key;
+    getBlockKey(request : Request) :  string{
+        const key : string = request?.query?.Key ?? request?.body?.Key;
         if(!key){
-            throw new Error("Key not defined");
+            throw new Error("Key not defined - the request: " + JSON.stringify(request));
         }
         else{
             return key;
         }
     }
-
 }

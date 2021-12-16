@@ -20,7 +20,16 @@ export class ProducerBlockEditorComponent implements OnInit {
     @Input() hostObject: IHostObject;
     @Input() isBlockContainer: boolean = true;
 
-    private blockUuid : string;
+    private _blockKey : string;
+
+    set blockKey(value : string){
+        if(!this._blockKey && value){
+            this._blockKey = value;
+        }
+    }
+    get blockKey(){
+        return this._blockKey;
+    }
 
     visibleComponent: VisibleComponent = "list";
 
@@ -46,23 +55,25 @@ export class ProducerBlockEditorComponent implements OnInit {
         this.pageProduce = this.hostObject?.pageConfiguration?.Produce ?
             this.hostObject?.pageConfiguration?.Produce :
             this.getDefaultPageProduce();
-
         this.setBlockUuid();
         
         this.listDataSource = this.getListDataSource();
     }
 
     private setBlockUuid(){
-        if(this.hostObject?.configuration?.blockUuid){
-            this.blockUuid = this.hostObject?.configuration?.blockUuid;
+        if(this.hostObject?.configuration?.blockKey){
+            this._blockKey = this.hostObject?.configuration?.blockKey;
         }
-        else if(this.isBlockContainer){
-            this.blockUuid = PepGuid.newGuid();
+        else if(this.isBlockContainer && !this.blockKey){
+            this.blockKey = PepGuid.newGuid();
+            const hostObject : IHostObject = {
+                configuration: {
+                    blockKey : this.blockKey
+                }
+            }
             this.hostEvents.emit({
                 action: "set-configuration",
-                configuration: {
-                    blockUuid: this.blockUuid,
-                }
+                configuration: hostObject.configuration
             });
         }
         else{

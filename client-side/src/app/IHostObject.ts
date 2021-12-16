@@ -2,7 +2,7 @@ import { PageConfiguration } from "@pepperi-addons/papi-sdk";
 
 export interface IHostObject{
 	configuration?: {
-		blockUuid : string
+		blockKey : string
 		[key : string] : any
 	};
     pageConfiguration?: PageConfiguration;

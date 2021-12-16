@@ -43,14 +43,13 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
             this.pageProduce = this.hostObject.pageConfiguration.Produce;
         }
         if(!this.blockKey){
-            this.blockKey = this.hostObject?.configuration?.blockUuid;
+            this.blockKey = this.hostObject?.configuration?.blockKey;
             this.filtersService.blockKey = this.blockKey;
         }
     }
     unsubscribe$: Subject<boolean> = new Subject();
 
     ngOnInit(): void {
-        // this.blockKey = this.hostObject?.configuration?.blockUuid;
         
         this.filtersService.jsonFilters$
             .pipe(map((blockFilters) => this.convertToSetFilters(blockFilters)), takeUntil(this.unsubscribe$))

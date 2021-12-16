@@ -47,6 +47,7 @@ export class GenericListComponent implements OnInit, AfterViewInit, AfterViewChe
     handler: (obj: any) => Promise<void>;
   }[]>;
   
+  
   @Input()
   dataSource: GenericListDataSource;
   dataObjects: any[] = []
