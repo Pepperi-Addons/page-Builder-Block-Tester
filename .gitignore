@@ -1,8 +1,9 @@
 /publish/api
 /publish/editors
-var_sk
-node_modules
 publish
+var_sk
+var_sk.old
+node_modules
 /server-side/node_modules
 /client-side/node_modules
-/cpi-side/node_modules
+.vscode
