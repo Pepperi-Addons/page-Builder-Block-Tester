@@ -1,4 +1,4 @@
-import { PageFilter, ResourceType, ResourceTypes } from "@pepperi-addons/papi-sdk";
+import { PageFilter, ResourceType } from "@pepperi-addons/papi-sdk";
 
 ({ providedIn: 'root' })
 export class FilterTarget implements PageFilter {

@@ -1,4 +1,3 @@
-// import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { PageProduce } from '@pepperi-addons/papi-sdk';
 import { ISetFilter } from '../block-filter/set-filters-editor/set-filters-editor.component';
@@ -6,7 +5,7 @@ import { IHostObject } from 'src/app/IHostObject';
 import { BlockFiltersService } from '../block-filter/block-filters.service';
 import { IBlockFilter } from '../block-filter/blockfilter.model';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Component({
     selector: 'producer-block[hostObject]',
@@ -27,23 +26,25 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
     }
 
     filters: Array<ISetFilter>;
+    private _pageProduce : ReplaySubject<PageProduce> = new ReplaySubject<PageProduce>();
+    public pageProduce$ = this._pageProduce.asObservable();
 
     pageProduce: PageProduce;
     blockKey: string;
 
-    // @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     @Output() onFiltersRaised: EventEmitter<Array<ISetFilter>> = new EventEmitter<Array<ISetFilter>>();
 
     constructor(
-        //private translate: TranslateService,
         private filtersService: BlockFiltersService) { }
 
     
 
     private handleHostObjectChange() {
-        if (this.hostObject?.pageConfiguration?.Produce) {
-            this.pageProduce = this.hostObject.pageConfiguration.Produce;
-        }
+        this._pageProduce.next(this.hostObject?.pageConfiguration?.Produce);
+        // if (this.hostObject?.pageConfiguration?.Produce) {
+        //     this.pageProduce = this.hostObject.pageConfiguration.Produce;
+        // }
+
         if(!this.blockKey){
             this.blockKey = this.hostObject?.configuration?.blockKey;
             this.filtersService.blockKey = this.blockKey;
@@ -56,7 +57,6 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
         this.filtersService.jsonFilters$
             .pipe(map((blockFilters) => this.convertToSetFilters(blockFilters)), takeUntil(this.unsubscribe$))
             .subscribe((setFilters) => this.filters = setFilters)
-        // this.hostEvents.emit({ action: 'block-loaded' });
     }
 
     ngOnDestroy(): void {
@@ -84,11 +84,6 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
     }
     onBtnClick() {
         this.onFiltersRaised.emit(this.filters);
-        // this.hostEvents.emit({
-        //     action: 'set-filters',
-        //     filters: this.filters
-        // });
-        // console.log(this.filters);
     }
 
 }

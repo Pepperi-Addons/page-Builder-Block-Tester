@@ -3,10 +3,9 @@
         <span>Producer Configuration</span>
     </div>
     
-    <producer-display [pageProduce]="pageProduce"> </producer-display>
+    <producer-display [pageProduceObs]="pageProduce$"> </producer-display>
 
-    <set-filters-editor [blockKey]="blockKey">
-        <!-- (blockFiltersChange)="onFiltersChange($event)" -->
+    <set-filters-editor [blockKey]="blockKey"> [title]="'Json Filter'"
     
     </set-filters-editor>
     

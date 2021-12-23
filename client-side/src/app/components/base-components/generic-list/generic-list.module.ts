@@ -5,8 +5,7 @@ import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
-// import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { PepAddonService, PepDataConvertorService, PepLayoutService } from '@pepperi-addons/ngx-lib';
+import { PepDataConvertorService, PepLayoutService } from '@pepperi-addons/ngx-lib';
 
 
 
@@ -18,29 +17,15 @@ import { PepAddonService, PepDataConvertorService, PepLayoutService } from '@pep
     PepMenuModule,
     PepTopBarModule,
     PepSearchModule,
-  //   TranslateModule.forChild({
-  //     loader: {
-  //         provide: TranslateLoader,
-  //         useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
-  //             PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
-  //         deps: [HttpClient, PepFileService, PepAddonService],
-  //     }, isolate: false
-  // }),
-
-
   ],
   exports:[GenericListComponent],
   providers:[
-    // TranslateStore,
     PepLayoutService,
-    // TranslateService,
     PepDataConvertorService
   ]
 })
 export class GenericListModule { 
   constructor(
-    // translate: TranslateService,
-    private pepAddonService: PepAddonService) {
-      // this.pepAddonService.setDefaultTranslateLang(translate);
+) {
   }
 }

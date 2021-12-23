@@ -1,5 +1,4 @@
-<p *ngIf="pageProduce"> Producer context: {{pageProduce?.Context?.Resource}}</p>
-
-<generic-list *ngIf="pageProduce?.Filters.length > 0" style="overflow: auto; height: 100%;" [viewType]="'table'" [allowSelection]="false" [inline]="true" 
-    [dataView]="listDataSource" [listData]="pageProduce?.Filters">
+<pep-textbox label="Context" disabled="true" [value]="produceContext"></pep-textbox>
+<generic-list [title]="'Allowed Filters'" [viewType]="'table'" [allowSelection]="false" [inline]="true" 
+    [dataView]="listDataSource" [listData]="pageFilters">
 </generic-list>

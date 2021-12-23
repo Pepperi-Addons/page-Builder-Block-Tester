@@ -4,8 +4,7 @@ import { PapiClient } from '@pepperi-addons/papi-sdk';
 import { Injectable } from '@angular/core';
 
 import {PepHttpService, PepDataConvertorService, PepSessionService, PepGuid} from '@pepperi-addons/ngx-lib';
-import { config } from 'src/app/addon.config';
-
+import { config } from '../../../app/addon.config';
 
 @Injectable({ providedIn: 'root' })
 export class AddonService {
@@ -20,8 +19,8 @@ export class AddonService {
             baseURL: this.papiBaseURL,
             token: this.session.getIdpToken(),
             addonUUID: this.addonUUID,
-            actionUUID: PepGuid.newGuid()
-            // suppressLogging:true
+            actionUUID: PepGuid.newGuid(),
+            suppressLogging:true
         })
     }
 

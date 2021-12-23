@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageContext, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
-import { OutputFileType } from 'typescript';
 import { Resource } from '../../options.model';
 import { FilterTarget } from './FilterTarget';
 

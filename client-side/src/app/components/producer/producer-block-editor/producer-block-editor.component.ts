@@ -1,7 +1,5 @@
-// import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardsGridDataView, PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
-// import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
 import { PepDialogData, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 import { pageFiltersDataView } from '../../cards-grid-dataview.default';
@@ -17,18 +15,14 @@ export type VisibleComponent = "list" | "add";
 export class ProducerBlockEditorComponent implements OnInit {
 
     @Input() hostObject: IHostObject;
-    // @Input() isBlockContainer: boolean = true;
-
 
     visibleComponent: VisibleComponent = "list";
 
     pageProduce: PageProduce;
 
     @Output() producerChange: EventEmitter<PageProduce> = new EventEmitter<PageProduce>();
-    // @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(
-        // private translate: TranslateService,
         public dialog: PepDialogService,
         ) { }
     private getDefaultPageProduce(): PageProduce {
@@ -39,37 +33,15 @@ export class ProducerBlockEditorComponent implements OnInit {
 
         return pageProduce;
     }
-    listDataView: CardsGridDataView;//: GenericListDataSource;
+    listDataView: CardsGridDataView;
 
     ngOnInit(): void {
         this.pageProduce = this.hostObject?.pageConfiguration?.Produce ?
             this.hostObject?.pageConfiguration?.Produce :
             this.getDefaultPageProduce();
-        // this.setBlockUuid();
         
         this.listDataView = pageFiltersDataView;
     }
-
-    // private setBlockUuid(){
-    //     if(this.hostObject?.configuration?.blockKey){
-    //         this._blockKey = this.hostObject?.configuration?.blockKey;
-    //     }
-    //     else if(this.isBlockContainer && !this.blockKey){
-    //         this.blockKey = PepGuid.newGuid();
-    //         const hostObject : IHostObject = {
-    //             configuration: {
-    //                 blockKey : this.blockKey
-    //             }
-    //         }
-    //         this.hostEvents.emit({
-    //             action: "set-configuration",
-    //             configuration: hostObject.configuration
-    //         });
-    //     }
-    //     else{
-    //         throw new Error("Block UUID is not defined!");
-    //     }
-    // }
 
     getActions = async (objs: ObjectsDataRow[]) => {
         let actions = [];
@@ -110,13 +82,6 @@ export class ProducerBlockEditorComponent implements OnInit {
         return pageFilters;
     }
 
-    // private getListDataSource(): GenericListDataSource {
-    //     return {
-
-    //         getDataView: pageFiltersDataView,
-    //     };
-    // }
-
     add() {
         this.visibleComponent = "add";
     }
@@ -143,20 +108,7 @@ export class ProducerBlockEditorComponent implements OnInit {
     }
 
     private onProduceChange() {
-        // if (this.isBlockContainer) {
-        //     this.hostEvents.emit({
-        //         action: "set-page-configuration",
-        //         pageConfiguration: {
-        //             Produce: this.pageProduce,
-        //         }
-        //     });
-        // }
-        // else {
-        //     this.producerChange.emit(this.pageProduce);
-        // }
         this.producerChange.emit(this.pageProduce);
-
-
     }
 
     addProducerFilter(producerFilter: PageFilter) {

@@ -1,8 +1,8 @@
-<generic-list *ngIf="visibleComponent === 'list'" [viewType]="'table'"
-	[allowMultipleSelection]="true" [inline]="false" [dataView]="listDataView" [listData]="blockFilters"
-	[getSelectActions]="getActions"> Block filters list
+<generic-list *ngIf="visibleComponent === 'list'" [title]="'Json Filters'" [viewType]="'table'" 
+	[allowMultipleSelection]="true" [inline]="true" [dataView]="listDataView" [listData]="blockFilters"
+	[getSelectActions]="getActions">
 	<div right-buttons>
-		<pep-button [value]="'Add block filter'" [iconName]="'number_plus'" [iconPosition]="'end'" [sizeType]="'sm'"
+		<pep-button [value]="'Add'" [iconName]="'number_plus'" [iconPosition]="'end'" [sizeType]="'sm'"
 			[styleType]="'strong'" [classNames]="'pep-spacing-element'" (buttonClick)="add()">
 		</pep-button>
 	</div>

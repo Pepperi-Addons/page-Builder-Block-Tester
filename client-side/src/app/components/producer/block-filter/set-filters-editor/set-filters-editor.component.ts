@@ -23,23 +23,13 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
 
   visibleComponent: string = "list";
 
-  // private _blockFiltersArray : Array<IBlockFilter>;
-
-  // set blockFiltersArray(value: Array<IBlockFilter>){
-  //   if(this._blockFiltersArray && value){
-  //     this.filtersService.post(value);
-  //   }
-  // }
-  // get blockFiltersArray(){
-  //   return this.filtersService.jsonFilters$;
-  // }
-
-  // blockFilters$ : Observable<IBlockFilter[]>;
   blockFilters: Array<IBlockFilter>;
   unsubscribe$: Subject<boolean> = new Subject();
 
-  listDataView: GridDataView;//: GenericListDataSource = this.getListDataSource();
+  listDataView: GridDataView;
+
   @Input() blockKey: string;
+  @Input() title: string;
 
   @Output() hostEvents = new EventEmitter<any>();
   @Output() blockFiltersChange = new EventEmitter<Array<ISetFilter>>();
@@ -117,113 +107,103 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
 
   };
 
-  // private getListDataSource(): GenericListDataSource {
-  //   return {
-  filtersDataView : GridDataView  = {
-        // const gridView: GridDataView = {
-          Type: 'Grid',
-          Fields: [
-            {
-              FieldID: 'resource',
-              Type: 'TextBox',
-              Title: "Resource",
-              Mandatory: false,
-              ReadOnly: true,
-              Style: {
-                Alignment: {
-                  Horizontal: "Left",
-                  Vertical: "Center",
-                },
-              }
-            },
-            {
-              FieldID: 'FieldType',
-              Type: 'TextBox',
-              Title: "FieldType",
-              Mandatory: false,
-              ReadOnly: true,
-              Style: {
-                Alignment: {
-                  Horizontal: "Left",
-                  Vertical: "Center",
-                },
-              }
-            },
-            {
-              FieldID: 'ApiName',
-              Type: 'TextBox',
-              Title: "ApiName",
-              Mandatory: false,
-              ReadOnly: true,
-              Style: {
-                Alignment: {
-                  Horizontal: "Left",
-                  Vertical: "Center",
-                },
-              }
-            },
-            {
-              FieldID: 'Operation',
-              Type: 'TextBox',
-              Title: "Operation",
-              Mandatory: false,
-              ReadOnly: true,
-              Style: {
-                Alignment: {
-                  Horizontal: "Left",
-                  Vertical: "Center",
-                },
-              }
-            },
-            {
-              FieldID: 'Values',
-              Type: 'TextBox',
-              Title: "Values",
-              Mandatory: false,
-              ReadOnly: true,
-              Style: {
-                Alignment: {
-                  Horizontal: "Left",
-                  Vertical: "Center",
-                },
-              }
-            }
-          ],
-          Columns: [
-            {
-              Width: 0
-            },
-            {
-              Width: 0
-            },
-            {
-              Width: 0
-            },
-            {
-              Width: 0
-            },
-            {
-              Width: 0
-            }
-          ]
+
+  filtersDataView: GridDataView = {
+    Type: 'Grid',
+    Fields: [
+      {
+        FieldID: 'resource',
+        Type: 'TextBox',
+        Title: "Resource",
+        Mandatory: false,
+        ReadOnly: true,
+        Style: {
+          Alignment: {
+            Horizontal: "Left",
+            Vertical: "Center",
+          },
         }
-        // return gridView;
-      // }
-    // }
-      
+      },
+      {
+        FieldID: 'FieldType',
+        Type: 'TextBox',
+        Title: "FieldType",
+        Mandatory: false,
+        ReadOnly: true,
+        Style: {
+          Alignment: {
+            Horizontal: "Left",
+            Vertical: "Center",
+          },
+        }
+      },
+      {
+        FieldID: 'ApiName',
+        Type: 'TextBox',
+        Title: "ApiName",
+        Mandatory: false,
+        ReadOnly: true,
+        Style: {
+          Alignment: {
+            Horizontal: "Left",
+            Vertical: "Center",
+          },
+        }
+      },
+      {
+        FieldID: 'Operation',
+        Type: 'TextBox',
+        Title: "Operation",
+        Mandatory: false,
+        ReadOnly: true,
+        Style: {
+          Alignment: {
+            Horizontal: "Left",
+            Vertical: "Center",
+          },
+        }
+      },
+      {
+        FieldID: 'Values',
+        Type: 'TextBox',
+        Title: "Values",
+        Mandatory: false,
+        ReadOnly: true,
+        Style: {
+          Alignment: {
+            Horizontal: "Left",
+            Vertical: "Center",
+          },
+        }
+      }
+    ],
+    Columns: [
+      {
+        Width: 0
+      },
+      {
+        Width: 0
+      },
+      {
+        Width: 0
+      },
+      {
+        Width: 0
+      },
+      {
+        Width: 0
+      }
+    ]
+  }
+  // return gridView;
+  // }
+  // }
+
   // }
 
   add() {
     this.visibleComponent = "add";
   }
-
-  // private onFiltersChange() {
-  //   let setFilters : Array<ISetFilter> = [];
-  //   this.blockFiltersArray.forEach((blockFilter) => {
-  //     setFilters.push(this.blockToSetFilter(blockFilter));
-  //   });
-  //   this.blockFiltersChange.emit(setFilters);
-  // }
 
   blockToSetFilter(blockFilter: IBlockFilter): ISetFilter {
     return {
@@ -241,11 +221,6 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
     let blockFiltersArray = this.blockFilters;
     blockFiltersArray.push(blockFilter);
     this.filtersService.updateFiltersData(blockFiltersArray);
-    // this.filtersService.post(this.blockFiltersArray).then((addonData) =>{
-    //   this.blockFiltersArray = this.filtersService.toFiltersArray(addonData as AddonDataFilter);
-    // });
-    // this.blockFiltersArray = this.blockFiltersArray.slice();
-    // this.onFiltersChange();
     this.visibleComponent = "list";
   }
 
