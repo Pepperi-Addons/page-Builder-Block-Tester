@@ -1,5 +1,5 @@
 import { PapiClient, AddonData } from '@pepperi-addons/papi-sdk'
-import { AddonService } from '../addon';
+import { AddonService } from '../../addon';
 import { IBlockFilter } from './blockfilter.model';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';

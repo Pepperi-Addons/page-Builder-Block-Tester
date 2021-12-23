@@ -1,10 +1,10 @@
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageConsume, PageContext, PageFilter } from '@pepperi-addons/papi-sdk';
 import { IHostObject } from 'src/app/IHostObject';
 
 @Component({
-    selector: 'consumer-block-editor',
+    selector: 'consumer-block-editor[hostObject]',
     templateUrl: './consumer-block-editor.component.html',
     styleUrls: ['./consumer-block-editor.component.scss']
 })
@@ -24,7 +24,6 @@ export class ConsumerBlockEditorComponent implements OnInit {
     }
 
     @Output() consumerChange: EventEmitter<PageConsume> = new EventEmitter<PageConsume>();
-    @Output() hostEvents: EventEmitter<any>  = new EventEmitter<any>();
     
     constructor() { }
 
@@ -37,12 +36,7 @@ export class ConsumerBlockEditorComponent implements OnInit {
 
     private onConsumeChange() {
         this.consumerChange.emit(this.pageConsume);
-        this.hostEvents.emit({
-            action: "set-page-configuration",
-            pageConfiguration: {
-                Consume: this.pageConsume,
-            }
-        });
+        
     }
 
     ngOnChanges(e: any): void { 

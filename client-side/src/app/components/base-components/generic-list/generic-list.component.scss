@@ -1,10 +1,10 @@
-@import 'ngx-lib/src/core/style/abstracts/mixins';
-@import 'ngx-lib/src/core/style/abstracts/variables';
+// @import 'ngx-lib/src/core/style/abstracts/mixins';
+// @import 'ngx-lib/src/core/style/abstracts/variables';
 
-.inline-top-bar-container {
-    margin-top: 1rem;
-}
-.list-wrapper {
+// .inline-top-bar-container {
+//     margin-top: 1rem;
+// }
+.generic-list-wrapper {
     overflow: auto;
     // height: 250px;
     width: 100%;

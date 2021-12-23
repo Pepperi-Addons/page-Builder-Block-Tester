@@ -1,9 +1,9 @@
-<div>
-	Consumer display
-	<p>Context: {{pageConsume?.Context?.Resource}}</p>
-	<p>Resource: {{pageConsume?.Filter?.Resource}}</p>
-	<p>Fields: {{pageConsume?.Filter?.Fields}}</p>
-	<pep-textarea [value]="consumedFilter" label="Consumed filter" xAlignment="left" [rowSpan]="4" [visible]="true"
-		[disabled]="true" [showTitle]="true"></pep-textarea>>
-	<!-- <p>Consumed filter: {{consumedFilter}}</p> -->
+<div  class="display-container">
+	<!-- <pep-textbox [label]="groupField.Key" disabled="true" [value]="groupField.Value"></pep-textbox> -->
+
+	<pep-textbox label="Context" disabled="true" [value]="pageConsume?.Context?.Resource" class="item"></pep-textbox>
+	<pep-textbox label="Resource" disabled="true" [value]="pageConsume?.Filter?.Resource" class="item"></pep-textbox>
+	<pep-textbox label="Fields" disabled="true" [value]="pageConsume?.Filter?.Fields" class="fields-item"></pep-textbox>
 </div>
+<pep-textarea *ngIf="consumedFilter" [value]="consumedFilter" label="Consumed filter" xAlignment="left" [rowSpan]="4" [visible]="true"
+		disabled="true" [showTitle]="true"></pep-textarea>

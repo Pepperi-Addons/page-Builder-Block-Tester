@@ -1,15 +1,21 @@
 <div> 
-    <p>{{blockKey}}</p>
+    <div class="content pep-border-bottom">
+        <div class="title-lg ellipsis">
+            <span>Producer Configuration</span>
+        </div>
+    </div>
+    
+    
 	<context-resource [contextResource] = "pageProduce?.Context?.Resource"  (contextChange)="onContextChange($event)">
 	</context-resource>
-    <pep-top-bar [title]="'Charts Manager' | translate">
+    <pep-top-bar  [title]="'Producer editor'">
     </pep-top-bar>
 
     <div >
-            <generic-list style="overflow: auto; height: 100%;" *ngIf="visibleComponent === 'list'" [viewType]="'table'" [allowMultipleSelection]="true" [inline]="true" 
-				[dataSource]="listDataSource" [listData]="pageProduce?.Filters" [getSelectActions]="getActions">
+            <generic-list style="overflow: auto; height: 100%;" *ngIf="visibleComponent === 'list'" [viewType]="'table'" [allowMultipleSelection]="true" [inline]="false" 
+				[dataView]="listDataView" [listData]="pageProduce?.Filters" [getSelectActions]="getActions">
                 <div right-buttons>
-                    <pep-button [value]="'Add' | translate" [iconName]="'number_plus'" [iconPosition]="'end'" [sizeType]="'sm'" [styleType]="'strong'" [classNames]="'pep-spacing-element'" (buttonClick)="add()"></pep-button>
+                    <pep-button [value]="'Add'" [iconName]="'number_plus'" [iconPosition]="'end'" [sizeType]="'sm'" [styleType]="'strong'" [classNames]="'pep-spacing-element'" (buttonClick)="add()"></pep-button>
                 </div>
             </generic-list>
 			<addon-filter-target *ngIf="visibleComponent === 'add'" [target]="'producer'" (setTargetFilter)="addProducerFilter($event)" > 

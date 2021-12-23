@@ -1,0 +1,14 @@
+<div>
+	<pep-checkbox xAlignment="left" label="Enable consumer" showTitle=false [value]="consumerEnabled"
+		(valueChange)="onCheckboxChange('consumer', $event)">
+	</pep-checkbox>
+	<consumer-block-editor *ngIf="consumerEnabled" [hostObject]="hostObject"
+		(consumerChange)="onConsumerChange($event)"></consumer-block-editor>
+</div>
+<div>
+	<pep-checkbox xAlignment="left" label="Enable producer" showTitle=false [value]="producerEnabled"
+		(valueChange)="onCheckboxChange('producer', $event)">
+	</pep-checkbox>
+	<producer-block-editor *ngIf="producerEnabled" [hostObject]="hostObject"
+		(producerChange)="onProducerChange($event)"></producer-block-editor>
+</div>

@@ -1,9 +1,16 @@
-<producer-display [pageProduce]="pageProduce"> </producer-display>
+<div class="producer-block-container">
+    <div class="title-xl ellipsis block-tester-title">
+        <span>Producer Configuration</span>
+    </div>
+    
+    <producer-display [pageProduce]="pageProduce"> </producer-display>
 
-<pep-button value="raise filter" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
-    (click)="onBtnClick();" style="width: 200px;">
-</pep-button>
-<set-filters-editor  [blockKey]="blockKey">
-    <!-- (blockFiltersChange)="onFiltersChange($event)" -->
-
-</set-filters-editor>
+    <set-filters-editor [blockKey]="blockKey">
+        <!-- (blockFiltersChange)="onFiltersChange($event)" -->
+    
+    </set-filters-editor>
+    
+    <pep-button value="raise filter" sizeType="md" styleType="strong" classNames="pep-spacing-element"
+        (click)="onBtnClick();" style="width: 200px;" class="raise-filter-button">
+    </pep-button>
+</div>

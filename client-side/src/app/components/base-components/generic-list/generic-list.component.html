@@ -1,4 +1,4 @@
-<div class="addon-page-container" style="max-width: 80rem;">
+<div style="max-width: 80rem;" >
     <div [ngClass]="{ 'inline-top-bar-container' : inline }">
         <pep-top-bar [title]="title" [inline]="inline">
             <div header-start-content>
@@ -15,24 +15,24 @@
         </pep-top-bar>
     </div>
 
-    <ng-container *ngIf="inline; then inlineBlock; else regularBlock"></ng-container>
+    <ng-container *ngIf="inline; then inlineBlock; else regularBlock" ></ng-container>
 
     <ng-template #inlineBlock>
         <ng-container *ngTemplateOutlet="listTemplate"></ng-container>
     </ng-template>
     <ng-template #regularBlock>
-        <div class="main-content">
-            <div class="content">
+        <div class="generic-list-main-content">
+            <div class="generic-list-content">
                 <ng-container *ngTemplateOutlet="listTemplate"></ng-container>
             </div>
         </div>
     </ng-template>
     <ng-template #listTemplate>
-        <div class="list-wrapper" #listContainer id="listContainer" [ngStyle]="{'height':listHeight}">
+        <div class="generic-list-wrapper" #listContainer id="listContainer" [ngStyle]="{'height':listHeight}" >
             <pep-list [viewType]="viewType" [supportSorting]="supportSorting" [supportResizing]="false"
             [parentScroll]="listContainer" [showCardSelection]="true"
              [selectionTypeForActions]="allowMultipleSelection ? 'multi' : (allowSelection ? 'single' : 'none')"
-              [noDataFoundMsg]="'No data' | translate" (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
+              [noDataFoundMsg]="'No data'" (fieldClick)="onCustomizeFieldClick($event)" (selectedItemsChange)="selectedRowsChanged($event)">
             </pep-list>
         </div>
     </ng-template>

@@ -6,7 +6,6 @@ import { PepLayoutService, PepScreenSizeType } from '@pepperi-addons/ngx-lib';
 import { AddonService, PepperiTableComponent } from './index';
 import { Observable } from 'rxjs';
 import { InstalledAddon, ResourceType } from '@pepperi-addons/papi-sdk';
-import { ResourceTypes } from 'papi-sdk-web';
 import { FilterTarget } from '../base-components/filter-target/FilterTarget';
 
 

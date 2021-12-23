@@ -1,0 +1,15 @@
+.display-container{ 
+	display: flex; 
+	flex-direction: row;
+	flex-wrap: wrap;
+	column-gap: 5px;
+	margin-top: 5px;
+	margin-right: 10px;
+	margin-left:10px;
+ }
+ .item{
+	 flex: 1 1 auto; 
+ }
+ .fields-item{
+	 flex: 4 1 50%;
+ }

@@ -1,7 +1,7 @@
 import { Client, Request } from "@pepperi-addons/debug-server/dist";
 import { AddonData, PapiClient } from "@pepperi-addons/papi-sdk";
 
-const TABLE_NAME = "JsonFilter";
+export const JSON_FILTERS_TABLE = "JsonFilter";
 
 export class BlockFiltersService{
 
@@ -25,13 +25,13 @@ export class BlockFiltersService{
             BlockFiltersJson: body.BlockFiltersJson
         };
 
-        return this.papiClient.addons.data.uuid(this.client.AddonUUID).table(TABLE_NAME).upsert(addonData); 
+        return this.papiClient.addons.data.uuid(this.client.AddonUUID).table(JSON_FILTERS_TABLE).upsert(addonData); 
     }
 
     async get(request : Request) : Promise<AddonData>{
         // const body = request.body;
         const key : string = this.getBlockKey(request);
-        return this.papiClient.addons.data.uuid(this.client.AddonUUID).table(TABLE_NAME).key(key).get();
+        return this.papiClient.addons.data.uuid(this.client.AddonUUID).table(JSON_FILTERS_TABLE).key(key).get();
 	}
 
     getBlockKey(request : Request) :  string{

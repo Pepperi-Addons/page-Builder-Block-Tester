@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
-import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+// import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 
 import { PepAddonService, PepFileService, PepCustomizationService } from '@pepperi-addons/ngx-lib';
 import { PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
@@ -19,21 +19,21 @@ import { ConsumerDisplayModule } from '../consumer-display/consumer-display.modu
         CommonModule,
         // HttpClientModule,
         // When not using module as sub-addon please remark this for not loading twice resources
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
-                    PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
-                deps: [HttpClient, PepFileService, PepAddonService],
-            }, isolate: false
-        }),
+        // TranslateModule.forChild({
+        //     loader: {
+        //         provide: TranslateLoader,
+        //         useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
+        //             PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
+        //         deps: [HttpClient, PepFileService, PepAddonService],
+        //     }, isolate: false
+        // }),
         PepImagesFilmstripModule,
         ConsumerDisplayModule
     ],
     exports: [ConsumerBlockComponent],
     providers: [
         // HttpClient,
-        TranslateStore,
+        // TranslateStore,
         // PepHttpService,
         // PepAddonService,
         // PepFileService,
@@ -43,9 +43,9 @@ import { ConsumerDisplayModule } from '../consumer-display/consumer-display.modu
 })
 export class ConsumerBlockModule {
     constructor(
-        translate: TranslateService,
-        private pepAddonService: PepAddonService
+        // translate: TranslateService,
+        // private pepAddonService: PepAddonService
     ) {
-        this.pepAddonService.setDefaultTranslateLang(translate);
+        // this.pepAddonService.setDefaultTranslateLang(translate);
     }
 }

@@ -10,7 +10,3 @@ export interface IFilter{
 	Operation?: any | undefined;
 	Values?: any[] | undefined;
 }
-  export interface IConfigBlockFilters{
-	  Id: string;
-	  Filters?: Array<IBlockFilter>;
-  }

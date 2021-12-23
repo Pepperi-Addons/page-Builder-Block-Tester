@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 import { GridDataView, ResourceType } from '@pepperi-addons/papi-sdk';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
-import { BlockFilterData, BlockFiltersService } from '../block-filters.service';
+import { BlockFiltersService } from '../block-filters.service';
 import { IBlockFilter, IFilter } from '../blockfilter.model';
 
 
@@ -39,7 +38,7 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
   blockFilters: Array<IBlockFilter>;
   unsubscribe$: Subject<boolean> = new Subject();
 
-  listDataSource: GenericListDataSource = this.getListDataSource();
+  listDataView: GridDataView;//: GenericListDataSource = this.getListDataSource();
   @Input() blockKey: string;
 
   @Output() hostEvents = new EventEmitter<any>();
@@ -56,13 +55,12 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.listDataView = this.filtersDataView;
     this.filtersService.blockKey = this.blockKey;
-    this.filtersService.jsonFilters$.pipe(takeUntil(this.unsubscribe$))
+    this.filtersService.jsonFilters$
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: IBlockFilter[]) => this.blockFilters = data);
-    // this.blockFilters$ = this.filtersService.jsonFilters$;
-    // this.filtersService.get().then((addonData) =>{
-    //   this.blockFiltersArray = this.filtersService.toFiltersArray(addonData as AddonDataFilter)
-    // });
+
   }
 
 
@@ -116,14 +114,13 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
       }
     }
     this.filtersService.updateFiltersData(blockFiltersArray);
-    // this.blockFiltersArray = this.blockFiltersArray.slice();
-    // this.onFiltersChange();
+
   };
 
-  private getListDataSource(): GenericListDataSource {
-    return {
-      getDataView: () => {
-        const gridView: GridDataView = {
+  // private getListDataSource(): GenericListDataSource {
+  //   return {
+  filtersDataView : GridDataView  = {
+        // const gridView: GridDataView = {
           Type: 'Grid',
           Fields: [
             {
@@ -210,11 +207,11 @@ export class SetFiltersEditorComponent implements OnInit, OnDestroy {
             }
           ]
         }
-        return of(gridView);
-      }
-    }
-      ;
-  }
+        // return gridView;
+      // }
+    // }
+      
+  // }
 
   add() {
     this.visibleComponent = "add";

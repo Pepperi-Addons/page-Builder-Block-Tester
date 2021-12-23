@@ -1,44 +1,34 @@
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
-import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
+import { CardsGridDataView, PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
+// import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
 import { PepDialogData, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
-import { ObjectsDataRow, PepGuid } from '@pepperi-addons/ngx-lib';
-import { pageFiltersDataView } from '../../list-data-source.service';
+import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
+import { pageFiltersDataView } from '../../cards-grid-dataview.default';
 import { IHostObject } from 'src/app/IHostObject';
-import { BlockFiltersService } from '../../block-filter/block-filters.service';
 
 export type VisibleComponent = "list" | "add";
 
 @Component({
-    selector: 'producer-block-editor',
+    selector: 'producer-block-editor[hostObject]',
     templateUrl: './producer-block-editor.component.html',
     styleUrls: ['./producer-block-editor.component.scss']
 })
 export class ProducerBlockEditorComponent implements OnInit {
 
     @Input() hostObject: IHostObject;
-    @Input() isBlockContainer: boolean = true;
+    // @Input() isBlockContainer: boolean = true;
 
-    private _blockKey : string;
-
-    set blockKey(value : string){
-        if(!this._blockKey && value){
-            this._blockKey = value;
-        }
-    }
-    get blockKey(){
-        return this._blockKey;
-    }
 
     visibleComponent: VisibleComponent = "list";
 
     pageProduce: PageProduce;
 
     @Output() producerChange: EventEmitter<PageProduce> = new EventEmitter<PageProduce>();
-    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+    // @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translate: TranslateService,
+    constructor(
+        // private translate: TranslateService,
         public dialog: PepDialogService,
         ) { }
     private getDefaultPageProduce(): PageProduce {
@@ -49,37 +39,37 @@ export class ProducerBlockEditorComponent implements OnInit {
 
         return pageProduce;
     }
-    listDataSource: GenericListDataSource;
+    listDataView: CardsGridDataView;//: GenericListDataSource;
 
     ngOnInit(): void {
         this.pageProduce = this.hostObject?.pageConfiguration?.Produce ?
             this.hostObject?.pageConfiguration?.Produce :
             this.getDefaultPageProduce();
-        this.setBlockUuid();
+        // this.setBlockUuid();
         
-        this.listDataSource = this.getListDataSource();
+        this.listDataView = pageFiltersDataView;
     }
 
-    private setBlockUuid(){
-        if(this.hostObject?.configuration?.blockKey){
-            this._blockKey = this.hostObject?.configuration?.blockKey;
-        }
-        else if(this.isBlockContainer && !this.blockKey){
-            this.blockKey = PepGuid.newGuid();
-            const hostObject : IHostObject = {
-                configuration: {
-                    blockKey : this.blockKey
-                }
-            }
-            this.hostEvents.emit({
-                action: "set-configuration",
-                configuration: hostObject.configuration
-            });
-        }
-        else{
-            throw new Error("Block UUID is not defined!");
-        }
-    }
+    // private setBlockUuid(){
+    //     if(this.hostObject?.configuration?.blockKey){
+    //         this._blockKey = this.hostObject?.configuration?.blockKey;
+    //     }
+    //     else if(this.isBlockContainer && !this.blockKey){
+    //         this.blockKey = PepGuid.newGuid();
+    //         const hostObject : IHostObject = {
+    //             configuration: {
+    //                 blockKey : this.blockKey
+    //             }
+    //         }
+    //         this.hostEvents.emit({
+    //             action: "set-configuration",
+    //             configuration: hostObject.configuration
+    //         });
+    //     }
+    //     else{
+    //         throw new Error("Block UUID is not defined!");
+    //     }
+    // }
 
     getActions = async (objs: ObjectsDataRow[]) => {
         let actions = [];
@@ -89,20 +79,10 @@ export class ProducerBlockEditorComponent implements OnInit {
             throw new Error("PageFilter objects for actions is 'undefined'");
         }
         if (objs.length > 0) {
-            const pageFilters: PageFilter[] = [];
-            objs.forEach((row) => {
-                const resource = row.Fields.find(x => x.ApiName == "Resource").FormattedValue;
-                const fields = row.Fields.find(x => x.ApiName == "Fields").FormattedValue;
-                console.log(`From producer-editor: ${resource}, ${fields}`);
-                pageFilters.push(
-                    {
-                        Resource: resource,
-                        Fields: fields
-                    })
-            });
+            const pageFilters: PageFilter[] = this.dataRowsToPageFilters(objs);
             actions.unshift(
                 {
-                    title: this.translate.instant("Delete"),
+                    title: "Delete",
                     handler: async () => {
 
                         console.log(`From producer-editor: ${pageFilters}`);
@@ -115,12 +95,27 @@ export class ProducerBlockEditorComponent implements OnInit {
         return actions;
     }
 
-    private getListDataSource(): GenericListDataSource {
-        return {
-
-            getDataView: pageFiltersDataView,
-        };
+    private dataRowsToPageFilters(objs: ObjectsDataRow[]) {
+        const pageFilters: PageFilter[] = [];
+        objs.forEach((row) => {
+            const resource = row.Fields.find(x => x.ApiName == "Resource").FormattedValue;
+            const fields = row.Fields.find(x => x.ApiName == "Fields").FormattedValue;
+            console.log(`From producer-editor: ${resource}, ${fields}`);
+            pageFilters.push(
+                {
+                    Resource: resource,
+                    Fields: fields
+                });
+        });
+        return pageFilters;
     }
+
+    // private getListDataSource(): GenericListDataSource {
+    //     return {
+
+    //         getDataView: pageFiltersDataView,
+    //     };
+    // }
 
     add() {
         this.visibleComponent = "add";
@@ -148,17 +143,18 @@ export class ProducerBlockEditorComponent implements OnInit {
     }
 
     private onProduceChange() {
-        if (this.isBlockContainer) {
-            this.hostEvents.emit({
-                action: "set-page-configuration",
-                pageConfiguration: {
-                    Produce: this.pageProduce,
-                }
-            });
-        }
-        else {
-            this.producerChange.emit(this.pageProduce);
-        }
+        // if (this.isBlockContainer) {
+        //     this.hostEvents.emit({
+        //         action: "set-page-configuration",
+        //         pageConfiguration: {
+        //             Produce: this.pageProduce,
+        //         }
+        //     });
+        // }
+        // else {
+        //     this.producerChange.emit(this.pageProduce);
+        // }
+        this.producerChange.emit(this.pageProduce);
 
 
     }

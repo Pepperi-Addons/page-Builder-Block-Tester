@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
-import { Resource } from '../../options.model';
+import { Resource } from '../../../options.model';
 import { IBlockFilter } from '../blockfilter.model';
 
 

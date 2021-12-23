@@ -1,15 +1,15 @@
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { PageProduce } from '@pepperi-addons/papi-sdk';
-import { ISetFilter } from '../../block-filter/set-filters-editor/set-filters-editor.component';
+import { ISetFilter } from '../block-filter/set-filters-editor/set-filters-editor.component';
 import { IHostObject } from 'src/app/IHostObject';
-import { BlockFiltersService } from '../../block-filter/block-filters.service';
-import { IBlockFilter } from '../../block-filter/blockfilter.model';
+import { BlockFiltersService } from '../block-filter/block-filters.service';
+import { IBlockFilter } from '../block-filter/blockfilter.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'producer-block',
+    selector: 'producer-block[hostObject]',
     templateUrl: './producer-block.component.html',
     styleUrls: ['./producer-block.component.css']
 })
@@ -31,9 +31,11 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
     pageProduce: PageProduce;
     blockKey: string;
 
-    @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+    // @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onFiltersRaised: EventEmitter<Array<ISetFilter>> = new EventEmitter<Array<ISetFilter>>();
 
-    constructor(private translate: TranslateService,
+    constructor(
+        //private translate: TranslateService,
         private filtersService: BlockFiltersService) { }
 
     
@@ -54,7 +56,7 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
         this.filtersService.jsonFilters$
             .pipe(map((blockFilters) => this.convertToSetFilters(blockFilters)), takeUntil(this.unsubscribe$))
             .subscribe((setFilters) => this.filters = setFilters)
-        this.hostEvents.emit({ action: 'block-loaded' });
+        // this.hostEvents.emit({ action: 'block-loaded' });
     }
 
     ngOnDestroy(): void {
@@ -81,11 +83,12 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
         }
     }
     onBtnClick() {
-        this.hostEvents.emit({
-            action: 'set-filters',
-            filters: this.filters
-        });
-        console.log(this.filters);
+        this.onFiltersRaised.emit(this.filters);
+        // this.hostEvents.emit({
+        //     action: 'set-filters',
+        //     filters: this.filters
+        // });
+        // console.log(this.filters);
     }
 
 }

@@ -1,6 +1,6 @@
 import { PapiClient, InstalledAddon, Relation, NgComponentRelation, AddonDataScheme } from '@pepperi-addons/papi-sdk'
 import { Client } from '@pepperi-addons/debug-server';
-import { FiltersTableName } from '../global.consts'
+import { JSON_FILTERS_TABLE } from './block-filters.service';
 
 class MyService {
 
@@ -31,7 +31,7 @@ class MyService {
 
     async createFiltersSchema(){
         const tableScheme : AddonDataScheme = {
-            Name: FiltersTableName,
+            Name: JSON_FILTERS_TABLE,
             Type: 'data',
             Fields: {
                 BlockFiltersJson: {

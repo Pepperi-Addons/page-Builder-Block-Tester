@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
 import { of } from 'rxjs';
-import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
-import { pageFiltersDataView } from '../../list-data-source.service';
+// import { GenericListDataSource } from '../../base-components/generic-list/generic-list.component';
+import { pageFiltersDataView } from '../../cards-grid-dataview.default';
 
 @Component({
   selector: 'producer-display[pageProduce]',
@@ -37,15 +37,19 @@ export class ProducerDisplayComponent implements OnInit {
 
   displayedColumns: string[] = ['Resource', 'Fields'];
   dataSource = new MatTableDataSource<PageFilter>([]);
-  listDataSource: GenericListDataSource = this.getListDataSource();
+  // listDataSource: GenericListDataSource = this.getListDataSource();
+  listDataSource = pageFiltersDataView;
 
-  private getListDataSource(): GenericListDataSource {
-    return {
-      getDataView: pageFiltersDataView,
-    };
-  }
 
-  constructor(private translate: TranslateService) {
+  // private getListDataSource(): GenericListDataSource {
+  //   return {
+  //     getDataView: pageFiltersDataView,
+  //   };
+  // }
+
+  constructor(
+    // private translate: TranslateService
+    ) {
 
   }
 

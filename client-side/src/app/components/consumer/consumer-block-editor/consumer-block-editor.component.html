@@ -1,31 +1,9 @@
-<!-- <div>
-    <p>Consumer context: {{consumerContext}}</p>
-    <p>Consumer resource: {{consumerResource}}</p>
-    <p>Consumer fields: {{consumerFields}}</p>
-
-    <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
-    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p>
-    
-</div> -->
-
-<!-- <div>
-    <p>Consumer context: {{pageConfiguration?.Consume?.Context?.Resource}}</p>
-    <p>Consumer resource: {{pageConfiguration?.Consume?.Filter?.Resource}}</p>
-    <p>Consumer fields: {{pageConfiguration?.Consume?.Filter?.Fields}}</p>
-</div>
-
-<p>Producer context: {{pageConfiguration?.Produce?.Context?.Resource}}</p>
-    <p *ngFor="let producerFilter of pageConfiguration?.Produce?.Filters; let i = index">
-        {{i}}: {{producerFilter?.Resource}}
-        <br>
-        {{i}}: {{producerFilter?.Fields}}
-        </p> -->
-<!-- <div>
-    <pep-select #pepSelect [value]="configuration?.consumerResource" [options]="options" (valueChange)="onConsumerResourceChange($event)" [label]="'Select_Label' | translate "
-    ></pep-select>
-</div> -->
-<div [id]="'consumer-editor'">
-    Consumer Configuration
+<div [id]="'consumer-editor'" class="consumer-block-editor">
+    <div class="content pep-border-bottom">
+        <div class="title-lg ellipsis">
+            <span>Consumer Configuration</span>
+        </div>
+    </div>
     <context-resource [contextResource] = "pageConsume?.Context?.Resource" (contextChange)="onContextChange($event)">
     </context-resource>
     <addon-filter-target [pageFilter] = "pageConsume?.Filter" [target]="'consumer'" (setTargetFilter)="onFilterChange($event)"> 

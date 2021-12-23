@@ -1,0 +1,5 @@
+<consumer-block *ngIf="consumerEnabled" [hostObject]="hostObject"></consumer-block>
+
+
+<producer-block *ngIf="producerEnabled" [hostObject]="hostObject" (onFiltersRaised)="setJsonFilters($event)">
+</producer-block>

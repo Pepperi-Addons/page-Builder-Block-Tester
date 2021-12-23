@@ -5,10 +5,8 @@ import { PepListModule } from '@pepperi-addons/ngx-lib/list';
 import { PepMenuModule } from '@pepperi-addons/ngx-lib/menu';
 import { PepTopBarModule } from '@pepperi-addons/ngx-lib/top-bar';
 import { PepSearchModule } from '@pepperi-addons/ngx-lib/search';
-import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { PepAddonService, PepDataConvertorService, PepFileService, PepLayoutService } from '@pepperi-addons/ngx-lib';
-import { config } from '../../addon.config';
+// import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { PepAddonService, PepDataConvertorService, PepLayoutService } from '@pepperi-addons/ngx-lib';
 
 
 
@@ -20,29 +18,29 @@ import { config } from '../../addon.config';
     PepMenuModule,
     PepTopBarModule,
     PepSearchModule,
-    TranslateModule.forChild({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
-              PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
-          deps: [HttpClient, PepFileService, PepAddonService],
-      }, isolate: false
-  }),
+  //   TranslateModule.forChild({
+  //     loader: {
+  //         provide: TranslateLoader,
+  //         useFactory: (http: HttpClient, fileService: PepFileService, addonService: PepAddonService) => 
+  //             PepAddonService.createDefaultMultiTranslateLoader(http, fileService, addonService, config.AddonUUID),
+  //         deps: [HttpClient, PepFileService, PepAddonService],
+  //     }, isolate: false
+  // }),
 
 
   ],
   exports:[GenericListComponent],
   providers:[
-    TranslateStore,
+    // TranslateStore,
     PepLayoutService,
-    TranslateService,
+    // TranslateService,
     PepDataConvertorService
   ]
 })
 export class GenericListModule { 
   constructor(
-    translate: TranslateService,
+    // translate: TranslateService,
     private pepAddonService: PepAddonService) {
-      this.pepAddonService.setDefaultTranslateLang(translate);
+      // this.pepAddonService.setDefaultTranslateLang(translate);
   }
 }
