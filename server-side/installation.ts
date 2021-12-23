@@ -46,33 +46,7 @@ async function upsertPageBlockRelations(client: Client) {
             ModuleName: "BlockTesterModule",
             EditorComponentName: 'BlockTesterEditorComponent',
             EditorModuleName: 'BlockTesterEditorModule'
-        }//,
-        // {
-        //     RelationName: "PageBlock",
-        //     Name: "Ofer Producer",
-        //     Description: "Ofer Producer example",
-        //     Type: "NgComponent",
-        //     SubType: "NG12",
-        //     AddonUUID: client.AddonUUID,
-        //     AddonRelativeURL: "producer",
-        //     ComponentName: "ProducerBlockComponent",
-        //     ModuleName: "ProducerBlockModule",
-        //     EditorComponentName: 'ProducerBlockEditorComponent',
-        //     EditorModuleName: 'ProducerBlockEditorModule'
-        // },
-        // {
-        //     RelationName: "PageBlock",
-        //     Name: "Ofer Consumer",
-        //     Description: "Ofer Consumer example",
-        //     Type: "NgComponent",
-        //     SubType: "NG12",
-        //     AddonUUID: client.AddonUUID,
-        //     AddonRelativeURL: "consumer",
-        //     ComponentName: "ConsumerBlockComponent",
-        //     ModuleName: "ConsumerBlockModule",
-        //     EditorComponentName: 'ConsumerBlockEditorComponent',
-        //     EditorModuleName: 'ConsumerBlockEditorModule'
-        // }
+        }
     ]
 
     // pageComponentRelation.Key = `${pageComponentRelation.Name}_${pageComponentRelation.AddonUUID}_${pageComponentRelation.RelationName}`;
