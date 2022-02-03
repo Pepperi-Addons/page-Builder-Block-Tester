@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
-import { Resource } from '../../../options.model';
+import { SelectOptions } from '../../../options.model';
 import { IBlockFilter } from '../blockfilter.model';
 
 
@@ -25,8 +25,8 @@ export class AddBlockFilterComponent implements OnInit {
  
   buttonText: string = "Add block filter";
 
-  constructor(resource : Resource) {
-    this.options = resource.options;
+  constructor(selectOptions : SelectOptions) {
+    this.options = selectOptions.resourceType;
   }
 
   ngOnInit(): void {

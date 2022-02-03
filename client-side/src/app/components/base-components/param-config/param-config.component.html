@@ -1,0 +1,14 @@
+<div>
+	<pep-checkbox xAlignment="left" label="Enable consumer" showTitle=false [value]="consumerEnabled"
+		(valueChange)="onCheckboxChange('consumer', $event)">
+	</pep-checkbox>
+	<pep-checkbox xAlignment="left" label="Enable consumer" showTitle=false [value]="consumerEnabled"
+		(valueChange)="onCheckboxChange('consumer', $event)">
+	</pep-checkbox>
+	<pep-select id="paramType" [value]="type" label="Type" (valueChange)="onChange($event)" [options]="typeOptions"
+    ></pep-select>
+	<param-filter-config *ngIf="type === 'Filter'" (saveParam)="onParamSaved($event)"></param-filter-config>
+	<param-string-config *ngIf="type === 'String'" (saveParam)="onParamSaved($event)"></param-string-config>
+</div>
+
+

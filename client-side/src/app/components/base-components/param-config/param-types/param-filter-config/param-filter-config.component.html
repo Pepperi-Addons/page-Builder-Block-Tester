@@ -1,0 +1,10 @@
+<div>
+    <pep-select id="resourceType" [value]="resourceType" [options]="resourceOptions" (valueChange)="onResourceChange($event)" label="'Resource Type'"
+    ></pep-select>
+    <pep-textbox id="filterFields" [value]="fields" label="'Fields'" type="text" (valueChange)="onFieldsChange($event)">
+    </pep-textbox>
+    <pep-button value="Save Filter Configuration" sizeType="sm" styleType="regular" classNames="pep-spacing-element"
+    (click)="onSaveClick();" ></pep-button>
+</div>
+
+

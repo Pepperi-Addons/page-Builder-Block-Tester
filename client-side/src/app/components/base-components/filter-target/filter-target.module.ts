@@ -5,7 +5,7 @@ import { PepSelectModule } from '@pepperi-addons/ngx-lib/select';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { FilterTarget } from './FilterTarget';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
-import { Resource } from '../../options.model';
+import { SelectOptions } from '../../options.model';
 
 
 
@@ -18,7 +18,7 @@ import { Resource } from '../../options.model';
   exports: [FilterTargetComponent],
   providers: [
     FilterTarget,
-    Resource
+    SelectOptions
 ],
   imports: [
     CommonModule,

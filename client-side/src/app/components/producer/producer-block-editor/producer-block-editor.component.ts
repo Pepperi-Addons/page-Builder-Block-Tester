@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CardsGridDataView, PageContext, PageFilter, PageProduce } from '@pepperi-addons/papi-sdk';
+import { CardsGridDataView, PageConfigurationParameter, PageFilter } from '@pepperi-addons/papi-sdk';
 import { PepDialogData, PepDialogService } from '@pepperi-addons/ngx-lib/dialog';
 import { ObjectsDataRow } from '@pepperi-addons/ngx-lib';
 import { pageFiltersDataView } from '../../cards-grid-dataview.default';
@@ -18,26 +18,24 @@ export class ProducerBlockEditorComponent implements OnInit {
 
     visibleComponent: VisibleComponent = "list";
 
-    pageProduce: PageProduce;
+    pageProduce: PageConfigurationParameter[];
 
-    @Output() producerChange: EventEmitter<PageProduce> = new EventEmitter<PageProduce>();
+    @Output() producerChange: EventEmitter<PageConfigurationParameter[]> = new EventEmitter<PageConfigurationParameter[]>();
 
     constructor(
         public dialog: PepDialogService,
         ) { }
-    private getDefaultPageProduce(): PageProduce {
-        const pageProduce: PageProduce = {
-            Filters: [],
-            Context: undefined
-        };
+    private getDefaultPageProduce(): PageConfigurationParameter[] {
+        const pageProduce: PageConfigurationParameter[] = [];
 
         return pageProduce;
     }
     listDataView: CardsGridDataView;
 
     ngOnInit(): void {
-        this.pageProduce = this.hostObject?.pageConfiguration?.Produce ?
-            this.hostObject?.pageConfiguration?.Produce :
+        const produceConfigParams = this.hostObject?.pageConfiguration?.Parameters.filter(pageParamConfig => pageParamConfig.Produce);
+        this.pageProduce = produceConfigParams?.length > 0 ?
+        produceConfigParams :
             this.getDefaultPageProduce();
         
         this.listDataView = pageFiltersDataView;
@@ -86,24 +84,19 @@ export class ProducerBlockEditorComponent implements OnInit {
         this.visibleComponent = "add";
     }
 
-    deletePageFilter(pageFilter: PageFilter[]) {
-        for (let filter of pageFilter) {
-            const index = this.getFilterIndex(this.pageProduce.Filters, filter);
+    deletePageFilter(pageConfigParams: PageConfigurationParameter[]) {
+        for (let filter of pageConfigParams) {
+            const index = this.getFilterIndex(this.pageProduce, filter);
             if (index > -1) {
-                if (this.pageProduce.Filters.length == 1) {
-                    this.pageProduce.Filters = [];
+                if (this.pageProduce.length == 1) {
+                    this.pageProduce = [];
                 }
                 else {
-                    this.pageProduce.Filters.splice(index, 1);
+                    this.pageProduce.splice(index, 1);
                 }
             }
         }
-        this.pageProduce.Filters = this.pageProduce.Filters.slice();
-        this.onProduceChange();
-    }
-
-    onContextChange(pageContext: PageContext) {
-        this.pageProduce.Context = pageContext;
+        this.pageProduce = this.pageProduce.slice();
         this.onProduceChange();
     }
 
@@ -134,7 +127,7 @@ export class ProducerBlockEditorComponent implements OnInit {
         this.dialog.openDefaultDialog(dataMsg);
     }
 
-    private getFilterIndex(filtersArray: PageFilter[], filter: PageFilter) {
-        return filtersArray.findIndex(x => x?.Resource == filter?.Resource && JSON.stringify(x?.Fields) == JSON.stringify(filter?.Fields), 0);
+    private getFilterIndex(configParamsArray: PageConfigurationParameter[], filter: PageConfigurationParameter) {
+        return configParamsArray.findIndex(configParam => JSON.stringify(configParam) == JSON.stringify(filter), 0);
     }
 }

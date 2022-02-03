@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageContext, PageFilter, ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
-import { Resource } from '../../options.model';
+import { ResourceType, ResourceTypes } from '@pepperi-addons/papi-sdk';
+import { SelectOptions } from '../../options.model';
 import { FilterTarget } from './FilterTarget';
 
 @Component({
@@ -16,12 +16,11 @@ export class FilterTargetComponent implements OnInit {
 
 
   @Input() target : string;
-  @Input() pageFilter : PageFilter;
+  @Input() pageFilter : any;
 
   filterTarget : FilterTarget;
 
-  @Output() setTargetFilter = new EventEmitter<PageFilter>();
-  @Output() onTargetContextChange = new EventEmitter<PageContext>();
+  @Output() setTargetFilter = new EventEmitter<any>();
   
   options;
   selectId : string;
@@ -29,9 +28,9 @@ export class FilterTargetComponent implements OnInit {
   buttonText: string;
 
   constructor(filterTarget : FilterTarget,
-              resource : Resource) {
+              selectOptions : SelectOptions) {
     this.filterTarget = filterTarget;
-    this.options = resource.options;
+    this.options = selectOptions.resourceType;
   }
 
   ngOnInit(): void {
@@ -79,7 +78,7 @@ export class FilterTargetComponent implements OnInit {
   }
   
   onBtnClick(){
-    let pageFilter : PageFilter;
+    let pageFilter : any;
     if(this.resource || this.fields?.length > 0){
       pageFilter= { Resource: this.resource, Fields: this.fields};
       this.setTargetFilter.emit(pageFilter);

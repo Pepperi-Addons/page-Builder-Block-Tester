@@ -1,0 +1,26 @@
+{
+  "AddonUUID": "3da3c1d7-6aa9-4938-bcdb-b8b4acbf8535",
+  "AddonVersion": "0.0.4",
+  "DebugPort": 4500,
+  "WebappBaseUrl": "https://app.sandbox.pepperi.com",
+  "DefaultEditor": "main",
+  "Endpoints": [
+    "installation.ts",
+    "api.ts"
+  ],
+  "Editors": [
+    "main"
+  ],
+  "PublishConfig": {
+    "ClientStack": "ng10",
+    "Editors": [
+      {
+        "ParentPackageName": "Page Tester",
+        "PackageName": "page-tester",
+        "Description": "Page Tester"
+      }
+    ],
+    "Dependencies": {},
+    "CPISide": []
+  }
+}

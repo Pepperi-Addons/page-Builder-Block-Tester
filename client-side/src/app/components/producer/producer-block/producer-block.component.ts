@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { PageProduce } from '@pepperi-addons/papi-sdk';
+import { PageConfiguration, PageConfigurationParameter } from '@pepperi-addons/papi-sdk';
 import { ISetFilter } from '../block-filter/set-filters-editor/set-filters-editor.component';
 import { IHostObject } from 'src/app/IHostObject';
 import { BlockFiltersService } from '../block-filter/block-filters.service';
@@ -26,10 +26,9 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
     }
 
     filters: Array<ISetFilter>;
-    private _pageProduce : ReplaySubject<PageProduce> = new ReplaySubject<PageProduce>();
+    private _pageProduce : ReplaySubject<PageConfigurationParameter[]> = new ReplaySubject<PageConfigurationParameter[]>();
     public pageProduce$ = this._pageProduce.asObservable();
 
-    pageProduce: PageProduce;
     blockKey: string;
 
     @Output() onFiltersRaised: EventEmitter<Array<ISetFilter>> = new EventEmitter<Array<ISetFilter>>();
@@ -40,7 +39,7 @@ export class ProducerBlockComponent implements OnInit, OnDestroy {
     
 
     private handleHostObjectChange() {
-        this._pageProduce.next(this.hostObject?.pageConfiguration?.Produce);
+        this._pageProduce.next(this.hostObject?.pageConfiguration?.Parameters.filter(pageParam => pageParam.Produce === true));
         // if (this.hostObject?.pageConfiguration?.Produce) {
         //     this.pageProduce = this.hostObject.pageConfiguration.Produce;
         // }
