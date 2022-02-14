@@ -16,7 +16,7 @@ export class ParamConfigComponent implements OnInit {
   produce: boolean = false;
   consume: boolean = false;
   
-  @Output() savedParam = new EventEmitter<PageConfigurationParameter>();
+  @Output() savedParam = new EventEmitter<Partial<PageConfigurationParameter>>();
 
   constructor(selectOptions: SelectOptions) {
     this.typeOptions = selectOptions.resourceType;

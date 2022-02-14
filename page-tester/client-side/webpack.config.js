@@ -33,27 +33,16 @@ function convertDetailsToModuleFed(){
         name: blockDetails.fileName,
         filename: `${blockDetails.fileName}.js`,
         exposes: {
-            ['./'+blockDetails.componentName]: './src/app/block/index.ts',
-            ['./'+blockDetails.moduleName]: './src/app/block/index.ts',
-            ['./'+blockDetails.editorComponentName]: './src/app/block-editor/index.ts',
-            ['./'+blockDetails.editorModuleName]: './src/app/block-editor/index.ts',
+            ['./'+blockDetails.componentName]: blockDetails.blockIndexPath,
+            ['./'+blockDetails.moduleName]: blockDetails.blockIndexPath,
+            ['./'+blockDetails.editorComponentName]: blockDetails.blockEditorIndexPath,
+            ['./'+blockDetails.editorModuleName]: blockDetails.blockEditorIndexPath,
         },
         shared: share(shareObjectsConfig)
     })));
     return moduleFedArray;
 }
-// const moduleFedArray = blockDetailsList.map(function (blockDetails) {
-//     return new ModuleFederationPlugin({
-//     name: blockDetails.fileName,
-//     filename: `${blockDetails.fileName}.js`,
-//     exposes: {
-//         ['./'+blockDetails.componentName]: './src/app/block/index.ts',
-//         ['./'+blockDetails.moduleName]: './src/app/block/index.ts',
-//         ['./'+blockDetails.editorComponentName]: './src/app/block-editor/index.ts',
-//         ['./'+blockDetails.editorModuleName]: './src/app/block-editor/index.ts',
-//     },
-//     shared: share(shareObjectsConfig)
-// })}).push(sharedMappings.getPlugin());
+
 
 module.exports = {
     output: {
@@ -70,31 +59,4 @@ module.exports = {
         }
     },
     plugins: convertDetailsToModuleFed(),
-    // [
-    //     // moduleFedArray,
-        
-    //     // new ModuleFederationPlugin({
-    //     //     name: `${filename}`,
-    //     //     filename: `${filename}.js`,
-    //     //     exposes: {
-    //     //         './PageTesterComponent': './src/app/block/index.ts',
-    //     //         './PageTesterModule': './src/app/block/index.ts',
-    //     //         './PageTesterEditorComponent': './src/app/block-editor/index.ts',
-    //     //         './PageTesterEditorModule': './src/app/block-editor/index.ts',
-    //     //     },
-    //     //     shared: share(shareObjectsConfig)
-    //     // }),
-    //     // new ModuleFederationPlugin({
-    //     //     name: produceConsumeForLoop.fileName,
-    //     //     filename: `${produceConsumeForLoop.fileName}.js`,
-    //     //     exposes: {
-    //     //         ['./'+produceConsumeForLoop.componentName]: './src/app/block/index.ts',
-    //     //         ['./'+produceConsumeForLoop.moduleName]: './src/app/block/index.ts',
-    //     //         ['./'+produceConsumeForLoop.editorComponentName]: './src/app/block-editor/index.ts',
-    //     //         ['./'+produceConsumeForLoop.editorModuleName]: './src/app/block-editor/index.ts',
-    //     //     },
-    //     //     shared: share(shareObjectsConfig)
-    //     // }),
-    //     // sharedMappings.getPlugin()
-    // ]
 };

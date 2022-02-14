@@ -1,5 +1,4 @@
-import { IBlockFilterParameter, IBlockStringParameter } from './../models/page-block.model';
-
+import { IBlockFilterParameter, IBlockStringParameter } from 'src/models/page-block.model';
 
 export const stringTestParam: IBlockStringParameter = {
     Key: "StringKey",

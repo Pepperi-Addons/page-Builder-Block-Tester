@@ -6,7 +6,7 @@ import { PepAddonService, PepFileService } from '@pepperi-addons/ngx-lib';
 
 import { PageTesterEditorComponent } from './index';
 
-import { config } from '../addon.config';
+import { config } from '../../addon.config';
 
 @NgModule({
     declarations: [PageTesterEditorComponent],

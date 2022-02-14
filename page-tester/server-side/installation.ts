@@ -1,4 +1,4 @@
-import { produceConsumeForLoop } from './../blocks-helper';
+import { blockDetailsList, produceConsumeForLoop } from './../blocks-helper';
 /*
 The return object format MUST contain the field 'success':
 {success:true}
@@ -54,9 +54,29 @@ async function createPageBlockRelation(client: Client): Promise<any> {
             EditorModuleName: produceConsumeForLoop.editorModuleName // This is should be the block editor module name (from the client-side)
         };
 
+        const blockRelations: Relation[] = blockDetailsList.map((blockRelation) => {
+            return {
+                RelationName: "PageBlock",
+                Name: blockRelation.blockName,
+                Description: blockRelation.blockName,
+                Type: "NgComponent",
+                SubType: "NG12",
+                AddonUUID: client.AddonUUID,
+                AddonRelativeURL: blockRelation.fileName,
+                ComponentName: blockRelation.componentName, // This is should be the block component name (from the client-side)
+                ModuleName: blockRelation.moduleName, // This is should be the block module name (from the client-side)
+                EditorComponentName: blockRelation.editorComponentName, // This is should be the block editor component name (from the client-side)
+                EditorModuleName: blockRelation.editorModuleName // This is should be the block editor module name (from the client-side)
+            };
+        });
         const service = new MyService(client);
-        const result = await service.upsertRelation(pageComponentRelation);
-        return { success:true, resultObject: result };
+        const resultsArray : any[] = []
+        for(let blockRelation of blockRelations){
+            const result = await service.upsertRelation(blockRelation);
+            resultsArray.push(result);
+        }
+        // const result = await service.upsertRelation(pageComponentRelation);
+        return { success:true, resultObject: JSON.stringify(resultsArray) };
     } catch(err) {
         return { success: false, resultObject: err , errorMessage: `Error in upsert relation. error - ${err}`};
     }

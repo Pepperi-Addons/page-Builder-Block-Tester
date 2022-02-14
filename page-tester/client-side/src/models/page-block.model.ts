@@ -1,10 +1,7 @@
-import { PageConfiguration, PageConfigurationParameter, PageConfigurationParameterBase, PageConfigurationParameterFilter, PageConfigurationParameterString, ScreenSizeDataConfiguration } from '@pepperi-addons/papi-sdk';
+import { PageBlock, PageConfigurationParameterFilter, PageConfigurationParameterString, ResourceType} from '@pepperi-addons/papi-sdk';
 
-export interface IBlockHostObject {
-    configurationPerScreenSize?: ScreenSizeDataConfiguration;
-    pageConfiguration?: PageConfiguration;
-    configuration: any;
-    parameters: any;
+export interface IBlockHostObject extends Partial<PageBlock>{
+    parameters?: {[key: string]: any};
 }
 
 export interface IBlockStringParameter extends PageConfigurationParameterString {
@@ -16,8 +13,12 @@ export interface IBlockFilterParameter extends PageConfigurationParameterFilter 
 }
 
 export interface IFilter {
-    FieldType?: string;
-    ApiName?: string;
-    Operation?: string;
-    Values: Array<any>;
+    resource?: ResourceType,
+    filter?: {
+        FieldType?: string;
+        ApiName?: string;
+        Operation?: string;
+        Values?: Array<any>;
+    }
+    
 }

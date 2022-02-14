@@ -1,6 +1,7 @@
 import { stringTestParam, filterTestParam } from './../test-data';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageConfiguration } from '@pepperi-addons/papi-sdk';
+import { IBlockHostObject } from 'src/models/page-block.model';
 
 @Component({
     selector: 'page-tester-editor',
@@ -10,7 +11,16 @@ import { PageConfiguration } from '@pepperi-addons/papi-sdk';
 
 
 export class PageTesterEditorComponent implements OnInit {
-    @Input() hostObject: any;
+    private _hostObject : IBlockHostObject;
+
+    @Input() 
+    set hostObject(value: IBlockHostObject){
+        this._hostObject = value;
+        console.log(`EDITOR host object:\n${JSON.stringify(this.hostObject)}`);
+    }
+    get hostObject() : IBlockHostObject{
+        return this._hostObject;
+    }
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
     
@@ -22,7 +32,9 @@ export class PageTesterEditorComponent implements OnInit {
     ngOnInit(): void {
         // When finish load raise block-editor-loaded.
         // this.hostEvents.emit({action: 'block-editor-loaded'});
+        this.setConfiguration();
         this.setPageConfiguration();
+
     }
 
     ngOnChanges(e: any): void {
@@ -32,7 +44,7 @@ export class PageTesterEditorComponent implements OnInit {
     setPageConfiguration(){
         const pageConfig : PageConfiguration = {
             Parameters: [
-                // stringTestParam,
+                stringTestParam,
                 filterTestParam
             ]
         }
@@ -41,5 +53,14 @@ export class PageTesterEditorComponent implements OnInit {
             action: 'set-page-configuration',
             pageConfiguration: pageConfig
         });
+    }
+
+    setConfiguration(){
+        this.hostEvents.emit({
+            action: 'set-configuration',
+            configuration: {
+                test: 'BlockEditor'
+            }
+        })
     }
 }

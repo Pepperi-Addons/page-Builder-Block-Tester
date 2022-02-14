@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+
+import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
+import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { PepAddonService, PepFileService, PepHttpService } from '@pepperi-addons/ngx-lib';
-import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
-import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 
-
-
-import { PageTesterComponent } from './index';
-
-import { config } from '../addon.config';
+import { StaticTesterComponent } from './index';
+import { AddonService } from '../addon.service';
+import { config } from 'src/app/addon.config';
 
 export const routes: Routes = [
     {
         path: '',
-        component: PageTesterComponent
+        component: StaticTesterComponent
     }
 ];
 
 @NgModule({
-    declarations: [PageTesterComponent],
+    declarations: [StaticTesterComponent],
     imports: [
         CommonModule,
         PepTextareaModule,
@@ -37,13 +36,14 @@ export const routes: Routes = [
         }),
         RouterModule.forChild(routes)
     ],
-    exports: [PageTesterComponent],
+    exports: [StaticTesterComponent],
     providers: [
-        TranslateStore,
-        // Add here all used services.
+        AddonService,
+        TranslateStore
+        
     ]
 })
-export class PageTesterModule {
+export class StaticTesterModule {
     constructor(
         translate: TranslateService,
         private pepAddonService: PepAddonService
