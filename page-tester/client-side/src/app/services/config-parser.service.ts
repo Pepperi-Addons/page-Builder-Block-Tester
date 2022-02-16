@@ -13,7 +13,7 @@ export class ConfigParserService {
     ) {
     }
 
-    parseSetParameters(hostObject: IBlockHostObject): SetParameterAction[] {
+    parseParameterValues(hostObject: IBlockHostObject): SetParameterAction[] {
         const setActions: SetParameterAction[] = [];
         if (hostObject?.configuration?.Parameters) {
             hostObject.configuration.Parameters.forEach((param) => {

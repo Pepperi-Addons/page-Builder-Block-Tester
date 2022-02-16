@@ -1,25 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DynamicTesterComponent } from './dynamic-tester.component';
+import { InitTesterComponent } from './init-tester.component';
+import { ConfigParserService } from '../services/config-parser.service';
+import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 
 import { HttpClient } from '@angular/common/http';
 
-import { TranslateLoader, TranslateModule, TranslateStore } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { PepAddonService, PepFileService } from '@pepperi-addons/ngx-lib';
 import { config } from 'src/app/addon.config';
-import { ConfigParserService } from 'src/app/services/config-parser.service';
-import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
-import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
+
 
 
 @NgModule({
   declarations: [
-    DynamicTesterComponent
+    InitTesterComponent
   ],
   imports: [
     CommonModule,
-    PepButtonModule,
     PepTextareaModule,
+    PepTextboxModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -29,12 +30,14 @@ import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
       }, isolate: false
     })
   ],
-  exports: [DynamicTesterComponent],
-  providers: [
-    TranslateStore,
-    ConfigParserService
+  exports: [
+    InitTesterComponent
+  ],
+  providers:[
+    ConfigParserService,
+    TranslateStore
   ]
 })
-export class DynamicTesterModule {
+export class InitTesterModule {
   constructor(){}
-}
+ }

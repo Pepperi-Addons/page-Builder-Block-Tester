@@ -1,5 +1,8 @@
+<pep-textbox value="{{loadTime}}" label="Block loading time"
+  type="text"
+  [disabled]="true"
+  xAlignment="left"
+  [showTitle]="true"
+></pep-textbox>
 <pep-textarea label="HostObject" [value]="hostObjectString" [disabled]="true" [rowSpan]="3"></pep-textarea>
 <pep-textarea label="Received Consumes" [value]="consumeString" [disabled]="true" [rowSpan]="3"></pep-textarea>
-<ng-container *ngFor="let param of parameterValues">
-    <pep-button class="set-param-btn" value="{{param.key}}" (buttonClick)="setParameter(param)"></pep-button>
-</ng-container>

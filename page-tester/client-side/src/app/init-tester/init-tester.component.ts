@@ -1,24 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ConfigParserService, SetParameterAction } from 'src/app/services/config-parser.service';
 import { IBlockHostObject } from 'src/models/page-block.model';
-import { ConfigParserService, SetParameterAction } from '../services/config-parser.service';
 
 @Component({
-  selector: 'dynamic-tester',
-  templateUrl: './dynamic-tester.component.html',
-  styleUrls: ['./dynamic-tester.component.scss']
+  selector: 'init-tester',
+  templateUrl: './init-tester.component.html',
+  styleUrls: ['./init-tester.component.scss']
 })
-export class DynamicTesterComponent implements OnInit {
+export class InitTesterComponent implements OnInit {
 
   hostObjectString: string;
   consumeString: string;
   parameterValues: SetParameterAction[];
+  loadTime: number;
 
   private _hostObject: IBlockHostObject;
   
   @Input()
   set hostObject(value: IBlockHostObject) {
     this._hostObject = value;
-    console.log(`Dynamic Tester Block host object:\n${this.hostObjectString}`);
+    console.log(`Init Tester Block host object:\n${this.hostObjectString}`);
     this.onHostObjectChange();
   }
   get hostObject(): IBlockHostObject {
@@ -32,20 +33,17 @@ export class DynamicTesterComponent implements OnInit {
   constructor(private configParser: ConfigParserService) { }
 
   ngOnInit(): void {
+    this.loadTime = performance.now();
     this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
+    this.parameterValues.forEach((param) => this.setParameter(param));
   }
 
   onHostObjectChange() {
     this.hostObjectString = JSON.stringify(this.hostObject);
     this.consumeString = JSON.stringify(this.hostObject?.parameters);
-    // const parameters = this.configParser.parseSetParameters(this.hostObject);
-    // if(this.setParameters !== parameters){
-    //   this.setParameters = parameters;
-    // }
   }
-  
+
   setParameter(param: SetParameterAction){
     this.hostEvents.emit(param);
   }
-
 }

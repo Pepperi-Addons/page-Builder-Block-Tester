@@ -30,11 +30,11 @@ export class DynamicTesterEditorComponent implements OnInit, AfterViewInit {
 
   parametersString: string[];
   hostObjectString: string;
-
   @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor(private configParser: ConfigParserService) { }
+  
   ngAfterViewInit(): void {
     this.setPageConfiguration();
   }

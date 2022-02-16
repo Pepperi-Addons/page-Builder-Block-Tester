@@ -51,12 +51,24 @@ const dynamicTester = {
     editorModuleName: "DynamicTesterEditorModule",
 }
 
+const initTester = {
+    blockName: 'Init Tester',
+    fileName: `init_tester`,
+    componentName: "InitTesterComponent",
+    moduleName: "InitTesterModule",
+    blockIndexPath: './src/app/init-tester/index.ts',
+    editorComponentName: "InitTesterEditorComponent",
+    blockEditorIndexPath: './src/app/init-tester-editor/index.ts',
+    editorModuleName: "InitTesterEditorModule",
+}
+
 
 const blockDetailsList = [
     produceConsumeForLoop,
     consumerBlock,
     staticTester,
-    dynamicTester
+    dynamicTester,
+    initTester
 ]
 module.exports = {
     produceConsumeForLoop: produceConsumeForLoop,
