@@ -40,5 +40,4 @@ export class AddonService {
     pepGet(endpoint: string): Observable<any> {
         return this.pepHttp.getPapiApiCall(endpoint);
     }
-
 }

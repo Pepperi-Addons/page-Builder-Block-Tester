@@ -8,10 +8,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { PepAddonService, PepFileService, PepHttpService } from '@pepperi-addons/ngx-lib';
-
-import { StaticTesterComponent } from './index';
-import { AddonService } from '../addon.service';
 import { config } from 'src/app/addon.config';
+import { StaticTesterComponent } from './index';
+import { AddonService } from '../services/addon.service';
+
 
 export const routes: Routes = [
     {

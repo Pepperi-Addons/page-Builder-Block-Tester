@@ -8,7 +8,7 @@
 // }
 
 const produceConsumeForLoop = {
-    blockName: 'Produce/Consume For Loop',
+    blockName: 'Produce Consume For Loop',
     fileName: `prd_con_for_loop`,
     componentName: "PageTesterComponent",
     moduleName: "PageTesterModule",
@@ -40,11 +40,23 @@ const staticTester = {
     editorModuleName: "StaticTesterEditorModule",
 }
 
+const dynamicTester = {
+    blockName: 'Dynamic Tester',
+    fileName: `dynamic_tester`,
+    componentName: "DynamicTesterComponent",
+    moduleName: "DynamicTesterModule",
+    blockIndexPath: './src/app/dynamic-tester/index.ts',
+    editorComponentName: "DynamicTesterEditorComponent",
+    blockEditorIndexPath: './src/app/dynamic-tester-editor/index.ts',
+    editorModuleName: "DynamicTesterEditorModule",
+}
+
 
 const blockDetailsList = [
     produceConsumeForLoop,
     consumerBlock,
-    staticTester
+    staticTester,
+    dynamicTester
 ]
 module.exports = {
     produceConsumeForLoop: produceConsumeForLoop,

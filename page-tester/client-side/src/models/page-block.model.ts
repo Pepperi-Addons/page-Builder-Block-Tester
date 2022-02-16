@@ -1,7 +1,9 @@
-import { PageBlock, PageConfigurationParameterFilter, PageConfigurationParameterString, ResourceType} from '@pepperi-addons/papi-sdk';
+import { PageConfiguration, PageConfigurationParameterFilter, PageConfigurationParameterString, ResourceType} from '@pepperi-addons/papi-sdk';
 
-export interface IBlockHostObject extends Partial<PageBlock>{
-    parameters?: {[key: string]: any};
+export interface IBlockHostObject {
+    pageConfiguration?: PageConfiguration,
+    configuration?: TestConfiguration,
+    parameters: {[key: string]: any};
 }
 
 export interface IBlockStringParameter extends PageConfigurationParameterString {
@@ -9,7 +11,7 @@ export interface IBlockStringParameter extends PageConfigurationParameterString 
 }
 
 export interface IBlockFilterParameter extends PageConfigurationParameterFilter {
-    Filter?: IFilter
+    Value?: IFilter[]
 }
 
 export interface IFilter {
@@ -20,5 +22,8 @@ export interface IFilter {
         Operation?: string;
         Values?: Array<any>;
     }
-    
+}
+
+export interface TestConfiguration {
+    Parameters: Array<IBlockStringParameter | IBlockFilterParameter>
 }

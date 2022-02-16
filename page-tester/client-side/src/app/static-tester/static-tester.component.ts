@@ -1,11 +1,12 @@
 import { IBlockHostObject } from 'src/models/page-block.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AddonService } from 'src/app/addon.service';
+import { AddonService } from 'src/app/services/addon.service';
 import { Page, PapiClient } from '@pepperi-addons/papi-sdk';
 
 @Component({
     selector: 'consumer-block',
     templateUrl: './static-tester.component.html',
+    styleUrls: ['./static-tester.component.scss']
 })
 
 export class StaticTesterComponent implements OnInit {
@@ -15,7 +16,7 @@ export class StaticTesterComponent implements OnInit {
     @Input() 
     set hostObject(value: IBlockHostObject){
         this._hostObject = value;
-        console.log(`CONSUMER BLOCK host object:\n${JSON.stringify(this.hostObject)}`);
+        console.log(`Static Tester Block host object:\n${JSON.stringify(this.hostObject)}`);
         this.onHostObjectChange();
     }
     get hostObject() : IBlockHostObject{

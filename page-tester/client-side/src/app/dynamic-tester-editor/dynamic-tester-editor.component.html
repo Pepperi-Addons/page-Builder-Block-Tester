@@ -1,0 +1,5 @@
+<p>dynamic-tester-editor works!</p>
+<pep-textarea label="HostObject" [value]="hostObjectString" [disabled]="true" [rowSpan]="2"></pep-textarea>
+<ng-container *ngFor="let param of parametersString; let i=index">
+    <pep-textarea label="{{i}})" [value]="param" [disabled]="true" [rowSpan]="2"></pep-textarea>
+</ng-container>

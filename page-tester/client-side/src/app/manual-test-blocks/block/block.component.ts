@@ -33,7 +33,6 @@ export class PageTesterComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // When finish load raise block-loaded.
         this.testValues.set(stringTestParam.Key, this.getStringTestValues());
         this.testValues.set(filterTestParam.Key, this.getFilterTestValues());
         for(const paramKey of this.testValues.keys()){
@@ -43,7 +42,6 @@ export class PageTesterComponent implements OnInit {
         for(let index=0; index<Math.max(...this.paramIndices.values()); index++){
             this.indexArray.push(index);
         }
-        this.hostEvents.emit({action: 'block-loaded'});
     }
 
     ngOnChanges(e: any): void {
@@ -106,6 +104,7 @@ export class PageTesterComponent implements OnInit {
             // debugger;
             this.paramIndices.forEach( async (value,key) => {
                 if(this.testValuesIndex < this.paramIndices.get(key)){
+                    
                     this.setParameter(key, this.testValues.get(key)[this.testValuesIndex]);
                     
                 }
