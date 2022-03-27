@@ -4,7 +4,7 @@ import { AddonService } from 'src/app/services/addon.service';
 import { Page, PapiClient } from '@pepperi-addons/papi-sdk';
 
 @Component({
-    selector: 'consumer-block',
+    selector: 'static-tester',
     templateUrl: './static-tester.component.html',
     styleUrls: ['./static-tester.component.scss']
 })
