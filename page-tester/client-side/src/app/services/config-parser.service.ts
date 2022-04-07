@@ -25,7 +25,9 @@ export class ConfigParserService {
         }
         return setActions;
     }
-
+    getBlockId(hostObject: IBlockHostObject) : string | undefined {
+        return hostObject?.configuration?.BlockId;
+    }
     parsePageConfiguration(hostObject: IBlockHostObject): PageConfiguration {
         const paramters: PageConfigurationParameter[] = []
         if (hostObject?.configuration?.Parameters) {

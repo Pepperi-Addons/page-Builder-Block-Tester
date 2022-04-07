@@ -64,8 +64,8 @@ const initTester = {
 
 
 const blockDetailsList = [
-    produceConsumeForLoop,
-    consumerBlock,
+    // produceConsumeForLoop,
+    // consumerBlock,
     staticTester,
     dynamicTester,
     initTester

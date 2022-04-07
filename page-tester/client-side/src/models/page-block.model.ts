@@ -25,5 +25,6 @@ export interface IFilter {
 }
 
 export interface TestConfiguration {
-    Parameters: Array<IBlockStringParameter | IBlockFilterParameter>
+    Parameters: Array<IBlockStringParameter | IBlockFilterParameter>,
+    BlockId: string
 }

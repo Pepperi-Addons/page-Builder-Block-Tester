@@ -10,6 +10,7 @@ import { PepAddonService, PepFileService } from '@pepperi-addons/ngx-lib';
 import { config } from 'src/app/addon.config';
 import { StaticTesterComponent } from './index';
 import { AddonService } from '../services/addon.service';
+import { ConfigParserService } from '../services/config-parser.service';
 
 
 
@@ -30,8 +31,9 @@ import { AddonService } from '../services/addon.service';
     ],
     exports: [StaticTesterComponent],
     providers: [
-        TranslateStore
-    ]
+        TranslateStore,
+        ConfigParserService
+      ]
 })
 export class StaticTesterModule {
     constructor(){}
