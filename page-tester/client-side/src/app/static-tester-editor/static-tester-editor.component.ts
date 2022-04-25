@@ -15,6 +15,7 @@ export class StaticTesterEditorComponent implements OnInit {
         this._hostObject = value;
         console.log(`Static Tester Editor host object:\n${JSON.stringify(this.hostObject)}`);
     }
+    
     get hostObject() : IBlockHostObject{
         return this._hostObject;
     }

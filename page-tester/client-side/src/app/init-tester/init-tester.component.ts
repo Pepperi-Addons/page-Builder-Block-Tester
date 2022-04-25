@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { ConfigParserService, SetParameterAction } from 'src/app/services/config-parser.service';
 import { IBlockHostObject } from 'src/models/page-block.model';
 
@@ -14,6 +14,20 @@ export class InitTesterComponent implements OnInit {
   parameterValues: SetParameterAction[];
   loadTime: number;
 
+  private _blockId: string;
+
+  public get blockId(): string {
+    return this._blockId;
+  }
+
+  public set blockId(value: string) {
+    if(this._blockId){
+      console.log(`WARNING: blockId can only be assigned once. Current value: ${this._blockId}`);
+    }
+    else{
+      this._blockId = value ? value : undefined;
+    }
+  }
   private _hostObject: IBlockHostObject;
   
   @Input()
@@ -26,16 +40,21 @@ export class InitTesterComponent implements OnInit {
     return this._hostObject;
   }
 
+  
   @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
   
 
-  constructor(private configParser: ConfigParserService) { }
+  constructor(private configParser: ConfigParserService, private elementRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.loadTime = performance.now();
     this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
     this.parameterValues.forEach((param) => this.setParameter(param));
+    this.blockId = this.configParser.getBlockId(this.hostObject);
+    this.renderer.setAttribute(this.elementRef.nativeElement, 'block-id', this.blockId);
+
+    this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
   }
 
   onHostObjectChange() {
