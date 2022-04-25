@@ -45,21 +45,20 @@ export class DynamicTesterComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    debugger;
-    this.blockId = this.configParser.getBlockId(this.hostObject);
-    this.renderer.setAttribute(this.elementRef.nativeElement, 'block-id', this.blockId);
+    this.setBlockIdAttr();
 
     this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
     
   }
 
+  private setBlockIdAttr() {
+    this.blockId = this.configParser.getBlockId(this.hostObject);
+    this.renderer.setAttribute(this.elementRef.nativeElement, 'block-id', this.blockId);
+  }
+
   onHostObjectChange() {
     this.hostObjectString = JSON.stringify(this.hostObject);
     this.consumeString = JSON.stringify(this.hostObject?.parameters);
-    // const parameters = this.configParser.parseSetParameters(this.hostObject);
-    // if(this.setParameters !== parameters){
-    //   this.setParameters = parameters;
-    // }
   }
   
   setParameter(param: SetParameterAction){

@@ -49,12 +49,17 @@ export class InitTesterComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTime = performance.now();
-    this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
-    this.parameterValues.forEach((param) => this.setParameter(param));
-    this.blockId = this.configParser.getBlockId(this.hostObject);
-    this.renderer.setAttribute(this.elementRef.nativeElement, 'block-id', this.blockId);
+    this.setBlockIdAttr();
 
     this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
+    
+    //To set-parameter instantly after component was loaded.
+    this.parameterValues.forEach((param) => this.setParameter(param));
+  }
+
+  private setBlockIdAttr() {
+    this.blockId = this.configParser.getBlockId(this.hostObject);
+    this.renderer.setAttribute(this.elementRef.nativeElement, 'block-id', this.blockId);
   }
 
   onHostObjectChange() {
