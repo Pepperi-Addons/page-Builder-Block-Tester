@@ -19,12 +19,14 @@ export class ConfigParserService {
             hostObject.configuration.Parameters.forEach((param) => {
                 setActions.push(this.getSetParameter(param.Key, param.Value));
             });
-            // for (const param of hostObject.configuration.Parameters) {
-            //     setActions.push(this.getSetParameter(param.Key, param.Value));
-            // }
+        }
+        else{
+            console.error("hostObject.configuration.Parameters is undefined");
+            console.log("hostObject.configuration.Parameters is undefined");
         }
         return setActions;
     }
+    
     getBlockId(hostObject: IBlockHostObject) : string | undefined {
         return hostObject?.configuration?.BlockId;
     }
