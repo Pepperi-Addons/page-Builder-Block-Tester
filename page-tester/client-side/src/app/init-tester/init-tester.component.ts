@@ -12,7 +12,7 @@ export class InitTesterComponent implements OnInit {
   hostObjectString: string;
   consumeString: string;
   parameterValues: SetParameterAction[];
-  loadTime: number;
+  loadTime: string;
 
   private _blockId: string;
 
@@ -48,7 +48,7 @@ export class InitTesterComponent implements OnInit {
   constructor(private configParser: ConfigParserService, private elementRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.loadTime = performance.now();
+    this.loadTime = performance.now().toFixed(3);
     this.setBlockIdAttr();
 
     this.parameterValues = this.configParser.parseParameterValues(this.hostObject);
